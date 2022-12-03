@@ -31,9 +31,9 @@ public class GovernmentMayorViewChartJPanel extends javax.swing.JPanel {
         lblHeader = new javax.swing.JLabel();
         btnBack1 = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(204, 204, 255));
+        setBackground(new java.awt.Color(255, 255, 255));
 
-        pnlChart.setBackground(new java.awt.Color(204, 204, 255));
+        pnlChart.setBackground(new java.awt.Color(255, 255, 255));
         pnlChart.setLayout(new java.awt.BorderLayout());
 
         lblHeader.setBackground(new java.awt.Color(204, 204, 255));
