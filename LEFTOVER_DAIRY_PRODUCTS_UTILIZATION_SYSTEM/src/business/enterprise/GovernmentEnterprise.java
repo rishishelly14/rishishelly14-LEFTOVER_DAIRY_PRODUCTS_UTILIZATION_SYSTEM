@@ -3,8 +3,19 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package business.enterprise;
+import business.role.Role;
+import java.util.ArrayList;
 
+public class GovernmentEnterprise extends Enterprise {
 
-public class GovernmentEnterprise {
+    public GovernmentEnterprise(String name) {
+        super(name, Enterprise.EnterpriseType.Government);
+    }
+
+    @Override
+    public ArrayList<Role> getSupportedRole() {
+        return null;
+    }   
+    
     
 }

@@ -4,7 +4,22 @@
  */
 package business.enterprise;
 
+import business.role.Role;
+import java.util.ArrayList;
 
-public class LogisticsEnterprise {
+public class LogisticsEnterprise extends Enterprise {
+
+    public LogisticsEnterprise(String name) {
+        super(name, Enterprise.EnterpriseType.Logistics);
+    }
+
+    @Override
+    public ArrayList<Role> getSupportedRole() {
+        return null;
+    }
+
+
+
+
     
 }
