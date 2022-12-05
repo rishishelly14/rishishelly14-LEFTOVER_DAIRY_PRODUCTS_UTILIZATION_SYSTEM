@@ -1,13 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package business.enterprise;
 
 import business.enterprise.Enterprise.EnterpriseType;
 import java.util.ArrayList;
-
 
 public class EnterpriseDirectory {
 
@@ -46,6 +41,14 @@ public class EnterpriseDirectory {
         enterpriseList.remove(e);
     }
 
+    public boolean checkIfEnterpriseExists(String enterpriseName, EnterpriseType type) {
+        for (Enterprise e : enterpriseList) {
+            if ((e.getEnterpriseType() == type) && (e.getName().equals(enterpriseName))) {
+                return true;
+            }
+        }
+        return false;
+    }
     
 
 }
