@@ -11,11 +11,12 @@ package userInterface;
 public class MainJFrame extends javax.swing.JFrame  {
 
 
-
     /**
      * Creates new form MainJFrame
      */
     public MainJFrame() {
+        initComponents();
+
 
     }
 
@@ -148,8 +149,6 @@ public class MainJFrame extends javax.swing.JFrame  {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
 
-
-       
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed

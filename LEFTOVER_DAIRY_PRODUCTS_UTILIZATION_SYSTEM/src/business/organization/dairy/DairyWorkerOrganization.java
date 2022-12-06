@@ -4,10 +4,22 @@
  */
 package business.organization.dairy;
 
-/**
- *
- * @author shell
- */
-public class DairyWorkerOrganization {
+import business.organization.Organization;
+import business.role.dairy.DairyWorkerRole;
+import business.role.Role;
+import java.util.ArrayList;
+
+public class DairyWorkerOrganization extends Organization {
+    
+    public DairyWorkerOrganization() {
+        super(Organization.Type.DairyWorker.getValue());
+    }
+
+    @Override
+    public ArrayList<Role> getSupportedRole() {
+        ArrayList<Role> roles = new ArrayList();
+        roles.add(new DairyWorkerRole());
+        return roles;
+    }
     
 }

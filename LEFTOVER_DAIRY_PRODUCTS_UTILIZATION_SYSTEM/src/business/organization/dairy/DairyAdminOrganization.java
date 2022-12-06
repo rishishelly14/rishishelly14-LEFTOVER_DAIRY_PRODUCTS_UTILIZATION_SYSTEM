@@ -4,7 +4,23 @@
  */
 package business.organization.dairy;
 
+import business.organization.Organization;
+import business.role.dairy.DairyAdminRole;
+import business.role.Role;
+import java.util.ArrayList;
 
-public class DairyAdminOrganization {
+
+public class DairyAdminOrganization extends Organization {
+    
+        public DairyAdminOrganization() {
+        super(Organization.Type.DairyAdmin.getValue());
+    }
+
+    @Override
+    public ArrayList<Role> getSupportedRole() {
+        ArrayList<Role> roles = new ArrayList();
+        roles.add(new DairyAdminRole());
+        return roles;
+    }
     
 }
