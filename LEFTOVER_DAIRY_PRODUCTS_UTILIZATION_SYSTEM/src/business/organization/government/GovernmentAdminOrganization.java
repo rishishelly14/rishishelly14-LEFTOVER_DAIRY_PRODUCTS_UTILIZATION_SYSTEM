@@ -4,10 +4,27 @@
  */
 package business.organization.government;
 
+import business.organization.Organization;
+import business.role.Role;
+import business.role.government.GovernmentAdminRole;
+import java.util.ArrayList;
+
 /**
  *
  * @author nehas
  */
-public class GovernmentAdminOrganization {
+public class GovernmentAdminOrganization extends Organization {
+    
+    public GovernmentAdminOrganization() {
+        super(Organization.Type.GovernmentAdmin.getValue());
+    }
+
+    @Override
+    public ArrayList<Role> getSupportedRole() {
+        ArrayList<Role> roles = new ArrayList();
+        roles.add(new GovernmentAdminRole());
+        return roles;
+    }
+        
     
 }
