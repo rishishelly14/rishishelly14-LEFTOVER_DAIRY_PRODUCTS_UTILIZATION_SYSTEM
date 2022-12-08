@@ -4,19 +4,28 @@
  */
 package userInterface.dairy.adminWorkArea;
 
-
+import business.EcoSystem;
+import business.enterprise.Enterprise;
+import java.awt.CardLayout;
+import javax.swing.JPanel;
 
 
 public class DairyAdminWorkAreaJPanel extends javax.swing.JPanel {
     
-
+    
+    private JPanel userProcessContainer;
+    private Enterprise enterprise;
+    private EcoSystem business;
 
     /**
      * Creates new form DairyAdminWorkAreaJPanel
      */
-    public DairyAdminWorkAreaJPanel() {
+    public DairyAdminWorkAreaJPanel(JPanel userProcessContainer, Enterprise enterprise, EcoSystem business) {
         initComponents();
-
+        this.userProcessContainer = userProcessContainer;
+        this.enterprise = enterprise;
+        this.business = business;
+        lblValue.setText(enterprise.getName());
     }
 
     /**
@@ -36,7 +45,7 @@ public class DairyAdminWorkAreaJPanel extends javax.swing.JPanel {
         btnManageEmployee = new javax.swing.JButton();
         btnManageUser = new javax.swing.JButton();
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(255, 204, 153));
 
         lblHeading.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lblHeading.setText("Dairy Adminstrative Work Area");
@@ -132,20 +141,29 @@ public class DairyAdminWorkAreaJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnManageOrganizationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageOrganizationActionPerformed
-        // TODO add your handling code here:
 
-
+        DairyManageOrganizationJPanel manageOrganizationJPanel = new DairyManageOrganizationJPanel(userProcessContainer, enterprise.getOrganizationDirectory());
+        userProcessContainer.add("manageOrganizationJPanel", manageOrganizationJPanel);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
     }//GEN-LAST:event_btnManageOrganizationActionPerformed
 
     private void btnManageEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageEmployeeActionPerformed
-        // TODO add your handling code here:
 
+        DairyManageEmployeeJPanel manageEmployeeJPanel = new DairyManageEmployeeJPanel(userProcessContainer, enterprise.getOrganizationDirectory());
+        userProcessContainer.add("manageEmployeeJPanel", manageEmployeeJPanel);
 
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
     }//GEN-LAST:event_btnManageEmployeeActionPerformed
 
     private void btnManageUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageUserActionPerformed
         // TODO add your handling code here:
+        DairyManageUserAccountJPanel muajp = new DairyManageUserAccountJPanel(userProcessContainer, enterprise, business);
+        userProcessContainer.add("ManageUserAccountJPanel", muajp);
 
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
     }//GEN-LAST:event_btnManageUserActionPerformed
 
 

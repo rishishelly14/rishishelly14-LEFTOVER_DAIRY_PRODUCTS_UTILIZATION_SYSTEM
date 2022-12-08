@@ -4,19 +4,53 @@
  */
 package userInterface.dairy.adminWorkArea;
 
+import business.organization.Organization;
+import business.organization.Organization.Type;
+import business.organization.OrganizationDirectory;
+import java.awt.CardLayout;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 
 public class DairyManageOrganizationJPanel extends javax.swing.JPanel {
     
+    private OrganizationDirectory directory;
+    private JPanel userProcessContainer;
 
     /**
      * Creates new form DairyManageOrganizationJPanel
      */
-    public DairyManageOrganizationJPanel() {
+    public DairyManageOrganizationJPanel(JPanel userProcessContainer, OrganizationDirectory directory) {
         initComponents();
-
+        this.userProcessContainer = userProcessContainer;
+        this.directory = directory;
+        populateTable();
+        populateCombo();
     }
     
+        private void populateCombo() {
+        cmbOrganization.removeAllItems();
+        for (Type type : Organization.Type.values()) {
+            if ((!type.getValue().equals(Type.DairyAdmin.getValue())) && (type.getValue().indexOf("Dairy") >= 0)) {
+                cmbOrganization.addItem(type);
+            }
+        }
+    }
+
+    private void populateTable() {
+        DefaultTableModel model = (DefaultTableModel) tblOrganization.getModel();
+
+        model.setRowCount(0);
+
+        for (Organization organization : directory.getOrganizationList()) {
+            Object[] row = new Object[2];
+            row[0] = organization.getOrganizationID();
+            row[1] = organization.getName();
+
+            model.addRow(row);
+        }
+    }
 
 
     /**
@@ -38,7 +72,7 @@ public class DairyManageOrganizationJPanel extends javax.swing.JPanel {
         btnBack = new javax.swing.JButton();
         btnAddOrganization = new javax.swing.JButton();
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(255, 204, 153));
 
         lblHeader.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lblHeader.setText("Dairy Adminstrative Work Area - Manage Organization");
@@ -163,11 +197,22 @@ public class DairyManageOrganizationJPanel extends javax.swing.JPanel {
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
 
+        userProcessContainer.remove(this);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnAddOrganizationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddOrganizationActionPerformed
 
-
+        int selectedItem = cmbOrganization.getSelectedIndex();
+        if (selectedItem == -1) {
+            JOptionPane.showMessageDialog(null, "Please select the organization to create", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        Type type = (Type) cmbOrganization.getSelectedItem();
+        directory.addOrganization(type);
+        JOptionPane.showMessageDialog(null, "Organization added successfully", "Information", JOptionPane.INFORMATION_MESSAGE);
+        populateTable();
     }//GEN-LAST:event_btnAddOrganizationActionPerformed
 
 

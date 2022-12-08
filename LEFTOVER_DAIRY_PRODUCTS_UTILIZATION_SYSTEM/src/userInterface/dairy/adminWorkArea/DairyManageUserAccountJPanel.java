@@ -4,19 +4,79 @@
  */
 package userInterface.dairy.adminWorkArea;
 
+import business.EcoSystem;
+import business.employee.Employee;
+import business.enterprise.Enterprise;
+import business.organization.Organization;
+import business.role.Role;
+import business.userAccount.UserAccount;
+import business.util.validation.Validation;
+import java.awt.CardLayout;
+import java.awt.Color;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+
 
 
 
 public class DairyManageUserAccountJPanel extends javax.swing.JPanel {
+    private JPanel container;
+    private Enterprise enterprise;
+    private EcoSystem business;
 
 
     /**
      * Creates new form DairyManageUserAccountJPanel
      */
-    public DairyManageUserAccountJPanel() {
+    public DairyManageUserAccountJPanel(JPanel container, Enterprise enterprise, EcoSystem business) {
         initComponents();
+        this.enterprise = enterprise;
+        this.container = container;
+        this.business = business;
+        populateOrganizationComboBox();
+        populateData();
     }
     
+        public void populateOrganizationComboBox() {
+        cmbOrganiztion.removeAllItems();
+
+        for (Organization organization : enterprise.getOrganizationDirectory().getOrganizationList()) {
+            cmbOrganiztion.addItem(organization);
+        }
+    }
+
+    public void populateEmployeeComboBox(Organization organization) {
+        cmbEmployee.removeAllItems();
+
+        for (Employee employee : organization.getEmployeeDirectory().getEmployeeList()) {
+            if (organization.getUserAccountDirectory().searchUser(employee) == null) {
+                cmbEmployee.addItem(employee);
+            }
+        }
+    }
+
+    private void populateRoleComboBox(Organization organization) {
+        cmbRole.removeAllItems();
+        for (Role role : organization.getSupportedRole()) {
+            cmbRole.addItem(role);
+        }
+    }
+
+    public void populateData() {
+
+        DefaultTableModel dtm = (DefaultTableModel) tblUsers.getModel();
+        dtm.setRowCount(0);
+
+        for (Organization organization : enterprise.getOrganizationDirectory().getOrganizationList()) {
+            for (UserAccount ua : organization.getUserAccountDirectory().getUserAccountList()) {
+                Object row[] = new Object[2];
+                row[0] = ua;
+                row[1] = ua.getRole();
+                dtm.addRow(row);
+            }
+        }
+    }
 
 
     /**
@@ -46,7 +106,7 @@ public class DairyManageUserAccountJPanel extends javax.swing.JPanel {
         btnBack = new javax.swing.JButton();
         btnCreate = new javax.swing.JButton();
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(255, 204, 153));
 
         lblHeader.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lblHeader.setText("Dairy Adminstrative Work Area - Manage Users");
@@ -204,16 +264,67 @@ public class DairyManageUserAccountJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cmbOrganiztionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbOrganiztionActionPerformed
-
+        Organization organization = (Organization) cmbOrganiztion.getSelectedItem();
+        if (organization != null) {
+            populateEmployeeComboBox(organization);
+            populateRoleComboBox(organization);
+        }
     }//GEN-LAST:event_cmbOrganiztionActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-
+        container.remove(this);
+        CardLayout layout = (CardLayout) container.getLayout();
+        layout.previous(container);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
-      
+
+        String userName = null;
+        if (Validation.validateStringInput(txtUserName)) {
+            userName = txtUserName.getText();
+        } else {
+            return;
+        }
+
+        char[] passChar = txtPassword.getPassword();
+        if (passChar == null || passChar.length == 0) {
+            JOptionPane.showMessageDialog(null,
+                "Password cannot be blank",
+                "Warning",
+                JOptionPane.WARNING_MESSAGE);
+            txtPassword.setBackground(Color.RED);
+            return;
+        }
+        else{
+            txtPassword.setBackground(Color.WHITE);
+        }
+
+        UserAccount ua = new UserAccount();
+        String password = ua.encodePassword(String.valueOf(passChar));
+
+        Organization organization = (Organization) cmbOrganiztion.getSelectedItem();
+
+        if (business.checkIfUserNameIsUnique(userName)) {
+            JOptionPane.showMessageDialog(null, "User name already exists. Please select a different one.");
+            return;
+        }
+
+        Employee employee = (Employee) cmbEmployee.getSelectedItem();
+        Role role = (Role) cmbRole.getSelectedItem();
+
+        if (organization == null || employee == null || role == null) {
+            JOptionPane.showMessageDialog(null, "Invalid input!");
+            return;
+        }
+
+        organization.getUserAccountDirectory().addUserAccount(userName, password, employee, role);
+        JOptionPane.showMessageDialog(null, "User account created successfully", "Information", JOptionPane.INFORMATION_MESSAGE);
+
+        txtUserName.setText("");
+        txtPassword.setText("");
+        populateEmployeeComboBox(organization);
+        populateData();
     }//GEN-LAST:event_btnCreateActionPerformed
 
 
