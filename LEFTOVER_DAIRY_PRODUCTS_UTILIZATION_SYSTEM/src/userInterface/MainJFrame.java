@@ -1,23 +1,40 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package userInterface;
 
+import business.DB4OUtil.DB4OUtil;
+import business.EcoSystem;
+import business.enterprise.Enterprise;
+import business.enterprise.NGOEnterprise;
+import business.network.Network;
+import business.organization.Organization;
+import business.organization.dairy.DairyWorkerOrganization;
+import business.userAccount.UserAccount;
+import business.util.food.Food;
+import business.util.request.RequestStatus;
+import business.util.validation.Validation;
+import business.workQueue.CollectionWorkRequest;
+import business.workQueue.WorkRequest;
+import java.awt.CardLayout;
+import java.awt.Color;
+import javax.swing.JOptionPane;
 
 
+public class MainJFrame extends javax.swing.JFrame implements Runnable {
 
-public class MainJFrame extends javax.swing.JFrame  {
-
+    private final int MINUTES = 2;
+    public EcoSystem system;
+    private DB4OUtil dB4OUtil = DB4OUtil.getInstance();
 
     /**
      * Creates new form MainJFrame
      */
     public MainJFrame() {
         initComponents();
-
-
+        system = dB4OUtil.retrieveSystem();
+        RequestStatus.initalizePickupRequestStatusMap();
+        RequestStatus.initializeInvoiceStatusMap();
+        RequestStatus.initializeShortageStatusListMap();
+        Food.initializeFood();
     }
 
     /**
@@ -41,10 +58,11 @@ public class MainJFrame extends javax.swing.JFrame  {
         userProcessContainer = new javax.swing.JPanel();
         mainPagePanel = new javax.swing.JPanel();
         lblHeading = new javax.swing.JLabel();
+        lblText = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        leftPane.setBackground(new java.awt.Color(255, 255, 255));
+        leftPane.setBackground(new java.awt.Color(204, 255, 255));
 
         lblUserName.setText("User Name:");
 
@@ -118,24 +136,32 @@ public class MainJFrame extends javax.swing.JFrame  {
         userProcessContainer.setBackground(new java.awt.Color(204, 255, 255));
         userProcessContainer.setLayout(new java.awt.CardLayout());
 
+        mainPagePanel.setBackground(new java.awt.Color(204, 255, 255));
+
         lblHeading.setFont(new java.awt.Font("Tw Cen MT", 0, 52)); // NOI18N
-        lblHeading.setText("Leftover Dairy Product Utilization");
+        lblHeading.setText("LEFTOVER DAIRY PRODUCTS UTILIZATION");
+
+        lblText.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
 
         javax.swing.GroupLayout mainPagePanelLayout = new javax.swing.GroupLayout(mainPagePanel);
         mainPagePanel.setLayout(mainPagePanelLayout);
         mainPagePanelLayout.setHorizontalGroup(
             mainPagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPagePanelLayout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addComponent(lblHeading)
-                .addContainerGap(98, Short.MAX_VALUE))
+                .addGap(67, 67, 67)
+                .addGroup(mainPagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblHeading)
+                    .addComponent(lblText))
+                .addGap(64, 64, 64))
         );
         mainPagePanelLayout.setVerticalGroup(
             mainPagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mainPagePanelLayout.createSequentialGroup()
-                .addGap(92, 92, 92)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPagePanelLayout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(lblHeading)
-                .addContainerGap(395, Short.MAX_VALUE))
+                .addGap(31, 31, 31)
+                .addComponent(lblText, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(65, 65, 65))
         );
 
         userProcessContainer.add(mainPagePanel, "card2");
@@ -149,10 +175,94 @@ public class MainJFrame extends javax.swing.JFrame  {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
 
+        String userName = null;
+        if (Validation.validateStringInput(txtUserName)) {
+            userName = txtUserName.getText();
+        } else {
+            return;
+        }
+
+        char[] passChar = txtPassword.getPassword();
+        if (passChar == null) {
+            JOptionPane.showMessageDialog(null,
+                    "Input cannot be blank",
+                    "Warning",
+                    JOptionPane.WARNING_MESSAGE);
+            txtPassword.setBackground(Color.RED);
+            return;
+        }
+
+        UserAccount ua = new UserAccount();
+        String password = ua.encodePassword(String.valueOf(passChar));
+
+        Enterprise inEnterprise = null;
+        Organization inOrganization = null;
+
+        Network network = null;
+
+        ua = system.getUserAccountDirectory().searchUser(userName, password);
+
+        if (ua == null) {
+            for (Network n : system.getNetworkList()) {
+                for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
+                    ua = e.getUserAccountDirectory().searchUser(userName, password);
+                    if (ua == null) {
+                        for (Organization o : e.getOrganizationDirectory().getOrganizationList()) {
+                            ua = o.getUserAccountDirectory().searchUser(userName, password);
+                            if (ua != null) {
+                                inEnterprise = e;
+                                inOrganization = o;
+                                network = n;
+                                break;
+                            }
+                        }
+                    } else {
+                        inEnterprise = e;
+                        network = n;
+                        break;
+                    }
+                    if (inOrganization != null) {
+                        break;
+                    }
+                }
+                if (network != null) {
+                    break;
+                }
+            }
+        }
+
+        if (ua == null) {
+            JOptionPane.showMessageDialog(null, "Invalid credentials");
+            return;
+        } else {
+            CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+            userProcessContainer.add("WorkArea", ua.getRole().createWorkArea(userProcessContainer, ua, inOrganization, inEnterprise, system, network));
+            layout.next(userProcessContainer);
+
+        }
+        btnLogin.setEnabled(false);
+        btnLogout.setEnabled(true);
+        txtUserName.setEnabled(false);
+        txtPassword.setEnabled(false);
     }//GEN-LAST:event_btnLoginActionPerformed
 
     private void btnLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogoutActionPerformed
- 
+        btnLogout.setEnabled(false);
+        btnLogin.setEnabled(true);
+        txtUserName.setEnabled(true);
+        txtPassword.setEnabled(true);
+
+        txtUserName.setText("");
+        txtPassword.setText("");
+
+        userProcessContainer.removeAll();
+
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        MainPageJPanel mpjp = new MainPageJPanel();
+        userProcessContainer.add("NGORequestViewJPanel", mpjp);
+        layout.next(userProcessContainer);
+
+        dB4OUtil.storeSystem(system);
     }//GEN-LAST:event_btnLogoutActionPerformed
 
     /**
@@ -181,11 +291,15 @@ public class MainJFrame extends javax.swing.JFrame  {
             java.util.logging.Logger.getLogger(MainJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainJFrame().setVisible(true);
+                MainJFrame jFrame = new MainJFrame();
+                jFrame.setVisible(true);
+                Thread thread = new Thread(jFrame);
+                thread.start();
             }
         });
     }
@@ -196,6 +310,7 @@ public class MainJFrame extends javax.swing.JFrame  {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel lblHeading;
     private javax.swing.JLabel lblPassword;
+    private javax.swing.JLabel lblText;
     private javax.swing.JLabel lblUserName;
     private javax.swing.JPanel leftPane;
     private javax.swing.JPanel mainPagePanel;
@@ -205,4 +320,42 @@ public class MainJFrame extends javax.swing.JFrame  {
     private javax.swing.JPanel userProcessContainer;
     // End of variables declaration//GEN-END:variables
 
+    @Override
+    public void run() {
+        while (true) {
+            try {
+                System.out.println("********* INSIDE PERISHABLE UPDATE *********");
+                Thread.sleep(1000 * 60 * MINUTES);
+                for (Network n : system.getNetworkList()) {
+                    for (Enterprise e : n.getEnterpriseDirectory().getEnterpriseList()) {
+
+                        // Update perishable time for all the Dairy worker's work queue
+                        if (e.getEnterpriseType().equals(Enterprise.EnterpriseType.Dairy)) {
+                            for (Organization o : e.getOrganizationDirectory().getOrganizationList()) {
+                                if (o instanceof DairyWorkerOrganization) {
+                                    for (UserAccount ua : o.getUserAccountDirectory().getUserAccountList()) {
+                                        for (WorkRequest wr : ua.getWorkQueue().getWorkRequestList()) {
+                                            CollectionWorkRequest cwr = (CollectionWorkRequest) wr;
+                                            System.out.println("\n********** Updating Perishable **********");
+                                            cwr.updatePerishable();
+                                            System.out.println("\n ********** Update Complete **********");
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        // Update NGO's inventory after perishable update
+                        if (e.getEnterpriseType().equals(Enterprise.EnterpriseType.NGO)) {
+                            NGOEnterprise enterprise = (NGOEnterprise) e;
+                            System.out.println("\nNGO name " + enterprise.getName());
+                            enterprise.updateInventory();
+                        }
+                    }
+                }
+            } catch (InterruptedException ex) {
+                // Thread sleep failed
+            }
+        }
+    }
 }
