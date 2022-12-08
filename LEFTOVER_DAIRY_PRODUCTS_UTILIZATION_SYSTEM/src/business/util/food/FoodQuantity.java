@@ -1,10 +1,38 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package business.util.food;
+
+import business.util.request.RequestItem;
+import java.util.ArrayList;
 
 
 public class FoodQuantity {
-    
+
+    public static double calculateQuantity(ArrayList<RequestItem> foodItems) {
+        double quantity = 0;
+
+        for (RequestItem ri : foodItems) {
+            String name = ri.getFoodName();
+            double perServingQuantity = getQuantity(name);
+            // double perServingQuantity = 1.5;
+            int itemQuantity = ri.getQuantity();
+
+            quantity += (perServingQuantity * itemQuantity);
+        }
+        return quantity;
+    }
+
+    public static double calculateIndividualQuantity(RequestItem foodItem) {
+        double quantity = 0;
+        double perServingQuantity = getQuantity(foodItem.getFoodName());
+        int itemQuantity = foodItem.getQuantity();
+
+        quantity = (perServingQuantity * itemQuantity);
+        return quantity;
+    }
+
+    public static double getQuantity(String name) {
+        double quantity = 0;
+        quantity = Food.getFoodQuantityPerServing(name);
+        return quantity;
+    }
 }
