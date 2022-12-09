@@ -1,9 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package userInterface.ngo.ngoManager;
+
+import business.enterprise.Enterprise;
+import business.network.Network;
+import business.organization.Organization;
+import business.userAccount.UserAccount;
+import java.awt.CardLayout;
+import javax.swing.JPanel;
 
 
 public class NGOManagerWorkAreaJPanel extends javax.swing.JPanel {
@@ -11,11 +14,21 @@ public class NGOManagerWorkAreaJPanel extends javax.swing.JPanel {
     /**
      * Creates new form RegionManagerWorkArea
      */
- 
+    private JPanel userProcessContainer;
+    private UserAccount account;
+    private Organization organization;
+    private Enterprise enterprise;
+    private Network network;
 
-    public NGOManagerWorkAreaJPanel() {
+    public NGOManagerWorkAreaJPanel(JPanel userProcessContainer, UserAccount account, Organization organization, Enterprise enterprise, Network network) {
         initComponents();
- 
+        this.userProcessContainer = userProcessContainer;
+        this.account = account;
+        this.organization = organization;
+        this.enterprise = enterprise;
+        this.network = network;
+        lblName.setText(account.getEmployee().getName());
+
     }
 
     /**
@@ -35,7 +48,7 @@ public class NGOManagerWorkAreaJPanel extends javax.swing.JPanel {
         btnInvoices = new javax.swing.JButton();
         btnWastageInventory = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(204, 255, 204));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setText("NGO Manager Work Area");
@@ -89,7 +102,7 @@ public class NGOManagerWorkAreaJPanel extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(lblName, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(btnWastageInventory, javax.swing.GroupLayout.PREFERRED_SIZE, 195, Short.MAX_VALUE)
+                                .addComponent(btnWastageInventory, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
                                 .addComponent(btnInventory, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnDairyRequest, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnInvoices, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
@@ -118,21 +131,33 @@ public class NGOManagerWorkAreaJPanel extends javax.swing.JPanel {
 
     private void btnDairyRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDairyRequestActionPerformed
         // TODO add your handling code here:
-
+        NGODairyRequestJPanel dairyRequestJPanel = new NGODairyRequestJPanel(userProcessContainer, account, organization, enterprise, network);
+        userProcessContainer.add("DairyRequestJPanel", dairyRequestJPanel);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
     }//GEN-LAST:event_btnDairyRequestActionPerformed
 
     private void btnInventoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventoryActionPerformed
         // TODO add your handling code here:
-
+        NGOWorkerViewInventoryJPanel viewNGOInventoryJPanel = new NGOWorkerViewInventoryJPanel(userProcessContainer, enterprise, account, network);
+        userProcessContainer.add("ViewNGOInventoryJPanel", viewNGOInventoryJPanel);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
     }//GEN-LAST:event_btnInventoryActionPerformed
 
     private void btnWastageInventoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnWastageInventoryActionPerformed
-
+        NGOWorkerViewWastageInventoryJPanel ngoWorkerViewwastageInventoryJPanel = new NGOWorkerViewWastageInventoryJPanel(userProcessContainer, enterprise);
+        userProcessContainer.add("NGOWorkerViewWastageInventoryJPanel", ngoWorkerViewwastageInventoryJPanel);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
     }//GEN-LAST:event_btnWastageInventoryActionPerformed
 
     private void btnInvoicesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInvoicesActionPerformed
         // TODO add your handling code here:
-
+        NGOManagerPayInvoiceJPanel ngoManagerPayInvoiceJPanel = new NGOManagerPayInvoiceJPanel(userProcessContainer, account, organization);
+        userProcessContainer.add("NGOManagerPayInvoiceJPanel", ngoManagerPayInvoiceJPanel);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
     }//GEN-LAST:event_btnInvoicesActionPerformed
 
 

@@ -1,9 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package userInterface.ngo.ngoManager;
+
+import business.organization.Organization;
+import business.workQueue.ShortageWorkRequest;
+import business.workQueue.WorkRequest;
+import java.awt.CardLayout;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 
 public class NGOViewShortageRequestJPanel extends javax.swing.JPanel {
@@ -11,11 +14,14 @@ public class NGOViewShortageRequestJPanel extends javax.swing.JPanel {
     /**
      * Creates new form NGOViewShortageRequestJPanel
      */
+    private JPanel userProcessContainer;
+    private Organization organization;
 
-
-    public NGOViewShortageRequestJPanel() {
+    public NGOViewShortageRequestJPanel(JPanel userProcessContainer, Organization organization) {
         initComponents();
-
+        this.userProcessContainer = userProcessContainer;
+        this.organization = organization;
+        populateShortageTable();
     }
 
     /**
@@ -32,7 +38,7 @@ public class NGOViewShortageRequestJPanel extends javax.swing.JPanel {
         jScrollPane = new javax.swing.JScrollPane();
         tblShortage = new javax.swing.JTable();
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(204, 255, 204));
 
         lblHeader.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lblHeader.setText("NGO Worker - Shortage Requests");
@@ -90,9 +96,30 @@ public class NGOViewShortageRequestJPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void populateShortageTable() {
+        DefaultTableModel dtm = (DefaultTableModel) tblShortage.getModel();
+        dtm.setRowCount(0);
+
+        for (WorkRequest wr : organization.getWorkQueue().getWorkRequestList()) {
+            if (wr instanceof ShortageWorkRequest) {
+                ShortageWorkRequest swr = (ShortageWorkRequest) wr;
+
+                Object row[] = new Object[5];
+                row[0] = swr.getRequestDate();
+                row[1] = swr.getSender().getEmployee().getName();
+                row[2] = swr.getNgoName();
+                row[3] = swr.getAssignToEmployee();
+                row[4] = swr;
+
+                dtm.addRow(row);
+            }
+        }
+    }
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-
+        userProcessContainer.remove(this);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
 
 

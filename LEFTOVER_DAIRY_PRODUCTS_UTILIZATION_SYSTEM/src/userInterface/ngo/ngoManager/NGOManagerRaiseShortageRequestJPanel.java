@@ -1,9 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package userInterface.ngo.ngoManager;
+
+import business.enterprise.Enterprise;
+import business.enterprise.NGOEnterprise;
+import business.network.Network;
+import business.organization.Organization;
+import business.organization.ngo.NGOManagerOrganization;
+import business.role.Role;
+import business.userAccount.UserAccount;
+import business.util.request.RequestStatus;
+import business.workQueue.ShortageWorkRequest;
+import business.workQueue.WorkRequest;
+import java.awt.CardLayout;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 
 public class NGOManagerRaiseShortageRequestJPanel extends javax.swing.JPanel {
@@ -11,10 +21,19 @@ public class NGOManagerRaiseShortageRequestJPanel extends javax.swing.JPanel {
     /**
      * Creates new form RegionRequestJPanel
      */
+    private JPanel userProcessContainer;
+    private NGOEnterprise enterprise;
+    private UserAccount account;
+    private Network network;
+    private boolean hasShortage = false;
 
-
-    public NGOManagerRaiseShortageRequestJPanel() {
+    public NGOManagerRaiseShortageRequestJPanel(JPanel userProcessContainer, UserAccount account, NGOEnterprise enterprise, Network network) {
         initComponents();
+        this.userProcessContainer = userProcessContainer;
+        this.enterprise = enterprise;
+        this.account = account;
+        this.network = network;
+        populateEmployeeDropDown();
     }
 
     /**
@@ -35,7 +54,7 @@ public class NGOManagerRaiseShortageRequestJPanel extends javax.swing.JPanel {
         cmbEmployee = new javax.swing.JComboBox();
         btnRaise = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(204, 255, 204));
 
         lblHeader.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lblHeader.setText("NGO Manager - Shortage Request");
@@ -113,15 +132,68 @@ public class NGOManagerRaiseShortageRequestJPanel extends javax.swing.JPanel {
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
-
+    public void populateEmployeeDropDown() {
+        for (Organization organization : enterprise.getOrganizationDirectory().getOrganizationList()) {
+            for (UserAccount user : organization.getUserAccountDirectory().getUserAccountList()) {
+                if (user.getRole().getRoleType().getValue().equals(Role.RoleType.NGOWorker.getValue())) {
+                    cmbEmployee.addItem(user);
+                }
+            }
+        }
+    }
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-  
+        userProcessContainer.remove(this);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnRaiseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRaiseActionPerformed
         // TODO add your handling code here:
-  
+        if (txtMessage.getText() == "" || txtMessage.getText() == null) {
+            JOptionPane.showMessageDialog(null, "Please enter a message");
+            return;
+        }
+        if (cmbEmployee.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(null, "Please select an employee to assign the request to");
+            return;
+        }
+        for (WorkRequest wr : account.getWorkQueue().getWorkRequestList()) {
+            if (wr instanceof ShortageWorkRequest) {
+                ShortageWorkRequest sr = (ShortageWorkRequest) wr;
+                if (sr.getStatus().equals(RequestStatus.getShortageStatusMessage(1))) {
+                    hasShortage = true;
+                    break;
+                }
+            }
+        }
+        if (hasShortage == false) {
+            ShortageWorkRequest swr = new ShortageWorkRequest();
+            swr.setSender(account);
+            swr.setMessage(txtMessage.getText());
+            swr.setStatus(RequestStatus.getShortageStatusMessage(1));
+            swr.setNgoName(enterprise.getName());
+            swr.setAssignToEmployee((UserAccount) cmbEmployee.getSelectedItem());
+
+            for (Enterprise e : network.getEnterpriseDirectory().getEnterpriseList()) {
+                if (!e.getName().equals(enterprise.getName())) {
+                    for (Organization o : e.getOrganizationDirectory().getOrganizationList()) {
+                        if (o instanceof NGOManagerOrganization) {
+                            o.getWorkQueue().getWorkRequestList().add(swr);
+                        }
+                    }
+                }
+            }
+
+            JOptionPane.showMessageDialog(null, "Shortage request sucessfully raised");
+            account.getWorkQueue().getWorkRequestList().add(swr);
+            txtMessage.setText("");
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Already sent a request");
+            txtMessage.setText("");
+            return;
+        }
 
     }//GEN-LAST:event_btnRaiseActionPerformed
 

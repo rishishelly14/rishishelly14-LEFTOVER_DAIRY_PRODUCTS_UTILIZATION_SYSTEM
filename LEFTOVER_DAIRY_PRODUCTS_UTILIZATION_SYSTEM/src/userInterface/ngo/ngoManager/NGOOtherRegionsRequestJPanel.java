@@ -1,20 +1,47 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package userInterface.ngo.ngoManager;
+
+import business.enterprise.Enterprise;
+import business.network.Network;
+import business.organization.Organization;
+import business.organization.logistics.LogisticsManagerOrganization;
+import business.userAccount.UserAccount;
+import business.util.request.RequestItem;
+import business.util.request.RequestStatus;
+import business.workQueue.CollectionWorkRequest;
+import business.workQueue.ShortageWorkRequest;
+import business.workQueue.WorkRequest;
+import java.awt.CardLayout;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+
 
 public class NGOOtherRegionsRequestJPanel extends javax.swing.JPanel {
 
+    private JPanel userProcessContainer;
+    private UserAccount account;
+    private Organization organization;
+    private Network network;
+    private CollectionWorkRequest collectionWorkRequest;
+    private String message;
 
     /**
      * Creates new form NGOOtherRegionsRequestJPanel
      */
-    public NGOOtherRegionsRequestJPanel() {
+    public NGOOtherRegionsRequestJPanel(JPanel userProcessContainer, CollectionWorkRequest collectionWorkRequest, Organization organization, UserAccount account, Network network, String message) {
         initComponents();
+        this.userProcessContainer = userProcessContainer;
+        this.collectionWorkRequest = collectionWorkRequest;
+        this.account = account;
+        this.organization = organization;
+        this.network = network;
+        this.message = message;
 
+        populateShortageTable();
+        populateRequestDetails();
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -41,7 +68,7 @@ public class NGOOtherRegionsRequestJPanel extends javax.swing.JPanel {
         tblRequestDetails = new javax.swing.JTable();
         lblQuantityVal = new javax.swing.JLabel();
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(204, 255, 204));
 
         lblHeader.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lblHeader.setText("NGO Manager - Redirect Request");
@@ -208,17 +235,102 @@ public class NGOOtherRegionsRequestJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-   
+        userProcessContainer.remove(this);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+
+        int componentLength = userProcessContainer.getComponentCount();
+        NGODairyRequestJPanel panel = (NGODairyRequestJPanel) userProcessContainer.getComponent(componentLength - 1);
+        panel.populateTable();
+
+        layout.previous(userProcessContainer);
+
 
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnAssignActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAssignActionPerformed
 
-      
-      
+        int selectedRow = tblShortage.getSelectedRow();
+        if (selectedRow < 0) {
+            JOptionPane.showMessageDialog(null,
+                    "Please select a shortage request",
+                    "Information",
+                    JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        ShortageWorkRequest swr = (ShortageWorkRequest) tblShortage.getValueAt(selectedRow, 4);
+
+        collectionWorkRequest.setDeliverTo(swr.getAssignToEmployee());
+        collectionWorkRequest.setDeliverToNGO(swr.getNgoName());
+        collectionWorkRequest.setMessage(message);
+        collectionWorkRequest.setStatus(RequestStatus.getPickupStatusMessage(2));
+        swr.setLinkedCollectionWorkRequest(collectionWorkRequest);
+        swr.setStatus(RequestStatus.getShortageStatusMessage(2));
+
+        // Adding to own queue
+        account.getWorkQueue().getWorkRequestList().add(collectionWorkRequest);
+
+        // Adding to Logistics Manager Organization queue
+        for (Enterprise e : network.getEnterpriseDirectory().getEnterpriseList()) {
+            for (Organization o : e.getOrganizationDirectory().getOrganizationList()) {
+                if (o instanceof LogisticsManagerOrganization) {
+                    o.getWorkQueue().getWorkRequestList().add(collectionWorkRequest);
+                    break;
+                }
+            }
+        }
+        JOptionPane.showMessageDialog(null, "Request sucessfully redirected to another NGO.", "Information", JOptionPane.INFORMATION_MESSAGE);
+        btnAssign.setEnabled(false);
     }//GEN-LAST:event_btnAssignActionPerformed
 
-  
+    private void populateShortageTable() {
+        DefaultTableModel dtm = (DefaultTableModel) tblShortage.getModel();
+        dtm.setRowCount(0);
+
+        for (WorkRequest wr : organization.getWorkQueue().getWorkRequestList()) {
+            if (wr.getStatus().equals(RequestStatus.getShortageStatusMessage(1))) {
+                if (wr instanceof ShortageWorkRequest) {
+                    ShortageWorkRequest swr = (ShortageWorkRequest) wr;
+
+                    Object row[] = new Object[5];
+                    row[0] = swr.getRequestDate();
+                    row[1] = swr.getSender().getEmployee().getName();
+                    row[2] = swr.getNgoName();
+                    row[3] = swr.getAssignToEmployee();
+                    row[4] = swr;
+
+                    dtm.addRow(row);
+                }
+            }
+        }
+    }
+
+    public void populateRequestDetails() {
+        String status = collectionWorkRequest.getStatus();
+
+        lblRequestStatusVal.setText(status);
+        lblRequestFromVal.setText(collectionWorkRequest.getRaisedByDairy());
+        lblRequestDateVal.setText(collectionWorkRequest.getRequestDate() + "");
+        lblQuantityVal.setText(collectionWorkRequest.getTotalQuantity() + " pounds");
+
+        populateTable();
+    }
+
+    private void populateTable() {
+        DefaultTableModel dtm = (DefaultTableModel) tblRequestDetails.getModel();
+        dtm.setRowCount(0);
+
+        for (RequestItem ri : collectionWorkRequest.getRequestItems()) {
+            if (ri.getQuantity() > 0) {
+                Object row[] = new Object[3];
+                row[0] = ri;
+                row[1] = ri.getQuantity();
+                row[2] = ri.getHoursToPerish();
+
+                dtm.addRow(row);
+            }
+        }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAssign;
     private javax.swing.JButton btnBack;
