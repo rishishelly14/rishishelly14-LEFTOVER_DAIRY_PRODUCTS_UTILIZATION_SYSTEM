@@ -4,18 +4,59 @@
  */
 package userInterface.dairy.managerWorkArea;
 
+import business.util.request.RequestItem;
+import business.workQueue.CollectionWorkRequest;
+import java.awt.CardLayout;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+
 
 public class DairyManagerViewLogItemJPanel extends javax.swing.JPanel {
     
-   
-    public DairyManagerViewLogItemJPanel() {
+    private JPanel userProcessContainer;
+    private CollectionWorkRequest collectionWorkRequest;
+
+    /**
+     * Creates new form DairyManagerViewLogItemJPanel
+     */
+    public DairyManagerViewLogItemJPanel(JPanel userProcessContainer, CollectionWorkRequest collectionWorkRequest) {
         initComponents();
-       
+        this.userProcessContainer = userProcessContainer;
+        this.collectionWorkRequest = collectionWorkRequest;
+        populateItemTable();
+        populateData();
     }
     
-   
+    public void populateItemTable() {
+        DefaultTableModel dtm = (DefaultTableModel) tblFoodItems.getModel();
+        dtm.setRowCount(0);
 
-    
+        for (RequestItem ri : collectionWorkRequest.getRequestItems()) {
+            Object row[] = new Object[2];
+            row[0] = ri;
+            row[1] = ri.getQuantity();
+
+            dtm.addRow(row);
+        }
+    }
+
+    public void populateData() {
+
+        lblRequestFromVal.setText(collectionWorkRequest.getRaisedBy().getEmployee().getName());
+        lblRequestDateVal.setText(collectionWorkRequest.getRequestDate() + "");
+        lblRequestStatusVal.setText(collectionWorkRequest.getStatus());
+        lblQuantityVal.setText(collectionWorkRequest.getTotalQuantity() + " pounds");
+
+        String ngo = collectionWorkRequest.getDeliverToNGO() == null ? "Undelivered" : collectionWorkRequest.getDeliverToNGO();
+        lblNGOVal.setText(ngo);
+
+        String logistics = collectionWorkRequest.getDeliveredByLogistics() == null ? "Undelivered" : collectionWorkRequest.getDeliveredByLogistics();
+        lblLogisticsVal.setText(logistics);
+
+        String cost = collectionWorkRequest.getDeliveryCost() == 0d ? "Undelivered" : "$" + collectionWorkRequest.getDeliveryCost();
+        lblCostVal.setText(cost);
+
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -46,7 +87,7 @@ public class DairyManagerViewLogItemJPanel extends javax.swing.JPanel {
         lblCostVal = new javax.swing.JLabel();
         btnBack = new javax.swing.JButton();
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(255, 204, 153));
 
         lblHeader.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lblHeader.setText("Dairy Worker Work Area - Collection Request");
@@ -219,7 +260,9 @@ public class DairyManagerViewLogItemJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-       
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        userProcessContainer.remove(this);
+        layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
 
 

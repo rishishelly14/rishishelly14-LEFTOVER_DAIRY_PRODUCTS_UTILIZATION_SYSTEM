@@ -4,15 +4,33 @@
  */
 package userInterface.dairy.managerWorkArea;
 
+import business.enterprise.Enterprise;
+import business.organization.Organization;
+import business.role.Role.RoleType;
+import business.userAccount.UserAccount;
+import business.workQueue.CollectionWorkRequest;
+import business.workQueue.WorkRequest;
+import java.awt.CardLayout;
+import javax.swing.JPanel;
 
 
 public class DairyManagerWorkAreaJPanel extends javax.swing.JPanel {
     
-  
-    public DairyManagerWorkAreaJPanel() {
+    private JPanel userProcessContainer;
+    private UserAccount account;
+    private Enterprise enterprise;
+
+    /**
+     * Creates new form DairyManagerWorkAreaJPanel
+     */
+    public DairyManagerWorkAreaJPanel(JPanel userProcessContainer, UserAccount account, Enterprise enterprise) {
         initComponents();
         
-       
+        this.userProcessContainer = userProcessContainer;
+        this.enterprise = enterprise;
+        this.account = account;
+
+        populateLoginDetails();
     }
 
     /**
@@ -32,7 +50,7 @@ public class DairyManagerWorkAreaJPanel extends javax.swing.JPanel {
         btnLog = new javax.swing.JButton();
         btnEmployeeReports = new javax.swing.JButton();
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(255, 204, 153));
 
         lblHeader.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lblHeader.setText("Dairy Manager Work Area");
@@ -120,14 +138,34 @@ public class DairyManagerWorkAreaJPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-   
+    private void populateLoginDetails() {
+        double quantity = 0;
+        lblName.setText(lblName.getText() + " " + account.getEmployee().getName());
+        for (Organization o : enterprise.getOrganizationDirectory().getOrganizationList()) {
+            for (UserAccount ua : o.getUserAccountDirectory().getUserAccountList()) {
+                if ((ua.getRole().getRoleType().getValue()).equals(RoleType.DairyWorker.getValue())) {
+                    for (WorkRequest wr : ua.getWorkQueue().getWorkRequestList()) {
+                        CollectionWorkRequest cwr = (CollectionWorkRequest) wr;
+                        quantity += cwr.getTotalQuantity();
+                    }
+                }
+            }
+        }
+        lblWastageValue.setText(quantity + " pounds");
+    }
     
     private void btnLogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogActionPerformed
-       
+        DairyManagerViewRequestLogJPanel dairyManagerViewRequestLogJPanel = new DairyManagerViewRequestLogJPanel(userProcessContainer, enterprise);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        userProcessContainer.add("DairyWorkerViewRequestLogJPanel", dairyManagerViewRequestLogJPanel);
+        layout.next(userProcessContainer);
     }//GEN-LAST:event_btnLogActionPerformed
 
     private void btnEmployeeReportsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmployeeReportsActionPerformed
-       
+        DairyManagerViewEmployeeWastageAvoidedRecords dairyManagerViewEmployeeWastageAvoidedRecords = new DairyManagerViewEmployeeWastageAvoidedRecords(userProcessContainer, enterprise);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        userProcessContainer.add("DairyManagerViewEmployeeWastageAvoidedRecords", dairyManagerViewEmployeeWastageAvoidedRecords);
+        layout.next(userProcessContainer);
     }//GEN-LAST:event_btnEmployeeReportsActionPerformed
 
 

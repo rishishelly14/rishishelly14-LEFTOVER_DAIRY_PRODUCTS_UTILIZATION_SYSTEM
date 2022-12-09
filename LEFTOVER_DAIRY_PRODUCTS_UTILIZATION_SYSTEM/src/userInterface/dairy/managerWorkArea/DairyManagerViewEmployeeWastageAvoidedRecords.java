@@ -4,14 +4,37 @@
  */
 package userInterface.dairy.managerWorkArea;
 
+import business.enterprise.Enterprise;
+import business.organization.Organization;
+import business.role.Role;
+import business.userAccount.UserAccount;
+import business.workQueue.CollectionWorkRequest;
+import business.workQueue.WorkRequest;
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import java.awt.Color;
+import javax.swing.JPanel;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
+
 
 public class DairyManagerViewEmployeeWastageAvoidedRecords extends javax.swing.JPanel {
 
-   
+    /**
+     * Creates new form DairyManagerViewEmployeeWastageAvoidedRecords
+     */
+    private JPanel userProcessContainer;
+    private Enterprise enterprise;
     
-    public DairyManagerViewEmployeeWastageAvoidedRecords() {
+    public DairyManagerViewEmployeeWastageAvoidedRecords(JPanel userProcessContainer, Enterprise enterprise) {
         initComponents();
-       
+        this.userProcessContainer = userProcessContainer;
+        this.enterprise = enterprise;
+        populateChart();
     }
 
     /**
@@ -28,7 +51,7 @@ public class DairyManagerViewEmployeeWastageAvoidedRecords extends javax.swing.J
         lblHeader = new javax.swing.JLabel();
         btnBack = new javax.swing.JButton();
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(255, 204, 153));
 
         pnlChart.setLayout(new java.awt.BorderLayout());
 
@@ -89,13 +112,50 @@ public class DairyManagerViewEmployeeWastageAvoidedRecords extends javax.swing.J
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        userProcessContainer.remove(this);
+        layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
 
     
-   
+    public void populateChart() {
+        DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
+        double wastageAvoided = 0;
 
-      
+        for (Organization o : enterprise.getOrganizationDirectory().getOrganizationList()) {
+            for (UserAccount ua : o.getUserAccountDirectory().getUserAccountList()) {
+                if ((ua.getRole().getRoleType().getValue()).equals(Role.RoleType.DairyWorker.getValue())) {
+                    String name = ua.getEmployee().getName();
+                    for (WorkRequest wr : ua.getWorkQueue().getWorkRequestList()) {
+                        if (wr instanceof CollectionWorkRequest) {
+                            CollectionWorkRequest cwr = (CollectionWorkRequest) wr;
+                            wastageAvoided += cwr.getTotalQuantity();
+                        }
+                    }
+                    dataSet.setValue(wastageAvoided, "Wastage Avoided (in pounds)", name);
+                    wastageAvoided = 0;
+                }
+            }
+        }
+
+        JFreeChart chart = ChartFactory.createBarChart("Wastage Avoided by each Employee",
+                "Employee",
+                "Wastage Avoided(In Pounds)",
+                dataSet,
+                PlotOrientation.VERTICAL, true, true, false);
+
+        CategoryPlot plot = chart.getCategoryPlot();
+        plot.setRangeGridlinePaint(Color.BLACK);
+
+        // ChartFrame chartFrame = new ChartFrame("Wastage Avoided by each Employee", chart, true);
+        // chartFrame.setVisible(true);
+        // chartFrame.setSize(500,400); 
+        ChartPanel chartPanel = new ChartPanel(chart);
+        pnlChart.removeAll();
+        pnlChart.add(chartPanel, BorderLayout.CENTER);
+        pnlChart.validate();
+
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

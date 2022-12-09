@@ -4,16 +4,60 @@
  */
 package userInterface.dairy.managerWorkArea;
 
+import business.enterprise.Enterprise;
+import business.organization.Organization;
+import business.role.Role.RoleType;
+import business.userAccount.UserAccount;
+import business.workQueue.CollectionWorkRequest;
+import business.workQueue.WorkRequest;
+import java.awt.CardLayout;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+
 
 public class DairyManagerViewRequestLogJPanel extends javax.swing.JPanel {
     
-  
-    public DairyManagerViewRequestLogJPanel() {
+    private JPanel userProcessContainer;
+    private Enterprise enterprise;
+
+    /**
+     * Creates new form DairyManagerViewRequestLogJPanel
+     */
+    public DairyManagerViewRequestLogJPanel(JPanel userProcessContainer, Enterprise enterprise) {
         initComponents();
-        
+        this.userProcessContainer = userProcessContainer;
+        this.enterprise = enterprise;
+        populateTable();
     }
     
-    
+    public void populateTable() {
+        DefaultTableModel dtm = (DefaultTableModel) tblLog.getModel();
+        dtm.setRowCount(0);
+
+        for (Organization o : enterprise.getOrganizationDirectory().getOrganizationList()) {
+            for (UserAccount ua : o.getUserAccountDirectory().getUserAccountList()) {
+                if ((ua.getRole().getRoleType().getValue()).equals(RoleType.DairyWorker.getValue())) {
+                    for (WorkRequest wr : ua.getWorkQueue().getWorkRequestList()) {
+                        if (wr instanceof CollectionWorkRequest) {
+                            CollectionWorkRequest cwr = (CollectionWorkRequest) wr;
+
+                            Object row[] = new Object[7];
+                            row[0] = cwr.getRequestDate();
+                            row[1] = cwr.getRaisedBy().getEmployee().getName();
+                            row[2] = cwr;
+                            row[3] = cwr.getTotalQuantity();
+                            row[4] = cwr.getDeliverToNGO() == null ? "Undelivered" : cwr.getDeliverToNGO();
+                            row[5] = cwr.getDeliveredByLogistics() == null ? "Undelivered" : cwr.getDeliveredByLogistics();
+                            row[6] = cwr.getDeliveryCost() == 0d ? "Undelivered" : "$" + cwr.getDeliveryCost();
+
+                            dtm.addRow(row);
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -31,9 +75,8 @@ public class DairyManagerViewRequestLogJPanel extends javax.swing.JPanel {
         btnBack = new javax.swing.JButton();
         btnViewRequestItem = new javax.swing.JButton();
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(255, 204, 153));
 
-        lblHeader.setBackground(new java.awt.Color(255, 255, 255));
         lblHeader.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lblHeader.setText("Dairy Worker Work Area - Request Log");
 
@@ -125,12 +168,27 @@ public class DairyManagerViewRequestLogJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        userProcessContainer.remove(this);
+        layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnViewRequestItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewRequestItemActionPerformed
 
-      
+        int selectedRow = tblLog.getSelectedRow();
+        if (selectedRow < 0) {
+            JOptionPane.showMessageDialog(null,
+                "Please select a request item to view details",
+                "Information",
+                JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            CollectionWorkRequest cwr = (CollectionWorkRequest) tblLog.getValueAt(selectedRow, 2);
+
+            DairyManagerViewLogItemJPanel dairyWorkerViewLogItemJPanel = new DairyManagerViewLogItemJPanel(userProcessContainer, cwr);
+            CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+            userProcessContainer.add("DairyWorkerViewLogItemJPanel", dairyWorkerViewLogItemJPanel);
+            layout.next(userProcessContainer);
+        }
     }//GEN-LAST:event_btnViewRequestItemActionPerformed
 
 
