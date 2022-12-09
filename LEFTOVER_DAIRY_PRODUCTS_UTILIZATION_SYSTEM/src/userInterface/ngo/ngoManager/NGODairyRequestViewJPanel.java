@@ -4,17 +4,27 @@
  */
 package userInterface.ngo.ngoManager;
 
+import business.util.request.RequestItem;
+import business.workQueue.CollectionWorkRequest;
+import java.awt.CardLayout;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+
 public class NGODairyRequestViewJPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form NGODairyRequestViewJPanel
      */
     
-
+    private JPanel userProcessContainer;
+    private CollectionWorkRequest collectionWorkRequest;
     
-    public NGODairyRequestViewJPanel() {
+    public NGODairyRequestViewJPanel(JPanel userProcessContainer, CollectionWorkRequest collectionWorkRequest) {
         initComponents();
-
+        this.userProcessContainer = userProcessContainer;
+        this.collectionWorkRequest = collectionWorkRequest;
+        populateTable();
+        populateData();
     }
 
     /**
@@ -42,7 +52,7 @@ public class NGODairyRequestViewJPanel extends javax.swing.JPanel {
         tblRequestDetails = new javax.swing.JTable();
         btnBack = new javax.swing.JButton();
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(204, 255, 204));
 
         lblHeader.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lblHeader.setText("NGO Manager - View Request Details");
@@ -191,7 +201,9 @@ public class NGODairyRequestViewJPanel extends javax.swing.JPanel {
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-
+        userProcessContainer.remove(this);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
 
 
@@ -214,4 +226,37 @@ public class NGODairyRequestViewJPanel extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
     
     
+    private void populateTable() {
+        DefaultTableModel dtm = (DefaultTableModel) tblRequestDetails.getModel();
+        dtm.setRowCount(0);
+
+        for (RequestItem ri : collectionWorkRequest.getRequestItems()) {
+            if (ri.getQuantity() > 0) {
+                Object row[] = new Object[3];
+                row[0] = ri;
+                row[1] = ri.getQuantity();
+                row[2] = ri.getHoursToPerish();
+
+                dtm.addRow(row);
+            }
+        }
+    }
+
+    private void populateData() {
+
+        String status = collectionWorkRequest.getStatus();
+
+        lblRequestStatusVal.setText(status);
+        lblRequestFromVal.setText(collectionWorkRequest.getRaisedByDairy());
+        lblRequestDateVal.setText(collectionWorkRequest.getRequestDate() + "");
+        lblQuantityVal.setText(collectionWorkRequest.getTotalQuantity() + " pounds");
+
+        String cost = collectionWorkRequest.getDeliveryCost() == 0 ? "Undelivered" : "$" + collectionWorkRequest.getDeliveryCost();
+        lblCostVal.setText(cost);
+
+    }
+
+
+
+
 }

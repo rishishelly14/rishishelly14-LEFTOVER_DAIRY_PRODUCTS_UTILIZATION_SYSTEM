@@ -4,6 +4,19 @@
  */
 package userInterface.ngo.ngoManager;
 
+import business.enterprise.Enterprise;
+import business.network.Network;
+import business.organization.Organization;
+import business.organization.logistics.LogisticsManagerOrganization;
+import business.role.Role;
+import business.userAccount.UserAccount;
+import business.util.request.RequestStatus;
+import business.workQueue.CollectionWorkRequest;
+import business.workQueue.WorkRequest;
+import java.awt.CardLayout;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 
 public class NGODairyRequestJPanel extends javax.swing.JPanel {
@@ -12,11 +25,23 @@ public class NGODairyRequestJPanel extends javax.swing.JPanel {
      * Creates new form NGODairyRequestJPanel
      */
     
-
+    private JPanel userProcessContainer;
+    private UserAccount account;
+    private Organization organization;
+    private Enterprise enterprise;
+    private Network network;
     
-    public NGODairyRequestJPanel() {
+    
+    public NGODairyRequestJPanel(JPanel userProcessContainer, UserAccount account, Organization organization, Enterprise enterprise, Network network) {
         initComponents();
         
+        this.userProcessContainer = userProcessContainer;
+        this.network = network;
+        this.account = account;
+        this.organization = organization;
+        this.enterprise = enterprise;
+        populateTable();
+        populateComboBox();
     }
 
     /**
@@ -46,7 +71,7 @@ public class NGODairyRequestJPanel extends javax.swing.JPanel {
         txtMessageRedirect = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(204, 255, 204));
 
         tblDairyRequests.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -83,7 +108,7 @@ public class NGODairyRequestJPanel extends javax.swing.JPanel {
             }
         });
 
-        jPanelAssignToEmployee.setBackground(new java.awt.Color(255, 255, 255));
+        jPanelAssignToEmployee.setBackground(new java.awt.Color(204, 255, 204));
         jPanelAssignToEmployee.setBorder(javax.swing.BorderFactory.createTitledBorder("Assign to Employee"));
 
         lblMessage.setText("Message:");
@@ -141,7 +166,7 @@ public class NGODairyRequestJPanel extends javax.swing.JPanel {
                 .addGap(11, 11, 11))
         );
 
-        jPanelRedirectToNGO.setBackground(new java.awt.Color(255, 255, 255));
+        jPanelRedirectToNGO.setBackground(new java.awt.Color(204, 255, 204));
         jPanelRedirectToNGO.setBorder(javax.swing.BorderFactory.createTitledBorder("Redirect to other NGO"));
 
         btnAssignNGO.setText("Redirect");
@@ -230,28 +255,48 @@ public class NGODairyRequestJPanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addGap(0, 671, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addGap(0, 642, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
         // TODO add your handling code here:
-     
+        int selectedRow = tblDairyRequests.getSelectedRow();
+        if (selectedRow < 0) {
+            JOptionPane.showMessageDialog(null,
+                "Please select a request item to view details",
+                "Information",
+                JOptionPane.INFORMATION_MESSAGE);
+            return;
+        } else {
+            CollectionWorkRequest cwr = (CollectionWorkRequest) tblDairyRequests.getValueAt(selectedRow, 3);
+
+            NGODairyRequestViewJPanel dairyWorkerViewLogItemJPanel = new NGODairyRequestViewJPanel(userProcessContainer, cwr);
+            CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+            userProcessContainer.add("DairyWorkerViewLogItemJPanel", dairyWorkerViewLogItemJPanel);
+            layout.next(userProcessContainer);
+        }
     }//GEN-LAST:event_btnViewActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-
+        userProcessContainer.remove(this);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void cmbWorkerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbWorkerActionPerformed
@@ -261,10 +306,80 @@ public class NGODairyRequestJPanel extends javax.swing.JPanel {
     private void btnApproveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApproveActionPerformed
         // TODO add your handling code here:
 
+        int selectedRow = tblDairyRequests.getSelectedRow();
+        if (selectedRow < 0) {
+            JOptionPane.showMessageDialog(null,
+                "Please select a request item to view details",
+                "Warning",
+                JOptionPane.WARNING_MESSAGE);
+            return;
+        } else {
+            CollectionWorkRequest request = (CollectionWorkRequest) tblDairyRequests.getValueAt(selectedRow, 3);
+            if (request.getStatus().equals(RequestStatus.getPickupStatusMessage(1))) {
+
+                int selectedEmployee = cmbWorker.getSelectedIndex();
+                if (selectedEmployee < 0) {
+                    JOptionPane.showMessageDialog(null,
+                        "Please select an employee to assign the request to",
+                        "Warning",
+                        JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+
+                request.setSender(account);
+                request.setStatus(RequestStatus.getPickupStatusMessage(2));
+                request.setMessage(txtMessage.getText());
+                request.setDeliverToNGO(enterprise.getName());
+
+                UserAccount acc = (UserAccount) cmbWorker.getSelectedItem();
+                request.setDeliverTo(acc);
+
+                // Adding to own queue
+                account.getWorkQueue().getWorkRequestList().add(request);
+
+                // Adding to Logistics Manager Organization queue
+                for (Enterprise e : network.getEnterpriseDirectory().getEnterpriseList()) {
+                    for (Organization o : e.getOrganizationDirectory().getOrganizationList()) {
+                        if (o instanceof LogisticsManagerOrganization) {
+                            o.getWorkQueue().getWorkRequestList().add(request);
+                            break;
+                        }
+                    }
+                }
+
+                JOptionPane.showMessageDialog(null, "Request approved and forwarded to logistics", "Information", JOptionPane.INFORMATION_MESSAGE);
+                populateTable();
+                txtMessage.setText("");
+            } else {
+                JOptionPane.showMessageDialog(null,
+                    "Request already processed by you",
+                    "Warning",
+                    JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+        }
     }//GEN-LAST:event_btnApproveActionPerformed
 
     private void btnAssignNGOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAssignNGOActionPerformed
         // TODO add your handling code here:
+
+        int selectedRow = tblDairyRequests.getSelectedRow();
+        if (selectedRow < 0) {
+            JOptionPane.showMessageDialog(null,
+                "Please select a request item to view details",
+                "Warning",
+                JOptionPane.WARNING_MESSAGE);
+            return;
+        } else {
+            CollectionWorkRequest request = (CollectionWorkRequest) tblDairyRequests.getValueAt(selectedRow, 3);
+            String message = txtMessageRedirect.getText();
+
+            NGOOtherRegionsRequestJPanel ngoOtherRegionsRequestJPanel = new NGOOtherRegionsRequestJPanel(userProcessContainer, request, organization, account, network, message);
+            userProcessContainer.add("NGOOtherRegionsRequestJPanel", ngoOtherRegionsRequestJPanel);
+            CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+            layout.next(userProcessContainer);
+            txtMessageRedirect.setText("");
+        }
 
     }//GEN-LAST:event_btnAssignNGOActionPerformed
 
@@ -289,9 +404,43 @@ public class NGODairyRequestJPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txtMessageRedirect;
     // End of variables declaration//GEN-END:variables
     
- 
+    public void populateTable() {
+        
+        DefaultTableModel dtm = (DefaultTableModel) tblDairyRequests.getModel();
+        dtm.setRowCount(0);
+        for (WorkRequest workRequest : organization.getWorkQueue().getWorkRequestList()) {
+            if (workRequest instanceof CollectionWorkRequest) {
+                CollectionWorkRequest cwr = (CollectionWorkRequest) workRequest;
+
+                // View only newly raised requests
+                if (cwr.getStatus().equals(RequestStatus.getPickupStatusMessage(1))) {
+                    Object row[] = new Object[4];
+                    
+                    row[0] = cwr.getRaisedByDairy();
+                    row[1] = cwr.getRequestDate();
+                    row[2] = cwr.getMessage();
+                    row[3] = cwr;
+                    
+                    dtm.addRow(row);
+                }
+            }
+        }
+    }
     
+    private void populateComboBox() {
+        cmbWorker.removeAllItems();
+        for (Organization org : enterprise.getOrganizationDirectory().getOrganizationList()) {
+            for (UserAccount user : org.getUserAccountDirectory().getUserAccountList()) {
+                if (user.getRole().getRoleType().getValue().equals(Role.RoleType.NGOWorker.getValue())) {
+                    cmbWorker.addItem(user);
+                }
+            }
+        }
+    }
 }
+
+
+
 
 
 
