@@ -1,9 +1,21 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package userInterface.logistics.logisticsManager;
+
+import business.enterprise.Enterprise;
+import business.enterprise.NGOEnterprise;
+import business.network.Network;
+import business.organization.Organization;
+import business.organization.ngo.NGOManagerOrganization;
+import business.userAccount.UserAccount;
+import business.util.request.RequestStatus;
+import static business.util.request.RequestStatus.pickupRequestStatusList;
+import business.workQueue.CollectionWorkRequest;
+import business.workQueue.PaymentWorkRequest;
+import business.workQueue.WorkRequest;
+import java.awt.CardLayout;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 
 public class LogisticsManagerGenerateInvoicesJPanel extends javax.swing.JPanel {
@@ -11,11 +23,16 @@ public class LogisticsManagerGenerateInvoicesJPanel extends javax.swing.JPanel {
     /**
      * Creates new form LogisticsManagerGenerateInvoices
      */
+    private JPanel userProcessContainer;
+    private UserAccount account;
+    private Network network;
 
-
-    public LogisticsManagerGenerateInvoicesJPanel() {
+    public LogisticsManagerGenerateInvoicesJPanel(JPanel userProcessContainer, UserAccount account, Network network) {
         initComponents();
- 
+        this.userProcessContainer = userProcessContainer;
+        this.network = network;
+        this.account = account;
+        populateComboBox();
     }
 
     /**
@@ -36,7 +53,7 @@ public class LogisticsManagerGenerateInvoicesJPanel extends javax.swing.JPanel {
         btnGenerateAll = new javax.swing.JButton();
         btnGenerateInovice = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(255, 255, 204));
 
         lblHeader.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lblHeader.setText("Logistics Manager Work Area - Generate Invoices");
@@ -139,27 +156,159 @@ public class LogisticsManagerGenerateInvoicesJPanel extends javax.swing.JPanel {
                 .addGap(49, 49, 49))
         );
     }// </editor-fold>//GEN-END:initComponents
-
+    public void populateComboBox() {
+        cmbNGO.removeAllItems();
+        for (Enterprise e : network.getEnterpriseDirectory().getEnterpriseList()) {
+            if (e.getEnterpriseType().equals(Enterprise.EnterpriseType.NGO)) {
+                cmbNGO.addItem(e);
+            }
+        }
+    }
 
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-
+        userProcessContainer.remove(this);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void cmbNGOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbNGOActionPerformed
- 
+        // TODO add your handling code here:
+        NGOEnterprise ngo = (NGOEnterprise) cmbNGO.getSelectedItem();
+        if (ngo != null) {
+            populateTable(ngo);
+        }
     }//GEN-LAST:event_cmbNGOActionPerformed
 
     private void btnGenerateInoviceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerateInoviceActionPerformed
         // TODO add your handling code here:
- 
+        int selectedRow = tblDetails.getSelectedRow();
+        if (selectedRow < 0) {
+            JOptionPane.showMessageDialog(null,
+                    "Please select a request to generate invoice for",
+                    "Warning",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        } else {
+            CollectionWorkRequest cwr = (CollectionWorkRequest) tblDetails.getValueAt(selectedRow, 1);
+            String status = cwr.getStatus();
+            if (status.equals(pickupRequestStatusList.get(5)) || status.equals(pickupRequestStatusList.get(6))) {
+                if (cwr.getPaid()) {
+                    JOptionPane.showMessageDialog(null,
+                            "Selected Invoice has already been paid for",
+                            "Information",
+                            JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                }
+
+                if (cwr.getInvoiceGenerated()) {
+                    JOptionPane.showMessageDialog(null,
+                            "Selected Invoice has already been generated",
+                            "Information",
+                            JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                }
+
+                NGOEnterprise ngo = (NGOEnterprise) cmbNGO.getSelectedItem();
+
+                PaymentWorkRequest pwr = new PaymentWorkRequest();
+                cwr.setInvoiceGenerated(true);
+                pwr.setCollectionWorkRequest(cwr);
+                pwr.setStatus(RequestStatus.getInvoiceStatusMessage(1));
+                pwr.setSender(account);
+
+                for (Enterprise e : network.getEnterpriseDirectory().getEnterpriseList()) {
+                    if (e.getName().equals(ngo.getName())) {
+                        for (Organization o : e.getOrganizationDirectory().getOrganizationList()) {
+                            if (o instanceof NGOManagerOrganization) {
+                                o.getWorkQueue().getWorkRequestList().add(pwr);
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                // Add to own work queue
+                account.getWorkQueue().getWorkRequestList().add(pwr);
+                JOptionPane.showMessageDialog(null, "Invoice request raised with NGO for further processing", "Information", JOptionPane.INFORMATION_MESSAGE);
+                populateTable(ngo);
+            } else {
+                JOptionPane.showMessageDialog(null,
+                        "Request not delivered yet to generate an Invoice for",
+                        "Warning",
+                        JOptionPane.WARNING_MESSAGE);
+            }
+        }
     }//GEN-LAST:event_btnGenerateInoviceActionPerformed
 
     private void btnGenerateAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerateAllActionPerformed
 
+        NGOEnterprise ngo = (NGOEnterprise) cmbNGO.getSelectedItem();
+        boolean generated = false;
+
+        for (int i = 0; i < tblDetails.getRowCount(); i++) {
+            WorkRequest wr = (WorkRequest) tblDetails.getValueAt(i, 1);
+            if (wr instanceof CollectionWorkRequest) {
+                CollectionWorkRequest cwr = (CollectionWorkRequest) wr;
+                if (!cwr.getPaid() && !cwr.getInvoiceGenerated()) {
+                    generated = true;
+
+                    PaymentWorkRequest pwr = new PaymentWorkRequest();
+                    cwr.setInvoiceGenerated(true);
+                    pwr.setCollectionWorkRequest(cwr);
+                    pwr.setStatus(RequestStatus.getInvoiceStatusMessage(1));
+                    pwr.setSender(account);
+
+                    for (Enterprise e : network.getEnterpriseDirectory().getEnterpriseList()) {
+                        if (e.getName().equals(ngo.getName())) {
+                            for (Organization o : e.getOrganizationDirectory().getOrganizationList()) {
+                                if (o instanceof NGOManagerOrganization) {
+                                    o.getWorkQueue().getWorkRequestList().add(pwr);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    // Add to own work queue
+                    account.getWorkQueue().getWorkRequestList().add(pwr);
+
+                }
+            }
+        }
+        if (!generated) {
+            JOptionPane.showMessageDialog(null, "All invoices already generated", "Information", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        JOptionPane.showMessageDialog(null, "All ungenerated invoices are now generated", "Information", JOptionPane.INFORMATION_MESSAGE);
+        populateTable(ngo);
     }//GEN-LAST:event_btnGenerateAllActionPerformed
 
+    public void populateTable(NGOEnterprise ngo) {
+
+        DefaultTableModel dtm = (DefaultTableModel) tblDetails.getModel();
+        dtm.setRowCount(0);
+        for (WorkRequest wr : account.getWorkQueue().getWorkRequestList()) {
+            if (wr instanceof CollectionWorkRequest) {
+                CollectionWorkRequest cwr = (CollectionWorkRequest) wr;
+                if ((cwr.getStatus().equals(pickupRequestStatusList.get(5))) || (cwr.getStatus().equals(pickupRequestStatusList.get(6)))) {
+                    if (cwr.getDeliverToNGO() != null) {
+                        if (cwr.getDeliverToNGO().equals(ngo.getName())) {
+                            Object row[] = new Object[5];
+                            row[0] = cwr.getResolveDate();
+                            row[1] = cwr;
+                            row[2] = "$" + cwr.getDeliveryCost();
+                            row[3] = cwr.getInvoiceGenerated() ? "Yes" : "No";
+                            row[4] = cwr.getPaid() ? "Yes" : "No";
+
+                            dtm.addRow(row);
+                        }
+                    }
+                }
+            }
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnGenerateAll;

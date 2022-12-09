@@ -1,21 +1,73 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package userInterface.logistics.logisticsManager;
+
+import business.userAccount.UserAccount;
+import business.workQueue.PaymentWorkRequest;
+import business.workQueue.WorkRequest;
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import javax.swing.JPanel;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PiePlot;
+import org.jfree.data.general.DefaultPieDataset;
 
 
 public class LogisticsManagerViewChartJPanel extends javax.swing.JPanel {
 
-
+    private JPanel userProcessContainer;
+    private UserAccount account;
 
     /**
      * Creates new form LogisticsManagerViewChartJPanel
      */
-    public LogisticsManagerViewChartJPanel() {
+    public LogisticsManagerViewChartJPanel(JPanel userProcessContainer, UserAccount account) {
         initComponents();
+        this.userProcessContainer = userProcessContainer;
+        this.account = account;
+        populateChart();
     }
+
+    public void populateChart() {
+
+        DefaultPieDataset dataSet = new DefaultPieDataset();
+        int paid = 0, unpaid = 0;
+        double paidAmount = 0, unpaidAmount = 0;
+
+        for (WorkRequest wr : account.getWorkQueue().getWorkRequestList()) {
+            if (wr instanceof PaymentWorkRequest) {
+                PaymentWorkRequest pwr = (PaymentWorkRequest) wr;
+                if (pwr.getCollectionWorkRequest().getInvoiceGenerated()) {
+                    if (pwr.getCollectionWorkRequest().getPaid()) {
+                        paid++;
+                        paidAmount += pwr.getCollectionWorkRequest().getDeliveryCost();
+                    } else {
+                        unpaid++;
+                        unpaidAmount += pwr.getCollectionWorkRequest().getDeliveryCost();
+                    }
+                }
+            }
+        }
+
+        dataSet.setValue("Paid", paid);
+        dataSet.setValue("Unpaid", unpaid);
+
+        JFreeChart chart = ChartFactory.createPieChart("Paid and Unpaid Invoices",
+                dataSet, true, true, true);
+
+        PiePlot plot = (PiePlot) chart.getPlot();
+
+        ChartPanel chartPanel = new ChartPanel(chart);
+        pnlChart.removeAll();
+        pnlChart.add(chartPanel, BorderLayout.CENTER);
+        pnlChart.validate();
+
+        lblPaidVal.setText("$ " + paidAmount);
+        lblUnPaidVal.setText("$ " + unpaidAmount);
+
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -33,9 +85,9 @@ public class LogisticsManagerViewChartJPanel extends javax.swing.JPanel {
         lblUnPaid = new javax.swing.JLabel();
         lblUnPaidVal = new javax.swing.JLabel();
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(255, 255, 204));
 
-        pnlChart.setBackground(new java.awt.Color(255, 255, 255));
+        pnlChart.setBackground(new java.awt.Color(255, 255, 204));
         pnlChart.setLayout(new java.awt.BorderLayout());
 
         lblHeader.setBackground(new java.awt.Color(204, 204, 255));
@@ -105,7 +157,9 @@ public class LogisticsManagerViewChartJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        userProcessContainer.remove(this);
+        layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
 
 
