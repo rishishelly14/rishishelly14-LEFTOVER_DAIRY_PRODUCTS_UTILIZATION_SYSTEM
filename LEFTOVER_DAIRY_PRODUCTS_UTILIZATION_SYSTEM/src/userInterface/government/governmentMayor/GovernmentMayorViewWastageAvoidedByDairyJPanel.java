@@ -4,15 +4,48 @@
  */
 package userInterface.government.governmentMayor;
 
+import business.enterprise.Enterprise;
+import business.enterprise.DairyEnterprise;
+import business.network.Network;
+import business.organization.Organization;
+import business.role.Role;
+import business.userAccount.UserAccount;
+import business.workQueue.CollectionWorkRequest;
+import business.workQueue.WorkRequest;
+import java.awt.CardLayout;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Set;
+import java.util.TreeMap;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFFont;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 
 public class GovernmentMayorViewWastageAvoidedByDairyJPanel extends javax.swing.JPanel {
 
-   
+    private JPanel userProcessContainer;
+    private Network network;
 
-   
-    public GovernmentMayorViewWastageAvoidedByDairyJPanel() {
+    /**
+     * Creates new form GovernmentMayorViewWastageAvoidedByDairyJPanel
+     */
+    public GovernmentMayorViewWastageAvoidedByDairyJPanel(JPanel userProcessContainer, Network network) {
         initComponents();
-         
+        this.userProcessContainer = userProcessContainer;
+        this.network = network;
+        populateDairyCombo();
+        populateData(null);  
         
     }
 
@@ -37,7 +70,7 @@ public class GovernmentMayorViewWastageAvoidedByDairyJPanel extends javax.swing.
         lblWastageValue = new javax.swing.JLabel();
         btnExport = new javax.swing.JButton();
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(204, 204, 255));
 
         lblHeading.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lblHeading.setText("Mayor Work Area - View Dairy Wastage Avoided");
@@ -170,26 +203,169 @@ public class GovernmentMayorViewWastageAvoidedByDairyJPanel extends javax.swing.
 
     private void cmbDairyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbDairyActionPerformed
         // TODO add your handling code here:
-        
+        if (cmbDairy.getSelectedIndex() < 1) {
+            populateData(null);
+        } else {
+            DairyEnterprise e = (DairyEnterprise) cmbDairy.getSelectedItem();
+            populateData(e);
+        }
     }//GEN-LAST:event_cmbDairyActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-       
+        userProcessContainer.remove(this);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDetailsActionPerformed
         // TODO add your handling code here:
-      
+        int selectedRow = tblWastageAvoided.getSelectedRow();
+        if (selectedRow < 0) {
+            JOptionPane.showMessageDialog(null,
+                "Please select a request item to view details",
+                "Warning",
+                JOptionPane.WARNING_MESSAGE);
+            return;
+        } else {
+            CollectionWorkRequest request = (CollectionWorkRequest) tblWastageAvoided.getValueAt(selectedRow, 2);
+
+            GovernmentMayorViewRequestDetailsJPanel governmentMayorViewRequestDetailsJPanel = new GovernmentMayorViewRequestDetailsJPanel(userProcessContainer, request);
+            userProcessContainer.add("GovernmentMayorViewRequestDetailsJPanel", governmentMayorViewRequestDetailsJPanel);
+
+            CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+            layout.next(userProcessContainer);
+        }
     }//GEN-LAST:event_btnDetailsActionPerformed
 
     private void btnExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportActionPerformed
         // TODO add your handling code here:
-     
+        DefaultTableModel dtm = (DefaultTableModel) tblWastageAvoided.getModel();
+        XSSFWorkbook workbook = new XSSFWorkbook();
+        XSSFSheet worksheet = workbook.createSheet();
 
-     
+        TreeMap<String, Object[]> dataMap = new TreeMap<>();
+        dataMap.put("0", new Object[]{
+            dtm.getColumnName(0), dtm.getColumnName(1), dtm.getColumnName(2), dtm.getColumnName(3)
+        });
+
+        for (int i = 0; i < dtm.getRowCount(); i++) {
+            dataMap.put(i + 1 + "", new Object[]{
+                dtm.getValueAt(i, 0).toString(),
+                dtm.getValueAt(i, 1).toString(),
+                dtm.getValueAt(i, 2).toString(),
+                dtm.getValueAt(i, 3).toString()
+            });
+        }
+
+        Set<String> ids = dataMap.keySet();
+        XSSFRow row;
+        int rowId = 0;
+
+        XSSFCellStyle style = workbook.createCellStyle();
+        XSSFFont font = workbook.createFont();
+        font.setBoldweight(XSSFFont.BOLDWEIGHT_BOLD);
+        style.setFont(font);
+
+        for (String key : ids) {
+            row = worksheet.createRow(rowId++);
+
+            Object[] values = dataMap.get(key);
+
+            int cellId = 0;
+            for (Object o : values) {
+                Cell cell = row.createCell(cellId++);
+                cell.setCellValue((String) o);
+                if (rowId== 1) {
+                    cell.setCellStyle(style);
+                }
+            }
+        }
+
+        try {
+            String date = new SimpleDateFormat("MM_dd_yyyy_HH_mm_ss").format(new Date());
+            String fileName = "Mayor_" + network.getName() + "_" + date + ".xlsx";
+            FileOutputStream fos = new FileOutputStream(new File(System.getProperty("user.home") + "/Desktop/"+fileName));
+            workbook.write(fos);
+            fos.close();
+            JOptionPane.showMessageDialog(null, "Data exported to excel");
+        } catch (FileNotFoundException fnfe) {
+            // File Not Found
+        } catch (IOException iex) {
+            // IO Exception block
+        }
     }//GEN-LAST:event_btnExportActionPerformed
 
-   
+     public void populateDairyCombo() {
+        cmbDairy.removeAllItems();
+        cmbDairy.addItem(null);
+        for (Enterprise e : network.getEnterpriseDirectory().getEnterpriseList()) {
+            if (e.getEnterpriseType() == Enterprise.EnterpriseType.Dairy) {
+                cmbDairy.addItem(e);
+            }
+        }
+    }
+
+    public void populateData(DairyEnterprise dairy) {
+
+        DefaultTableModel dtm = (DefaultTableModel) tblWastageAvoided.getModel();
+        dtm.setRowCount(0);
+
+        double wastage = 0;
+
+        // All data
+        if (dairy == null) {
+
+            for (Enterprise e : network.getEnterpriseDirectory().getEnterpriseList()) {
+                if (e.getEnterpriseType() == Enterprise.EnterpriseType.Dairy) {
+                    for (Organization o : e.getOrganizationDirectory().getOrganizationList()) {
+                        for (UserAccount ua : o.getUserAccountDirectory().getUserAccountList()) {
+                            if ((ua.getRole().getRoleType().getValue()).equals(Role.RoleType.DairyWorker.getValue())) {
+                                for (WorkRequest wr : ua.getWorkQueue().getWorkRequestList()) {
+                                    if (wr instanceof CollectionWorkRequest) {
+                                        CollectionWorkRequest cwr = (CollectionWorkRequest) wr;
+
+                                        Object row[] = new Object[4];
+                                        row[0] = cwr.getRaisedByDairy();
+                                        row[1] = cwr.getTotalQuantity();
+                                        row[2] = cwr;
+                                        row[3] = cwr.getDeliverToNGO() == null ? "Undelivered" : cwr.getDeliverToNGO();
+                                        dtm.addRow(row);
+
+                                        wastage += cwr.getTotalQuantity();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+        } // Filtered
+        else {
+
+            for (Organization o : dairy.getOrganizationDirectory().getOrganizationList()) {
+                for (UserAccount ua : o.getUserAccountDirectory().getUserAccountList()) {
+                    if ((ua.getRole().getRoleType().getValue()).equals(Role.RoleType.DairyWorker.getValue())) {
+                        for (WorkRequest wr : ua.getWorkQueue().getWorkRequestList()) {
+                            CollectionWorkRequest cwr = (CollectionWorkRequest) wr;
+
+                            Object row[] = new Object[4];
+                            row[0] = cwr.getRaisedByDairy();
+                            row[1] = cwr.getTotalQuantity();
+                            row[2] = cwr;
+                            row[3] = cwr.getDeliverToNGO() == null ? "Undelivered" : cwr.getDeliverToNGO();
+                            dtm.addRow(row);
+
+                            wastage += cwr.getTotalQuantity();
+                        }
+                    }
+                }
+            }
+
+        }
+
+        lblWastageValue.setText(wastage + " pounds");
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;

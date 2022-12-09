@@ -5,18 +5,81 @@
  */
 package userInterface.government.governmentMayor;
 
+import business.enterprise.Enterprise;
+import business.network.Network;
+import business.organization.Organization;
+import business.role.Role;
+import business.userAccount.UserAccount;
+import business.workQueue.CollectionWorkRequest;
+import business.workQueue.WorkRequest;
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import java.awt.Color;
+import javax.swing.JPanel;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
+
+
 public class GovernmentMayorViewChartJPanel extends javax.swing.JPanel {
 
+    private JPanel userProcessContainer;
+    private Network network;
 
     /**
      * Creates new form GovernmentMayorViewChart
      */
-    public GovernmentMayorViewChartJPanel() {
+    public GovernmentMayorViewChartJPanel(JPanel userProcessContainer, Network network) {
         initComponents();
-
+        this.userProcessContainer = userProcessContainer;
+        this.network = network;
+        populateChart();
     }
 
+    public void populateChart() {
 
+        DefaultCategoryDataset dataSet = new DefaultCategoryDataset();
+        double wastageAvoided = 0;
+
+        for (Enterprise e : network.getEnterpriseDirectory().getEnterpriseList()) {
+            if (e.getEnterpriseType() == Enterprise.EnterpriseType.Dairy) {
+                String name = e.getName();
+                for (Organization o : e.getOrganizationDirectory().getOrganizationList()) {
+                    for (UserAccount ua : o.getUserAccountDirectory().getUserAccountList()) {
+                        if ((ua.getRole().getRoleType().getValue()).equals(Role.RoleType.DairyWorker.getValue())) {
+                            for (WorkRequest wr : ua.getWorkQueue().getWorkRequestList()) {
+                                if (wr instanceof CollectionWorkRequest) {
+                                    CollectionWorkRequest cwr = (CollectionWorkRequest) wr;
+                                    wastageAvoided += cwr.getTotalQuantity();
+                                }
+                            }
+                        }
+                    }
+                    dataSet.setValue(wastageAvoided, "Wastage Avoided", name);
+                    wastageAvoided = 0;
+                }
+            }
+        }
+
+        JFreeChart chart = ChartFactory.createBarChart("Wastage Avoided by each Dairy",
+                "Dairy",
+                "Wastage Avoided (In Pounds)",
+                dataSet,
+                PlotOrientation.VERTICAL, true, true, false);
+
+        CategoryPlot plot = chart.getCategoryPlot();
+        plot.setRangeGridlinePaint(Color.BLACK);
+        plot.setBackgroundPaint(Color.WHITE);
+
+        ChartPanel chartPanel = new ChartPanel(chart);
+        pnlChart.removeAll();
+        pnlChart.add(chartPanel, BorderLayout.CENTER);
+        pnlChart.validate();
+
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -31,9 +94,9 @@ public class GovernmentMayorViewChartJPanel extends javax.swing.JPanel {
         lblHeader = new javax.swing.JLabel();
         btnBack1 = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(204, 204, 255));
 
-        pnlChart.setBackground(new java.awt.Color(255, 255, 255));
+        pnlChart.setBackground(new java.awt.Color(204, 204, 255));
         pnlChart.setLayout(new java.awt.BorderLayout());
 
         lblHeader.setBackground(new java.awt.Color(204, 204, 255));
@@ -77,7 +140,9 @@ public class GovernmentMayorViewChartJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBack1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBack1ActionPerformed
-
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        userProcessContainer.remove(this);
+        layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBack1ActionPerformed
 
 
