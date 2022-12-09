@@ -1,9 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package userInterface.logistics.logisticsAdmin;
+
+import business.enterprise.Enterprise;
+import java.awt.CardLayout;
+import javax.swing.JPanel;
 
 
 public class LogisticsAdminWorkAreaJPanel extends javax.swing.JPanel {
@@ -11,11 +11,14 @@ public class LogisticsAdminWorkAreaJPanel extends javax.swing.JPanel {
     /**
      * Creates new form LogisticsAdminWorkAreaJPanel
      */
+    private JPanel userProcessContainer;
+    private Enterprise enterprise;
 
-
-    public LogisticsAdminWorkAreaJPanel() {
+    public LogisticsAdminWorkAreaJPanel(JPanel userProcessContainer, Enterprise enterprise) {
         initComponents();
-  
+        this.userProcessContainer = userProcessContainer;
+        this.enterprise = enterprise;
+        lblValue.setText(enterprise.getName());
     }
 
     /**
@@ -34,7 +37,7 @@ public class LogisticsAdminWorkAreaJPanel extends javax.swing.JPanel {
         btnManageEmployee = new javax.swing.JButton();
         btnManageUser = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(255, 255, 204));
 
         lblHeading.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lblHeading.setText("Logistics Adminstrative Work Area");
@@ -108,17 +111,29 @@ public class LogisticsAdminWorkAreaJPanel extends javax.swing.JPanel {
 
     private void btnManageOrganizationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageOrganizationActionPerformed
 
-  
+        LogisticsManageOrganizationJPanel manageLogisticsOrganizationJPanel = new LogisticsManageOrganizationJPanel(userProcessContainer, enterprise.getOrganizationDirectory());
+        userProcessContainer.add("manageLogisticsOrganizationJPanel", manageLogisticsOrganizationJPanel);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
     }//GEN-LAST:event_btnManageOrganizationActionPerformed
 
     private void btnManageEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageEmployeeActionPerformed
 
-   
+        LogisticsManageEmployeeJPanel manageLogisticsEmployeeJPanel = new LogisticsManageEmployeeJPanel(userProcessContainer, enterprise.getOrganizationDirectory());
+        userProcessContainer.add("manageLogisticsEmployeeJPanel", manageLogisticsEmployeeJPanel);
+
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
+
     }//GEN-LAST:event_btnManageEmployeeActionPerformed
 
     private void btnManageUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageUserActionPerformed
         // TODO add your handling code here:
- 
+        LogisticsManageUserAccountJPanel manageLogisticsUserAccountJPanel = new LogisticsManageUserAccountJPanel(userProcessContainer, enterprise);
+        userProcessContainer.add("manageLogisticsUserAccountJPanel", manageLogisticsUserAccountJPanel);
+
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
     }//GEN-LAST:event_btnManageUserActionPerformed
 
 

@@ -1,20 +1,52 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package userInterface.logistics.logisticsAdmin;
+
+import business.organization.Organization;
+import business.organization.Organization.Type;
+import business.organization.OrganizationDirectory;
+import java.awt.CardLayout;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+
 
 public class LogisticsManageOrganizationJPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form LogisticsManageOrganizationJPanel
      */
+    private OrganizationDirectory organizationDirectory;
+    private JPanel userProcessContainer;
 
-
-    public LogisticsManageOrganizationJPanel() {
+    public LogisticsManageOrganizationJPanel(JPanel userProcessContainer, OrganizationDirectory organizationDirectory) {
         initComponents();
-   
+        this.userProcessContainer = userProcessContainer;
+        this.organizationDirectory = organizationDirectory;
+        populateTable();
+        populateCombo();
+    }
+
+    private void populateCombo() {
+        cmbOrganization.removeAllItems();
+        for (Organization.Type type : Organization.Type.values()) {
+            if ((!type.getValue().equals(Organization.Type.LogisticsAdmin.getValue())) && (type.getValue().indexOf("Logistics") >= 0)) {
+                cmbOrganization.addItem(type);
+            }
+        }
+    }
+
+    private void populateTable() {
+        DefaultTableModel model = (DefaultTableModel) tblOrganization.getModel();
+
+        model.setRowCount(0);
+
+        for (Organization organization : organizationDirectory.getOrganizationList()) {
+            Object[] row = new Object[2];
+            row[0] = organization.getOrganizationID();
+            row[1] = organization.getName();
+
+            model.addRow(row);
+        }
     }
 
     /**
@@ -34,7 +66,7 @@ public class LogisticsManageOrganizationJPanel extends javax.swing.JPanel {
         btnBack = new javax.swing.JButton();
         btnAddOrganization = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(255, 255, 204));
 
         tblOrganization.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -127,12 +159,24 @@ public class LogisticsManageOrganizationJPanel extends javax.swing.JPanel {
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
 
-
+        userProcessContainer.remove(this);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnAddOrganizationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddOrganizationActionPerformed
 
+        Type type = (Type) cmbOrganization.getSelectedItem();
 
+        if (type == null) {
+            JOptionPane.showMessageDialog(null, "Invalid input!");
+            return;
+        }
+
+        organizationDirectory.addOrganization(type);
+
+        JOptionPane.showMessageDialog(null, "Organziation created successfully!");
+        populateTable();
     }//GEN-LAST:event_btnAddOrganizationActionPerformed
 
 
