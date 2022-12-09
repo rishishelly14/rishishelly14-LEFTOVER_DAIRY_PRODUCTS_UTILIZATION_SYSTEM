@@ -1,21 +1,31 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package userInterface.logistics.logisticsManager;
 
+import business.enterprise.Enterprise;
+import business.organization.Organization;
+import business.role.Role;
+import business.userAccount.UserAccount;
+import business.workQueue.CollectionWorkRequest;
+import business.workQueue.WorkRequest;
+import java.awt.CardLayout;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 
 public class LogisticsManagerViewWorkLogJPanel extends javax.swing.JPanel {
 
-
+    private JPanel userProcessContainer;
+    private Enterprise enterprise;
 
     /**
      * Creates new form LogisticsManagerViewWorkLogJPanel
      */
-    public LogisticsManagerViewWorkLogJPanel() {
+    public LogisticsManagerViewWorkLogJPanel(JPanel userProcessContainer, Enterprise enterprise) {
         initComponents();
+        this.userProcessContainer = userProcessContainer;
+        this.enterprise = enterprise;
+        populateTable();
     }
 
     /**
@@ -33,7 +43,7 @@ public class LogisticsManagerViewWorkLogJPanel extends javax.swing.JPanel {
         btnBack = new javax.swing.JButton();
         btnViewDetails = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(255, 255, 204));
 
         lblHeader.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lblHeader.setText("Logistics Manager Work Area - Work Log");
@@ -108,14 +118,57 @@ public class LogisticsManagerViewWorkLogJPanel extends javax.swing.JPanel {
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-
+        userProcessContainer.remove(this);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnViewDetailsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewDetailsActionPerformed
-     
+        // TODO add your handling code here:
+        int selectedRow = tblRequests.getSelectedRow();
+        if (selectedRow < 0) {
+            JOptionPane.showMessageDialog(null,
+                    "Please select a request item to view details",
+                    "Warning",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        } else {
+            CollectionWorkRequest request = (CollectionWorkRequest) tblRequests.getValueAt(selectedRow, 4);
+
+            LogisticsManagerViewRequestDetailsJPanel logisticsManagerViewRequestDetailsJPanel = new LogisticsManagerViewRequestDetailsJPanel(userProcessContainer, request);
+            userProcessContainer.add("LogisticsManagerViewRequestDetailsJPanel", logisticsManagerViewRequestDetailsJPanel);
+            CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+            layout.next(userProcessContainer);
+        }
     }//GEN-LAST:event_btnViewDetailsActionPerformed
 
-  
+    private void populateTable() {
+
+        DefaultTableModel dtm = (DefaultTableModel) tblRequests.getModel();
+        dtm.setRowCount(0);
+
+        for (Organization o : enterprise.getOrganizationDirectory().getOrganizationList()) {
+            for (UserAccount ua : o.getUserAccountDirectory().getUserAccountList()) {
+                if (ua.getRole().getRoleType().getValue().equals(Role.RoleType.LogisticsWorker.getValue())) {
+                    for (WorkRequest workRequest : ua.getWorkQueue().getWorkRequestList()) {
+                        if (workRequest instanceof CollectionWorkRequest) {
+                            CollectionWorkRequest cwr = (CollectionWorkRequest) workRequest;
+
+                            Object row[] = new Object[5];
+
+                            row[0] = cwr.getRaisedBy();
+                            row[1] = cwr.getRaisedByDairy();
+                            row[2] = cwr.getDeliverToNGO();
+                            row[3] = ua.getEmployee();
+                            row[4] = cwr;
+
+                            dtm.addRow(row);
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;

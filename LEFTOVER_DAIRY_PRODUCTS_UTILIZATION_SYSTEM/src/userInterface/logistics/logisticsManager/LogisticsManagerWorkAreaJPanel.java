@@ -1,9 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package userInterface.logistics.logisticsManager;
+
+import business.enterprise.Enterprise;
+import business.network.Network;
+import business.organization.Organization;
+import business.userAccount.UserAccount;
+import java.awt.CardLayout;
+import javax.swing.JPanel;
 
 
 public class LogisticsManagerWorkAreaJPanel extends javax.swing.JPanel {
@@ -11,11 +14,20 @@ public class LogisticsManagerWorkAreaJPanel extends javax.swing.JPanel {
     /**
      * Creates new form LogisticsManagerWorkAreaJPanel
      */
-  
+    private JPanel userProcessContainer;
+    private UserAccount account;
+    private Organization organization;
+    private Enterprise enterprise;
+    private Network network;
 
-    public LogisticsManagerWorkAreaJPanel() {
+    public LogisticsManagerWorkAreaJPanel(JPanel userProcessContainer, UserAccount account, Organization organization, Enterprise enterprise, Network network) {
         initComponents();
-  
+        this.userProcessContainer = userProcessContainer;
+        this.account = account;
+        this.organization = organization;
+        this.enterprise = enterprise;
+        this.network = network;
+        lblNameVal.setText(account.getEmployee().getName());
     }
 
     /**
@@ -35,7 +47,7 @@ public class LogisticsManagerWorkAreaJPanel extends javax.swing.JPanel {
         btnWorkLog = new javax.swing.JButton();
         btnPayementInfo = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(255, 255, 204));
 
         lblHeader.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lblHeader.setText("Logistics Manager Work Area");
@@ -120,19 +132,33 @@ public class LogisticsManagerWorkAreaJPanel extends javax.swing.JPanel {
 
     private void btnRestaurantRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestaurantRequestActionPerformed
         // TODO add your handling code here:
-
+        LogisticsManagerViewRequestsJPanel logisticsManagerViewRequestsJPanel = new LogisticsManagerViewRequestsJPanel(userProcessContainer, account, organization, enterprise);
+        userProcessContainer.add("LogisticsManagerViewRequestsJPanel", logisticsManagerViewRequestsJPanel);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
     }//GEN-LAST:event_btnRestaurantRequestActionPerformed
 
     private void btnInvoicesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInvoicesActionPerformed
-      
+        LogisticsManagerGenerateInvoicesJPanel logisticsManagerGenerateInvoicesJPanel = new LogisticsManagerGenerateInvoicesJPanel(userProcessContainer, account, network);
+        userProcessContainer.add("LogisticsManagerGenerateInvoicesJPanel", logisticsManagerGenerateInvoicesJPanel);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
     }//GEN-LAST:event_btnInvoicesActionPerformed
 
     private void btnWorkLogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnWorkLogActionPerformed
- 
+        // TODO add your handling code here:
+        LogisticsManagerViewWorkLogJPanel logisticsManagerViewWorkLogJPanel = new LogisticsManagerViewWorkLogJPanel(userProcessContainer, enterprise);
+        userProcessContainer.add("LogisticsManagerViewWorkLogJPanel", logisticsManagerViewWorkLogJPanel);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
     }//GEN-LAST:event_btnWorkLogActionPerformed
 
     private void btnPayementInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPayementInfoActionPerformed
-
+        // TODO add your handling code here:
+        LogisticsManagerViewChartJPanel logisticsManagerViewChartJPanel = new LogisticsManagerViewChartJPanel(userProcessContainer, account);
+        userProcessContainer.add("LogisticsManagerViewChartJPanel", logisticsManagerViewChartJPanel);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
     }//GEN-LAST:event_btnPayementInfoActionPerformed
 
 
