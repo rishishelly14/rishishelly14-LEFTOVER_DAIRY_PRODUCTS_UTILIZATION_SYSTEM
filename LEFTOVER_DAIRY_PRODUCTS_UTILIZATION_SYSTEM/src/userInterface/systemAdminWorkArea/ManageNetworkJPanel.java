@@ -1,23 +1,30 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package userInterface.systemAdminWorkArea;
 
-
+import business.EcoSystem;
+import business.network.Network;
+import business.util.validation.Validation;
+import java.awt.CardLayout;
+import java.awt.Component;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 
 public class ManageNetworkJPanel extends javax.swing.JPanel {
 
-
+    private JPanel userProcessContainer;
+    private EcoSystem business;
 
     /**
      * Creates new form ManageNetworkJPanel
      */
-    public ManageNetworkJPanel() {
+    public ManageNetworkJPanel(JPanel userProcessContainer, EcoSystem business) {
         initComponents();
+        this.userProcessContainer = userProcessContainer;
+        this.business = business;
 
+        populateNetworkTable();
     }
 
     /**
@@ -40,7 +47,7 @@ public class ManageNetworkJPanel extends javax.swing.JPanel {
         lblCreateNetwork = new javax.swing.JLabel();
         lblNetworkList = new javax.swing.JLabel();
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(0, 204, 204));
 
         tblNetwork.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -148,14 +155,45 @@ public class ManageNetworkJPanel extends javax.swing.JPanel {
 
     private void btnAddNetworkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddNetworkActionPerformed
 
+        String name = null;
+        if (Validation.validateStringInput(txtName)) {
+            name = txtName.getText();
+        } else {
+            return;
+        }
 
+        boolean ifExists = business.checkIfNetworkExisits(name);
+        if (ifExists) {
+            JOptionPane.showMessageDialog(null, "Network name already exists");
+            return;
+        }
+
+        Network network = business.createAndAddNetwork();
+        network.setName(name);
+        JOptionPane.showMessageDialog(null, "Network added successfully", "Information", JOptionPane.INFORMATION_MESSAGE);
+        txtName.setText("");
+        populateNetworkTable();
     }//GEN-LAST:event_btnAddNetworkActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-
+        userProcessContainer.remove(this);
+        Component[] componentArray = userProcessContainer.getComponents();
+        Component component = componentArray[componentArray.length - 1];
+        SystemAdminWorkAreaJPanel sysAdminwjp = (SystemAdminWorkAreaJPanel) component;
+        sysAdminwjp.populateTree();
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
 
-  
+    public void populateNetworkTable() {
+        DefaultTableModel dtm = (DefaultTableModel) tblNetwork.getModel();
+        dtm.setRowCount(0);
+        for (Network n : business.getNetworkList()) {
+            Object row[] = new Object[1];
+            row[0] = n;
+            dtm.addRow(row);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddNetwork;

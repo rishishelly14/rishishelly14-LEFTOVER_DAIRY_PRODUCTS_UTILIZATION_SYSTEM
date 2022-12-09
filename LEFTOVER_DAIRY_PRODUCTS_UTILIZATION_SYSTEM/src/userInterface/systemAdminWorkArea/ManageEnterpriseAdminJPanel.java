@@ -1,21 +1,40 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package userInterface.systemAdminWorkArea;
+
+import business.EcoSystem;
+import business.employee.Employee;
+import business.enterprise.Enterprise;
+import business.network.Network;
+import business.role.Role;
+import business.role.government.GovernmentAdminRole;
+import business.role.logistics.LogisticsAdminRole;
+import business.role.ngo.NGOAdminRole;
+import business.role.dairy.DairyAdminRole;
+import business.userAccount.UserAccount;
+import business.util.validation.Validation;
+import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.Component;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 
 public class ManageEnterpriseAdminJPanel extends javax.swing.JPanel {
 
-
+    private JPanel userProcessContainer;
+    private EcoSystem business;
 
     /**
      * Creates new form ManagerEnterpriseAdminJPanel
      */
-    public ManageEnterpriseAdminJPanel() {
+    public ManageEnterpriseAdminJPanel(JPanel userProcessContainer, EcoSystem business) {
         initComponents();
-        
+        this.userProcessContainer = userProcessContainer;
+        this.business = business;
+
+        populateTable();
+        populateNetworkComboBox();
     }
 
     /**
@@ -46,7 +65,7 @@ public class ManageEnterpriseAdminJPanel extends javax.swing.JPanel {
         lblNetworkList = new javax.swing.JLabel();
         lblCreateNetwork = new javax.swing.JLabel();
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(0, 204, 204));
 
         tblEnterprise.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -203,18 +222,129 @@ public class ManageEnterpriseAdminJPanel extends javax.swing.JPanel {
 
     private void cmbNetworkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbNetworkActionPerformed
 
+        Network network = (Network) cmbNetwork.getSelectedItem();
+        if (network != null) {
+            populateEnterpriseComboBox(network);
+        }
+
     }//GEN-LAST:event_cmbNetworkActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-
+        userProcessContainer.remove(this);
+        Component[] componentArray = userProcessContainer.getComponents();
+        Component component = componentArray[componentArray.length - 1];
+        SystemAdminWorkAreaJPanel sysAdminwjp = (SystemAdminWorkAreaJPanel) component;
+        sysAdminwjp.populateTree();
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnAddEnterpriseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddEnterpriseActionPerformed
 
+        Enterprise enterprise = (Enterprise) cmbEnterprise.getSelectedItem();
+        
+        if (enterprise == null) {
+                JOptionPane.showMessageDialog(null, "Invalid input!");
+        }
+            
+
+        String userName = null;
+        if (Validation.validateStringInput(txtUserName)) {
+            userName = txtUserName.getText();
+        } else {
+            return;
+        }
+
+        String name = null;
+        if (Validation.validateStringInput(txtName)) {
+            userName = txtUserName.getText();
+        } else {
+            return;
+        }
+
+        char[] passChar = txtPassword.getPassword();
+        if (passChar == null || passChar.length == 0) {
+            JOptionPane.showMessageDialog(null,
+                    "Password cannot be blank",
+                    "Warning",
+                    JOptionPane.WARNING_MESSAGE);
+            txtPassword.setBackground(Color.RED);
+            return;
+        }
+
+        if (business.checkIfUserNameIsUnique(userName)) {
+            JOptionPane.showMessageDialog(null, "User name already exists. Please select a different one.");
+            return;
+        }
+
+        Employee employee = enterprise.getEmployeeDirectory().addEmployee(name);
+        UserAccount account = new UserAccount();
+
+        String password = account.encodePassword(String.valueOf(passChar));
+
+        if (null != enterprise.getEnterpriseType()) {
+            switch (enterprise.getEnterpriseType()) {
+                case Logistics:
+                    account = enterprise.getUserAccountDirectory().addUserAccount(userName, password, employee, (Role) new LogisticsAdminRole());
+                    break;
+                case NGO:
+                    account = enterprise.getUserAccountDirectory().addUserAccount(userName, password, employee, (Role) new NGOAdminRole());
+                    break;
+                case Dairy:
+                    account = enterprise.getUserAccountDirectory().addUserAccount(userName, password, employee, (Role) new DairyAdminRole());
+                    break;
+                case Government:
+                    account = enterprise.getUserAccountDirectory().addUserAccount(userName, password, employee, (Role) new GovernmentAdminRole());
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        JOptionPane.showMessageDialog(null, "Enterprise admin added successfully", "Information", JOptionPane.INFORMATION_MESSAGE);
+
+        txtUserName.setText("");
+        txtName.setText("");
+        txtPassword.setText("");
+
+        populateTable();
 
     }//GEN-LAST:event_btnAddEnterpriseActionPerformed
 
-       
+    private void populateTable() {
+        DefaultTableModel dtm = (DefaultTableModel) tblEnterprise.getModel();
+        dtm.setRowCount(0);
+        for (Network network : business.getNetworkList()) {
+            for (Enterprise enterprise : network.getEnterpriseDirectory().getEnterpriseList()) {
+                for (UserAccount userAccount : enterprise.getUserAccountDirectory().getUserAccountList()) {
+                    Object[] row = new Object[3];
+                    row[0] = enterprise.getName();
+                    row[1] = network.getName();
+                    row[2] = userAccount.getUsername();
+
+                    dtm.addRow(row);
+                }
+            }
+        }
+    }
+
+    private void populateNetworkComboBox() {
+        cmbNetwork.removeAllItems();
+
+        for (Network network : business.getNetworkList()) {
+            cmbNetwork.addItem(network);
+        }
+    }
+
+    private void populateEnterpriseComboBox(Network network) {
+        cmbEnterprise.removeAllItems();
+
+        for (Enterprise enterprise : network.getEnterpriseDirectory().getEnterpriseList()) {
+            cmbEnterprise.addItem(enterprise);
+        }
+
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddEnterprise;
     private javax.swing.JButton btnBack;
