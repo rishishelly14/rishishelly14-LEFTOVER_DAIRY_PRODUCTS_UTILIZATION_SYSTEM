@@ -4,16 +4,53 @@
  */
 package userInterface.government.governmentAdmin;
 
+import business.organization.Organization;
+import business.organization.Organization.Type;
+import business.organization.OrganizationDirectory;
+import business.organization.government.GovernmentMayorOrganization;
+import java.awt.CardLayout;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+
 
 public class GovernmentManageOrganizationJPanel extends javax.swing.JPanel {
 
+    private OrganizationDirectory directory;
+    private JPanel userProcessContainer;
 
     /**
      * Creates new form ManageOrganizationJPanel
      */
-    public GovernmentManageOrganizationJPanel() {
+    public GovernmentManageOrganizationJPanel(JPanel userProcessContainer, OrganizationDirectory directory) {
         initComponents();
+        this.userProcessContainer = userProcessContainer;
+        this.directory = directory;
+        populateTable();
+        populateCombo();
+    }
 
+    private void populateCombo() {
+        cmbOrganization.removeAllItems();
+        for (Type type : Organization.Type.values()) {
+            if ((!type.getValue().equals(Type.GovernmentAdmin.getValue())) && (type.getValue().indexOf("Government") >= 0)) {
+                cmbOrganization.addItem(type);
+            }
+        }
+    }
+
+    private void populateTable() {
+        DefaultTableModel model = (DefaultTableModel) tblOrganization.getModel();
+
+        model.setRowCount(0);
+
+        for (Organization organization : directory.getOrganizationList()) {
+            Object[] row = new Object[2];
+            row[0] = organization.getOrganizationID();
+            row[1] = organization.getName();
+
+            model.addRow(row);
+        }
     }
 
     /**
@@ -34,7 +71,7 @@ public class GovernmentManageOrganizationJPanel extends javax.swing.JPanel {
         btnBack = new javax.swing.JButton();
         btnAddOrganization = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(204, 204, 255));
 
         lblHeader.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lblHeader.setText("Government Adminstrative Work Area - Manage Organization");
@@ -132,13 +169,34 @@ public class GovernmentManageOrganizationJPanel extends javax.swing.JPanel {
 
     private void btnAddOrganizationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddOrganizationActionPerformed
 
+        int selectedItem = cmbOrganization.getSelectedIndex();
+        if (selectedItem == -1) {
+            JOptionPane.showMessageDialog(null, "Please select the organization to create", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
+        Type type = (Type) cmbOrganization.getSelectedItem();
+
+        for (Organization o : directory.getOrganizationList()) {
+            {
+                if (o instanceof GovernmentMayorOrganization) {
+                    JOptionPane.showMessageDialog(null, "Government organization already exists for the network", "Warning", JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+            }
+        }
+
+        directory.addOrganization(type);
+        JOptionPane.showMessageDialog(null, "Organization added successfully", "Information", JOptionPane.INFORMATION_MESSAGE);
+        populateTable();
 
     }//GEN-LAST:event_btnAddOrganizationActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
 
-
+        userProcessContainer.remove(this);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
