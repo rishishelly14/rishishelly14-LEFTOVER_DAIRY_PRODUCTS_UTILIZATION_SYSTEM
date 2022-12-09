@@ -1,25 +1,63 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package userInterface.ngo.ngoAdmin;
 
+import business.employee.Employee;
+import business.organization.Organization;
+import business.organization.OrganizationDirectory;
+import business.util.validation.Validation;
+import java.awt.CardLayout;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 
 public class NGOManageEmployeeJPanel extends javax.swing.JPanel {
 
+    /**
+     * Creates new form NGOManageEmployeeJPanel
+     */
+    private OrganizationDirectory organizationDirectory;
+    private JPanel userProcessContainer;
 
-    public NGOManageEmployeeJPanel() {
+    public NGOManageEmployeeJPanel(JPanel userProcessContainer, OrganizationDirectory organizationDirectory) {
         initComponents();
-      
-      
+        this.userProcessContainer = userProcessContainer;
+        this.organizationDirectory = organizationDirectory;
+
+        populateOrganizationComboBox();
+        populateOrganizationEmpComboBox();
+
     }
 
+    public void populateOrganizationComboBox() {
+        cmbOrg.removeAllItems();
 
-    
+        for (Organization organization : organizationDirectory.getOrganizationList()) {
+            cmbOrg.addItem(organization);
 
- 
+        }
+    }
+
+    public void populateOrganizationEmpComboBox() {
+        cmbOrgCreate.removeAllItems();
+
+        for (Organization organization : organizationDirectory.getOrganizationList()) {
+            cmbOrgCreate.addItem(organization);
+        }
+    }
+
+    private void populateTable(Organization organization) {
+        DefaultTableModel model = (DefaultTableModel) tblOrganization.getModel();
+
+        model.setRowCount(0);
+
+        for (Employee employee : organization.getEmployeeDirectory().getEmployeeList()) {
+            Object[] row = new Object[2];
+            row[0] = employee.getId();
+            row[1] = employee.getName();
+            model.addRow(row);
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -43,7 +81,7 @@ public class NGOManageEmployeeJPanel extends javax.swing.JPanel {
         lblHeader = new javax.swing.JLabel();
         btnCreateEmployee = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(204, 255, 204));
 
         lblOrg.setText("Organization");
 
@@ -166,17 +204,39 @@ public class NGOManageEmployeeJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cmbOrgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbOrgActionPerformed
-       
+        Organization organization = (Organization) cmbOrg.getSelectedItem();
+        if (organization != null) {
+            populateTable(organization);
+        }
     }//GEN-LAST:event_cmbOrgActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
 
-       
+        userProcessContainer.remove(this);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnCreateEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateEmployeeActionPerformed
 
-        
+        Organization organization = (Organization) cmbOrgCreate.getSelectedItem();
+        if (organization == null) {
+            JOptionPane.showMessageDialog(null, "Invalid input");
+            return;
+        }
+
+        String name = txtName.getText();;
+        if (Validation.validateStringInput(txtName)) {
+            name = txtName.getText();
+        } else {
+            return;
+        }
+
+        organization.getEmployeeDirectory().addEmployee(name);
+        populateTable((Organization)cmbOrg.getSelectedItem());
+        txtName.setText("");
+
+        JOptionPane.showMessageDialog(null, "Employee created successfully!");
 
     }//GEN-LAST:event_btnCreateEmployeeActionPerformed
 

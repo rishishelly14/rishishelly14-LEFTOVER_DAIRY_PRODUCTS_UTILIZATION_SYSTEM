@@ -1,11 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package userInterface.ngo.ngoAdmin;
 
-
+import business.EcoSystem;
+import business.enterprise.Enterprise;
+import business.organization.Organization;
+import business.userAccount.UserAccount;
+import java.awt.CardLayout;
+import javax.swing.JPanel;
 
 
 public class NGOAdminWorkAreaJPanel extends javax.swing.JPanel {
@@ -13,11 +14,20 @@ public class NGOAdminWorkAreaJPanel extends javax.swing.JPanel {
     /**
      * Creates new form NGOAdminWorkAreaJPanel
      */
+    private JPanel userProcessContainer;
+    private UserAccount account;
+    private Organization organization;
+    private Enterprise enterprise;
+    private EcoSystem business;
 
-
-    public NGOAdminWorkAreaJPanel() {
+    public NGOAdminWorkAreaJPanel(JPanel userProcessContainer, Enterprise enterprise, EcoSystem business) {
         initComponents();
-    
+        this.userProcessContainer = userProcessContainer;
+        this.business = business;
+        this.account = account;
+        this.organization = organization;
+        this.enterprise = enterprise;
+        lblValue.setText(enterprise.getName());
     }
 
     /**
@@ -36,7 +46,7 @@ public class NGOAdminWorkAreaJPanel extends javax.swing.JPanel {
         btnManageEmployee = new javax.swing.JButton();
         btnManageUser = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(204, 255, 204));
 
         lblHeading.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lblHeading.setText("NGO Adminstrative Work Area");
@@ -112,17 +122,29 @@ public class NGOAdminWorkAreaJPanel extends javax.swing.JPanel {
 
     private void btnManageOrganizationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageOrganizationActionPerformed
 
-       
+        NGOManageOrganizationJPanel manageNGOOrganizationJPanel = new NGOManageOrganizationJPanel(userProcessContainer, enterprise.getOrganizationDirectory());
+        userProcessContainer.add("manageNGOOrganizationJPanel", manageNGOOrganizationJPanel);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
     }//GEN-LAST:event_btnManageOrganizationActionPerformed
 
     private void btnManageEmployeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageEmployeeActionPerformed
 
-      
+        NGOManageEmployeeJPanel manageNGOEmployeeJPanel = new NGOManageEmployeeJPanel(userProcessContainer, enterprise.getOrganizationDirectory());
+        userProcessContainer.add("manageEmployeeJPanel", manageNGOEmployeeJPanel);
+
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
+
     }//GEN-LAST:event_btnManageEmployeeActionPerformed
 
     private void btnManageUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnManageUserActionPerformed
         // TODO add your handling code here:
-      
+        NGOManageUserAccountJPanel muajp = new NGOManageUserAccountJPanel(userProcessContainer, enterprise, business);
+        userProcessContainer.add("ManageUserAccountJPanel", muajp);
+
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
     }//GEN-LAST:event_btnManageUserActionPerformed
 
 
