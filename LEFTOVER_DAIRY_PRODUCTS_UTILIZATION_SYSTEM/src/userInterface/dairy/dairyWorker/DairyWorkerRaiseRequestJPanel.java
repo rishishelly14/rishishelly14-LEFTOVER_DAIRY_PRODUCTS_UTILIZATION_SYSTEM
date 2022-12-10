@@ -1,19 +1,45 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
+
 package userInterface.dairy.dairyWorker;
 
-
+import business.enterprise.Enterprise;
+import business.network.Network;
+import business.organization.Organization;
+import business.organization.ngo.NGOManagerOrganization;
+import business.userAccount.UserAccount;
+import business.util.food.Food;
+import business.util.food.FoodQuantity;
+import business.util.request.RequestItem;
+import business.util.request.RequestStatus;
+import business.workQueue.CollectionWorkRequest;
+import java.awt.CardLayout;
+import java.util.ArrayList;
+import java.util.Set;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 
 
 public class DairyWorkerRaiseRequestJPanel extends javax.swing.JPanel {
+    private JPanel userProcessContainer;
+    private UserAccount account;
+    private Network network;
+    private String enterpriseName;
 
-  
-    public DairyWorkerRaiseRequestJPanel() {
+    /**
+     * Creates new form DairyWorkerRaiseRequestJPanel
+     */
+    public DairyWorkerRaiseRequestJPanel(JPanel userProcessContainer, UserAccount account, String enterpriseName, Network network) {
         initComponents();
-       
+        this.userProcessContainer = userProcessContainer;
+        this.account = account;
+        this.network = network;
+        this.enterpriseName = enterpriseName;
+        
+        DefaultTableModel dtm = (DefaultTableModel) tblFoodItems.getModel();
+        dtm.setRowCount(0);
+
+        populateFoodCombo();
     }
 
     /**
@@ -44,7 +70,7 @@ public class DairyWorkerRaiseRequestJPanel extends javax.swing.JPanel {
         lblWarning = new javax.swing.JLabel();
         btnRemove = new javax.swing.JButton();
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(255, 204, 153));
 
         lblHeader.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lblHeader.setText("Dairy Worker Work Area - Collection Request");
@@ -219,24 +245,115 @@ public class DairyWorkerRaiseRequestJPanel extends javax.swing.JPanel {
 
     
     
-     
+     public void populateFoodCombo() {
 
-    
+        cmbFood.removeAllItems();
+
+        Set foodNames = Food.getFoodMap().keySet();
+
+        for (Object name : foodNames) {
+            cmbFood.addItem((String) name);
+        }
+
+    }
     private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-       
+        String food = cmbFood.getSelectedItem().toString();
+        int quantity = (Integer) spnQuantity.getValue();
+        int hours = (Integer) spnPerishTime.getValue();
+
+        if (quantity < 1) {
+            JOptionPane.showMessageDialog(null,
+                "Quantity of food cannot be less than 1",
+                "Warning",
+                JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        if (hours < 4) {
+            JOptionPane.showMessageDialog(null,
+                "Food items perishable under 4 hours not accepted!",
+                "Warning",
+                JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        Object row[] = new Object[3];
+        row[0] = food;
+        row[1] = quantity;
+        row[2] = hours;
+
+        DefaultTableModel dtm = (DefaultTableModel) tblFoodItems.getModel();
+        dtm.addRow(row);
+
+        //        JOptionPane.showMessageDialog(null, "Food Item Added");
+        cmbFood.setSelectedIndex(0);
+        spnQuantity.setValue(1);
+        spnPerishTime.setValue(4);
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-       
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        userProcessContainer.remove(this);
+        layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnRaiseRequestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRaiseRequestActionPerformed
 
-      
+        String message = txtMessage.getText();
+
+        DefaultTableModel dtm = (DefaultTableModel) tblFoodItems.getModel();
+
+        if (dtm.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "No food items selected to be distributed");
+            return;
+        }
+
+        ArrayList<RequestItem> requestList = new ArrayList();
+        for (int i = 0; i < dtm.getRowCount(); i++) {
+            String food = (String) dtm.getValueAt(i, 0);
+            int quantity = (Integer) dtm.getValueAt(i, 1);
+            int hours = (Integer) dtm.getValueAt(i, 2);
+
+            RequestItem ri = new RequestItem(food, quantity, hours);
+            requestList.add(ri);
+        }
+
+        CollectionWorkRequest request = new CollectionWorkRequest();
+        request.setSender(account);
+        request.setMessage(message);
+        request.setRequestItems(requestList);
+        request.setStatus(RequestStatus.getPickupStatusMessage(1));
+        request.setTotalQuantity(FoodQuantity.calculateQuantity(request.getRequestItems()));
+        request.setRaisedBy(account);
+        request.setRaisedByDairy(enterpriseName);
+
+        for (Enterprise e : network.getEnterpriseDirectory().getEnterpriseList()) {
+            for (Organization o : e.getOrganizationDirectory().getOrganizationList()) {
+                if (o instanceof NGOManagerOrganization) {
+                    o.getWorkQueue().getWorkRequestList().add(request);
+                }
+            }
+        }
+
+        account.getWorkQueue().getWorkRequestList().add(request);
+        JOptionPane.showMessageDialog(null, "Request raised with NGO for further processing", "Information", JOptionPane.INFORMATION_MESSAGE);
+        dtm.setRowCount(0);
+
+        txtMessage.setText("");
     }//GEN-LAST:event_btnRaiseRequestActionPerformed
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
-       
+        int selectedRow = tblFoodItems.getSelectedRow();
+        if (selectedRow < 0) {
+            JOptionPane.showMessageDialog(null,
+                "Please select an item to be removed",
+                "Warning",
+                JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        DefaultTableModel dtm = (DefaultTableModel) tblFoodItems.getModel();
+        dtm.removeRow(selectedRow);
 
     }//GEN-LAST:event_btnRemoveActionPerformed
 

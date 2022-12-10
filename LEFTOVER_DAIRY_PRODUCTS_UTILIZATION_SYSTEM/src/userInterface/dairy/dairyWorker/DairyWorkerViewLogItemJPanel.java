@@ -1,19 +1,27 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
+
 package userInterface.dairy.dairyWorker;
+
+import business.util.request.RequestItem;
+import business.workQueue.CollectionWorkRequest;
+import java.awt.CardLayout;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 
 public class DairyWorkerViewLogItemJPanel extends javax.swing.JPanel {
     
- 
+    private JPanel userProcessContainer;
+    private CollectionWorkRequest collectionWorkRequest;
+
     /**
      * Creates new form DairyWorkerViewLogItemJPanel
      */
-    public DairyWorkerViewLogItemJPanel() {
+    public DairyWorkerViewLogItemJPanel(JPanel userProcessContainer, CollectionWorkRequest collectionWorkRequest) {
         initComponents();
-       
+        this.userProcessContainer = userProcessContainer;
+        this.collectionWorkRequest = collectionWorkRequest;
+        populateItemTable();
+        populateData();
     }
 
     /**
@@ -41,7 +49,7 @@ public class DairyWorkerViewLogItemJPanel extends javax.swing.JPanel {
         lblRequestDate = new javax.swing.JLabel();
         lblQuantity = new javax.swing.JLabel();
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(255, 204, 153));
 
         lblHeader.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lblHeader.setText("Dairy Worker Work Area - Collection Request");
@@ -187,11 +195,38 @@ public class DairyWorkerViewLogItemJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-       
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        userProcessContainer.remove(this);
+        layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
 
     
-    
+    public void populateItemTable() {
+        DefaultTableModel dtm = (DefaultTableModel) tblFoodItems.getModel();
+        dtm.setRowCount(0);
+
+        for (RequestItem ri : collectionWorkRequest.getRequestItems()) {
+            Object row[] = new Object[2];
+            row[0] = ri;
+            row[1] = ri.getQuantity();
+
+            dtm.addRow(row);
+        }
+    }
+
+    public void populateData() {
+
+        lblRequestDateVal.setText(collectionWorkRequest.getRequestDate() + "");
+        lblRequestStatusVal.setText(collectionWorkRequest.getStatus());
+        lblQuantityVal.setText(collectionWorkRequest.getTotalQuantity() + " pounds");
+
+        String ngo = collectionWorkRequest.getDeliverToNGO() == null ? "Undelivered" : collectionWorkRequest.getDeliverToNGO();
+        lblNGOVal.setText(ngo);
+
+        String logistics = collectionWorkRequest.getDeliveredByLogistics() == null ? "Undelivered" : collectionWorkRequest.getDeliveredByLogistics();
+        lblLogisticsVal.setText(logistics);
+
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
