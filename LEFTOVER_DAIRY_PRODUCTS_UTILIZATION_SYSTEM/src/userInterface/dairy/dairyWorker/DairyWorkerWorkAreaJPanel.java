@@ -4,17 +4,32 @@
  */
 package userInterface.dairy.dairyWorker;
 
+import business.enterprise.Enterprise;
+import business.network.Network;
+import business.userAccount.UserAccount;
+import business.workQueue.CollectionWorkRequest;
+import business.workQueue.WorkRequest;
+import java.awt.CardLayout;
+import javax.swing.JPanel;
 
 public class DairyWorkerWorkAreaJPanel extends javax.swing.JPanel {
     
-   
+    private JPanel userProcessContainer;
+    private UserAccount account;
+    private Enterprise enterprise;
+    private Network network;
 
     /**
      * Creates new form DairyWorkerWorkAreaJPanel
      */
-    public DairyWorkerWorkAreaJPanel() {
+    public DairyWorkerWorkAreaJPanel(JPanel userProcessContainer, UserAccount account, Enterprise enterprise, Network network) {
         initComponents();
-      
+        this.userProcessContainer = userProcessContainer;
+        this.account = account;
+        this.enterprise = enterprise;
+        this.network = network;
+
+        populateLoginDetails();
     }
 
     /**
@@ -34,7 +49,7 @@ public class DairyWorkerWorkAreaJPanel extends javax.swing.JPanel {
         btnCollectionReq = new javax.swing.JButton();
         btnLog = new javax.swing.JButton();
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(255, 204, 153));
 
         lblHeader.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lblHeader.setText("Dairy Worker Work Area");
@@ -73,7 +88,7 @@ public class DairyWorkerWorkAreaJPanel extends javax.swing.JPanel {
                             .addComponent(lblName))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btnLog, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnLog, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
                             .addComponent(lblWastageValue, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnCollectionReq, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(116, 116, 116))
@@ -119,14 +134,30 @@ public class DairyWorkerWorkAreaJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCollectionReqActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCollectionReqActionPerformed
-       
+        DairyWorkerRaiseRequestJPanel dairyWorkerRaiseRequestJPanel = new DairyWorkerRaiseRequestJPanel(userProcessContainer, account, enterprise.getName(), network);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        userProcessContainer.add("DairyWorkerRaiseRequestJPanel", dairyWorkerRaiseRequestJPanel);
+        layout.next(userProcessContainer);
     }//GEN-LAST:event_btnCollectionReqActionPerformed
 
     private void btnLogActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogActionPerformed
-        
+        DairyWorkerViewRequestLogJPanel dairyWorkerViewRequestLogJPanel = new DairyWorkerViewRequestLogJPanel(userProcessContainer, account);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        userProcessContainer.add("DairyWorkerViewRequestLogJPanel", dairyWorkerViewRequestLogJPanel);
+        layout.next(userProcessContainer);
     }//GEN-LAST:event_btnLogActionPerformed
 
-   
+    private void populateLoginDetails() {
+        double quantity = 0;
+        lblName.setText(lblName.getText() + " " + account.getEmployee().getName());
+        for (WorkRequest wr : account.getWorkQueue().getWorkRequestList()) {
+            if (wr instanceof CollectionWorkRequest) {
+                CollectionWorkRequest cwr = (CollectionWorkRequest) wr;
+                quantity += cwr.getTotalQuantity();
+            }
+        }
+        lblWastageValue.setText(quantity + " pounds");
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCollectionReq;

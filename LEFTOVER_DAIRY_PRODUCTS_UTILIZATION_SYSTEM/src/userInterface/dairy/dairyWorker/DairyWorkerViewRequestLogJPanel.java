@@ -4,19 +4,47 @@
  */
 package userInterface.dairy.dairyWorker;
 
-
-
+import business.userAccount.UserAccount;
+import business.workQueue.CollectionWorkRequest;
+import business.workQueue.WorkRequest;
+import java.awt.CardLayout;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 public class DairyWorkerViewRequestLogJPanel extends javax.swing.JPanel {
     
-    
-    public DairyWorkerViewRequestLogJPanel() {
+    private JPanel userProcessContainer;
+    private UserAccount account;
+
+    /**
+     * Creates new form DairyWorkerViewRequestLogJPanel
+     */
+    public DairyWorkerViewRequestLogJPanel(JPanel userProcessContainer, UserAccount account) {
         initComponents();
         
-       
+        this.userProcessContainer = userProcessContainer;
+        this.account = account;
+        
+        populateTable();
     }
     
-   
+    public void populateTable() {
+        DefaultTableModel dtm = (DefaultTableModel) tblLog.getModel();
+        dtm.setRowCount(0);
+
+        for (WorkRequest wr : account.getWorkQueue().getWorkRequestList()) {
+            CollectionWorkRequest cwr = (CollectionWorkRequest) wr;
+
+            Object row[] = new Object[4];
+            row[0] = cwr.getRequestDate();
+            row[1] = cwr;
+            row[2] = cwr.getTotalQuantity();
+            row[3] = cwr.getDeliverToNGO() == null ? "Undelivered" : cwr.getDeliverToNGO();
+
+            dtm.addRow(row);
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -34,7 +62,7 @@ public class DairyWorkerViewRequestLogJPanel extends javax.swing.JPanel {
         btnBack = new javax.swing.JButton();
         btnViewRequestItem = new javax.swing.JButton();
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(255, 204, 153));
 
         lblHeader.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lblHeader.setText("Dairy Worker Work Area - Request Log");
@@ -127,12 +155,27 @@ public class DairyWorkerViewRequestLogJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-      
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        userProcessContainer.remove(this);
+        layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnViewRequestItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewRequestItemActionPerformed
 
-        
+        int selectedRow = tblLog.getSelectedRow();
+        if (selectedRow < 0) {
+            JOptionPane.showMessageDialog(null,
+                "Please select a request item to view details",
+                "Information",
+                JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            CollectionWorkRequest cwr = (CollectionWorkRequest) tblLog.getValueAt(selectedRow, 1);
+
+            DairyWorkerViewLogItemJPanel dairyWorkerViewLogItemJPanel = new DairyWorkerViewLogItemJPanel(userProcessContainer, cwr);
+            CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+            userProcessContainer.add("DairyWorkerViewLogItemJPanel", dairyWorkerViewLogItemJPanel);
+            layout.next(userProcessContainer);
+        }
     }//GEN-LAST:event_btnViewRequestItemActionPerformed
 
 
