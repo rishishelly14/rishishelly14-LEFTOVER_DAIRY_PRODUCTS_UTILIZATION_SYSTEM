@@ -1,9 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package userInterface.ngo.ngoManager;
+
+import business.enterprise.Enterprise;
+import business.enterprise.NGOEnterprise;
+import business.network.Network;
+import business.userAccount.UserAccount;
+import business.util.food.FoodQuantity;
+import business.util.request.RequestItem;
+import java.awt.CardLayout;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 
 public class NGOWorkerViewInventoryJPanel extends javax.swing.JPanel {
@@ -11,10 +18,18 @@ public class NGOWorkerViewInventoryJPanel extends javax.swing.JPanel {
     /**
      * Creates new form ViewInventoryJPanel
      */
+    private JPanel userProcessContainer;
+    private NGOEnterprise enterprise;
+    private UserAccount account;
+    private Network network;
 
-    public NGOWorkerViewInventoryJPanel() {
+    public NGOWorkerViewInventoryJPanel(JPanel userProcessContainer, Enterprise enterprise, UserAccount account, Network network) {
         initComponents();
-  
+        this.userProcessContainer = userProcessContainer;
+        this.enterprise = (NGOEnterprise) enterprise;;
+        this.account = account;
+        this.network = network;
+        populateTable();
     }
 
     /**
@@ -34,7 +49,7 @@ public class NGOWorkerViewInventoryJPanel extends javax.swing.JPanel {
         lblQuantityVal = new javax.swing.JLabel();
         btnShortage = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(204, 255, 204));
 
         tblInventory.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -127,11 +142,16 @@ public class NGOWorkerViewInventoryJPanel extends javax.swing.JPanel {
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-
+        userProcessContainer.remove(this);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnShortageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShortageActionPerformed
-   
+        NGOManagerRaiseShortageRequestJPanel ngoRequestJPanel = new NGOManagerRaiseShortageRequestJPanel(userProcessContainer, account, enterprise, network);
+        userProcessContainer.add("NGORequestJPanel", ngoRequestJPanel);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
     }//GEN-LAST:event_btnShortageActionPerformed
 
 
@@ -145,5 +165,29 @@ public class NGOWorkerViewInventoryJPanel extends javax.swing.JPanel {
     private javax.swing.JTable tblInventory;
     // End of variables declaration//GEN-END:variables
 
-   
+    private void populateTable() {
+        DefaultTableModel dtm = (DefaultTableModel) tblInventory.getModel();
+        dtm.setRowCount(0);
+
+        double amount = 0;
+
+        for (RequestItem ri : enterprise.getInventory().getRequestItemList()) {
+            if (ri.getHoursToPerish() > 0 && ri.getQuantity() > 0) {
+                Object row[] = new Object[3];
+
+                row[0] = ri;
+                row[1] = ri.getQuantity();
+                row[2] = ri.getHoursToPerish();
+                dtm.addRow(row);
+
+                amount += FoodQuantity.getQuantity(ri.getFoodName()) * ri.getQuantity();
+            }
+        }
+
+        //Enable sorting
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<DefaultTableModel>(dtm);
+        tblInventory.setRowSorter(sorter);
+
+        lblQuantityVal.setText(amount + " pounds");
+    }
 }

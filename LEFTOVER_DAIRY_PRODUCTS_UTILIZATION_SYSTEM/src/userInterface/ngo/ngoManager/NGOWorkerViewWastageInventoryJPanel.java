@@ -1,20 +1,29 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package userInterface.ngo.ngoManager;
+
+import business.enterprise.Enterprise;
+import business.enterprise.NGOEnterprise;
+import business.util.food.FoodQuantity;
+import business.util.request.RequestItem;
+import java.awt.CardLayout;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
+
 
 public class NGOWorkerViewWastageInventoryJPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form ViewInventoryJPanel
      */
+    private JPanel userProcessContainer;
+    private NGOEnterprise enterprise;
 
-
-    public NGOWorkerViewWastageInventoryJPanel() {
+    public NGOWorkerViewWastageInventoryJPanel(JPanel userProcessContainer, Enterprise enterprise) {
         initComponents();
-
+        this.userProcessContainer = userProcessContainer;
+        this.enterprise = (NGOEnterprise) enterprise;
+        populateTable();
     }
 
     /**
@@ -33,7 +42,7 @@ public class NGOWorkerViewWastageInventoryJPanel extends javax.swing.JPanel {
         lblQuantity = new javax.swing.JLabel();
         lblQuantityVal = new javax.swing.JLabel();
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(204, 255, 204));
 
         tblInventory.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -114,7 +123,9 @@ public class NGOWorkerViewWastageInventoryJPanel extends javax.swing.JPanel {
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-
+        userProcessContainer.remove(this);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
 
 
@@ -127,4 +138,29 @@ public class NGOWorkerViewWastageInventoryJPanel extends javax.swing.JPanel {
     private javax.swing.JTable tblInventory;
     // End of variables declaration//GEN-END:variables
 
+    private void populateTable() {
+        DefaultTableModel dtm = (DefaultTableModel) tblInventory.getModel();
+        dtm.setRowCount(0);
+
+        double amount = 0;
+
+        for (RequestItem ri : enterprise.getWasteInventory().getRequestItemList()) {
+            if (ri.getQuantity() > 0) {
+                Object row[] = new Object[3];
+
+                row[0] = ri;
+                row[1] = ri.getQuantity();
+                row[2] = FoodQuantity.calculateIndividualQuantity(ri) + "";
+                dtm.addRow(row);
+
+                amount += FoodQuantity.getQuantity(ri.getFoodName()) * ri.getQuantity();
+            }
+        }
+
+        //Enable sorting
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<DefaultTableModel>(dtm);
+        tblInventory.setRowSorter(sorter);
+
+        lblQuantityVal.setText(amount + " pounds");
+    }
 }
