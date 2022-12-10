@@ -1,20 +1,57 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package userInterface.logistics.logisticsWorker;
+
+import business.userAccount.UserAccount;
+import business.util.request.RequestItem;
+import business.util.request.RequestStatus;
+import business.workQueue.CollectionWorkRequest;
+import java.awt.CardLayout;
+import java.util.Date;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 
 public class LogisticsWorkerPickUpDetailsJPanel extends javax.swing.JPanel {
 
-   
-    public LogisticsWorkerPickUpDetailsJPanel() {
+    /**
+     * Creates new form LogisticsWorkerPickUpDetailsJPanel
+     */
+    private JPanel userProcessContainer;
+    private UserAccount account;
+    private CollectionWorkRequest request;
+    private Date date;
+
+    public LogisticsWorkerPickUpDetailsJPanel(JPanel userProcessContainer, UserAccount account, CollectionWorkRequest request) {
         initComponents();
-      
+        this.userProcessContainer = userProcessContainer;
+        this.account = account;
+        this.request = request;
+        date = new Date();
+        populateData();
+        populateTable();
     }
 
-   
+    public void populateData() {
+        lblRequestedByValue.setText(request.getRaisedBy().getEmployee().getName() + " - " + request.getRaisedByDairy());
+        lblDeliveredValue.setText(request.getDeliverTo().getEmployee().getName() + " - " + request.getDeliverToNGO());
+        lblWeightValue.setText(request.getTotalQuantity() + " pounds");
+        lblDateValue.setText(date + "");
+    }
+
+    private void populateTable() {
+        DefaultTableModel dtm = (DefaultTableModel) tblDetails.getModel();
+        dtm.setRowCount(0);
+
+        for (RequestItem ri : request.getRequestItems()) {
+            Object row[] = new Object[3];
+            row[0] = ri;
+            row[1] = ri.getQuantity();
+            row[2] = ri.getHoursToPerish();
+
+            dtm.addRow(row);
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -40,7 +77,7 @@ public class LogisticsWorkerPickUpDetailsJPanel extends javax.swing.JPanel {
         lblDate = new javax.swing.JLabel();
         lblDateValue = new javax.swing.JLabel();
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(255, 255, 204));
 
         lblHeader.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lblHeader.setText("Logistics Worker - Pick Up ");
@@ -59,7 +96,7 @@ public class LogisticsWorkerPickUpDetailsJPanel extends javax.swing.JPanel {
             }
         });
 
-        pnlDeliveryDetails.setBackground(new java.awt.Color(255, 255, 255));
+        pnlDeliveryDetails.setBackground(new java.awt.Color(255, 255, 204));
         pnlDeliveryDetails.setBorder(javax.swing.BorderFactory.createTitledBorder("Pickup Details"));
 
         lblRequestedBy.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -189,11 +226,18 @@ public class LogisticsWorkerPickUpDetailsJPanel extends javax.swing.JPanel {
 
     private void btnConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmActionPerformed
 
-       
+        request.setSender(account);
+        request.setStatus(RequestStatus.getPickupStatusMessage(4));
+        request.setReceiver(request.getDeliverTo());
+        JOptionPane.showMessageDialog(null, "Pickup done from dairy", "Information", JOptionPane.INFORMATION_MESSAGE);
+
+        btnConfirm.setEnabled(false);
     }//GEN-LAST:event_btnConfirmActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-      
+        userProcessContainer.remove(this);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
 
 

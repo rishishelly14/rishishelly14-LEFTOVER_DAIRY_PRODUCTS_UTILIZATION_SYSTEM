@@ -1,18 +1,28 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package userInterface.logistics.logisticsWorker;
 
+import business.enterprise.Enterprise;
+import business.network.Network;
+import business.userAccount.UserAccount;
+import java.awt.CardLayout;
+import javax.swing.JPanel;
 
 public class LogisticsWorkerWorkAreaJPanel extends javax.swing.JPanel {
 
-   
+    /**
+     * Creates new form LogisticsWorkerJPanel
+     */
+    private JPanel userProcessContainer;
+    private UserAccount account;
+    private Enterprise enterprise;
+    private Network network;
 
-    public LogisticsWorkerWorkAreaJPanel() {
+    public LogisticsWorkerWorkAreaJPanel(JPanel userProcessContainer, UserAccount account, Enterprise enterprise, Network network) {
         initComponents();
-       
+        this.userProcessContainer = userProcessContainer;
+        this.account = account;
+        this.enterprise = enterprise;
+        this.network = network;
+        lblName.setText(account.getEmployee().getName());
     }
 
     /**
@@ -30,7 +40,7 @@ public class LogisticsWorkerWorkAreaJPanel extends javax.swing.JPanel {
         btnPickup = new javax.swing.JButton();
         btnDelivery = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(255, 255, 204));
 
         lblHeader.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lblHeader.setText("Logistics Worker - Work Area");
@@ -88,12 +98,18 @@ public class LogisticsWorkerWorkAreaJPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnDeliveryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeliveryActionPerformed
-       
+        LogisticsWorkerDeliveryJPanel logsiticsWorkerDeliveryJPanel = new LogisticsWorkerDeliveryJPanel(userProcessContainer, account, enterprise, network);
+        userProcessContainer.add("LogsiticsWorkerDeliveryJPanel", logsiticsWorkerDeliveryJPanel);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
     }//GEN-LAST:event_btnDeliveryActionPerformed
 
     private void btnPickupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPickupActionPerformed
 
-       
+        LogisticsWorkerPickUpJPanel logisticsWorkerPickUpJPanel = new LogisticsWorkerPickUpJPanel(userProcessContainer, account);
+        userProcessContainer.add("LogisticsWorkerPickUpJPanel", logisticsWorkerPickUpJPanel);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
 
     }//GEN-LAST:event_btnPickupActionPerformed
 

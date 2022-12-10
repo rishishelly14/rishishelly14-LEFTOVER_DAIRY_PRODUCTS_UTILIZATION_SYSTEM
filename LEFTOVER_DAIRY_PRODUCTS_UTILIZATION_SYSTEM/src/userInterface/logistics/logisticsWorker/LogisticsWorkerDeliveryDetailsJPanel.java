@@ -1,20 +1,67 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package userInterface.logistics.logisticsWorker;
+
+import business.enterprise.Enterprise;
+import business.network.Network;
+import business.organization.Organization;
+import business.organization.ngo.NGOWorkerOrganization;
+import business.userAccount.UserAccount;
+import business.util.request.RequestItem;
+import business.util.request.RequestStatus;
+import business.util.validation.Validation;
+import business.workQueue.CollectionWorkRequest;
+import java.awt.CardLayout;
+import java.util.Date;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 
 public class LogisticsWorkerDeliveryDetailsJPanel extends javax.swing.JPanel {
 
-   
-    public LogisticsWorkerDeliveryDetailsJPanel() {
+    /**
+     * Creates new form LogisticsWorkerDeliverJPanel
+     */
+    private JPanel userProcessContainer;
+    private UserAccount account;
+    private Enterprise enterprise;
+    private Date date;
+    private CollectionWorkRequest request;
+    private Network network;
+
+    public LogisticsWorkerDeliveryDetailsJPanel(JPanel userProcessContainer, UserAccount account, Enterprise enterprise, CollectionWorkRequest request, Network network) {
         initComponents();
-       
+        this.userProcessContainer = userProcessContainer;
+        this.account = account;
+        this.request = request;
+        this.enterprise = enterprise;
+        this.network = network;
+        date = new Date();
+        populateDetails();
     }
 
-   
+    public void populateDetails() {
+        lblRequestedByValue.setText(request.getRaisedBy().getEmployee().getName() + " - " + request.getRaisedByDairy());
+        lblDeliveredValue.setText(request.getDeliverTo().getEmployee().getName());
+        populateTable();
+        lblWeightValue.setText(request.getTotalQuantity() + " pounds");
+        lblDateValue.setText(date + "");
+    }
+
+    private void populateTable() {
+        DefaultTableModel dtm = (DefaultTableModel) tblDetails.getModel();
+        dtm.setRowCount(0);
+
+        for (RequestItem ri : request.getRequestItems()) {
+            Object row[] = new Object[3];
+            row[0] = ri;
+            row[1] = ri.getQuantity();
+            row[2] = ri.getHoursToPerish();
+
+            dtm.addRow(row);
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -42,7 +89,7 @@ public class LogisticsWorkerDeliveryDetailsJPanel extends javax.swing.JPanel {
         lblDate = new javax.swing.JLabel();
         lblDateValue = new javax.swing.JLabel();
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(255, 255, 204));
 
         lblHeader.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lblHeader.setText("Logistics Worker - Confirm Delivery");
@@ -69,7 +116,7 @@ public class LogisticsWorkerDeliveryDetailsJPanel extends javax.swing.JPanel {
             }
         });
 
-        pnlDeliveryDetails.setBackground(new java.awt.Color(255, 255, 255));
+        pnlDeliveryDetails.setBackground(new java.awt.Color(255, 255, 204));
         pnlDeliveryDetails.setBorder(javax.swing.BorderFactory.createTitledBorder("Delivery Details"));
 
         lblRequestedBy.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -215,11 +262,50 @@ public class LogisticsWorkerDeliveryDetailsJPanel extends javax.swing.JPanel {
 
     private void btnConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmActionPerformed
 
-      
+        Double cost = 0d;
+        if (Validation.validateNumericalInput(txtCost, 2)) {
+            cost = Double.parseDouble(txtCost.getText());
+        } else {
+            return;
+        }
+
+        if (cost <= 0) {
+            JOptionPane.showMessageDialog(null,
+                    "Enter a valid cost",
+                    "Warning",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        request.setStatus(RequestStatus.getPickupStatusMessage(5));
+        request.setDeliveredBy(account);
+        request.setDeliveryCost(cost);
+        request.setDeliveredByLogistics(enterprise.getName());
+        request.setPaid(false);
+        request.setResolveDate(new Date());
+
+        // Assign to NGO Worker's queue who was assigned for pickup
+        for (Enterprise e : network.getEnterpriseDirectory().getEnterpriseList()) {
+            for (Organization o : e.getOrganizationDirectory().getOrganizationList()) {
+                if (o instanceof NGOWorkerOrganization) {
+                    for (UserAccount ua : o.getUserAccountDirectory().getUserAccountList()) {
+                        if (request.getDeliverTo() == ua) {
+                            ua.getWorkQueue().getWorkRequestList().add(request);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        JOptionPane.showMessageDialog(null, "Delivery done", "Information", JOptionPane.INFORMATION_MESSAGE);
+        populateTable();
+        btnConfirm.setEnabled(false);
     }//GEN-LAST:event_btnConfirmActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-      
+        userProcessContainer.remove(this);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
 
 

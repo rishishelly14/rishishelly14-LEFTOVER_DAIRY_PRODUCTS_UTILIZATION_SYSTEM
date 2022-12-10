@@ -1,21 +1,51 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package userInterface.logistics.logisticsWorker;
+
+import business.userAccount.UserAccount;
+import business.util.request.RequestStatus;
+import business.workQueue.CollectionWorkRequest;
+import business.workQueue.WorkRequest;
+import java.awt.CardLayout;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 
 public class LogisticsWorkerPickUpJPanel extends javax.swing.JPanel {
 
-    
+    /**
+     * Creates new form LogisticsWorkerPickUpJPanel
+     */
+    private JPanel userProcessContainer;
+    private UserAccount account;
 
-    public LogisticsWorkerPickUpJPanel() {
+    public LogisticsWorkerPickUpJPanel(JPanel userProcessContainer, UserAccount account) {
         initComponents();
-       
+        this.userProcessContainer = userProcessContainer;
+        this.account = account;
+        populateTable();
     }
 
-    
+    private void populateTable() {
+
+        DefaultTableModel dtm = (DefaultTableModel) tblLogisticsWorker.getModel();
+        dtm.setRowCount(0);
+        for (WorkRequest workRequest : account.getWorkQueue().getWorkRequestList()) {
+            if (workRequest instanceof CollectionWorkRequest) {
+                CollectionWorkRequest cwr = (CollectionWorkRequest) workRequest;
+
+                Object row[] = new Object[6];
+
+                row[0] = cwr.getRequestDate();
+                row[1] = cwr.getRaisedByDairy();
+                row[2] = cwr.getRaisedBy().getUsername();
+                row[3] = cwr.getTotalQuantity() + " pounds";
+                row[4] = cwr.getDeliverToNGO();
+                row[5] = cwr;
+
+                dtm.addRow(row);
+            }
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -33,7 +63,7 @@ public class LogisticsWorkerPickUpJPanel extends javax.swing.JPanel {
         lblName = new javax.swing.JLabel();
         btnBack = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(255, 255, 204));
 
         tblLogisticsWorker.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -114,11 +144,36 @@ public class LogisticsWorkerPickUpJPanel extends javax.swing.JPanel {
 
     private void btnPickupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPickupActionPerformed
 
-       
+        int selectedRow = tblLogisticsWorker.getSelectedRow();
+        if (selectedRow < 0) {
+            JOptionPane.showMessageDialog(null,
+                    "Please select a request item to pickup",
+                    "Warning",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        } else {
+            CollectionWorkRequest request = (CollectionWorkRequest) tblLogisticsWorker.getValueAt(selectedRow, 5);
+            if (request.getStatus().equals(RequestStatus.getPickupStatusMessage(3))) {
+
+                LogisticsWorkerPickUpDetailsJPanel logisticsWorkerPickUpDetailsJPanel = new LogisticsWorkerPickUpDetailsJPanel(userProcessContainer, account, request);
+                userProcessContainer.add("LogisticsWorkerPickUpDetailsJPanel", logisticsWorkerPickUpDetailsJPanel);
+                CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+                layout.next(userProcessContainer);
+
+            } else {
+                JOptionPane.showMessageDialog(null,
+                        "Pick-up already completed",
+                        "Warning",
+                        JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+        }
     }//GEN-LAST:event_btnPickupActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-     
+        userProcessContainer.remove(this);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
 
 
