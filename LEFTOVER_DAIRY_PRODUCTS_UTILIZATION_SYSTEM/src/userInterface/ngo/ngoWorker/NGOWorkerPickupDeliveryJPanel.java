@@ -1,9 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package userInterface.ngo.ngoWorker;
+
+import business.enterprise.Enterprise;
+import business.enterprise.NGOEnterprise;
+import business.userAccount.UserAccount;
+import business.util.request.RequestItem;
+import business.util.request.RequestStatus;
+import business.workQueue.CollectionWorkRequest;
+import business.workQueue.WorkRequest;
+import java.awt.CardLayout;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 
 public class NGOWorkerPickupDeliveryJPanel extends javax.swing.JPanel {
@@ -11,11 +19,16 @@ public class NGOWorkerPickupDeliveryJPanel extends javax.swing.JPanel {
     /**
      * Creates new form NGOWorkerPickupDeliveryJPanel
      */
+    private JPanel userProcessContainer;
+    private UserAccount account;
+    private NGOEnterprise enterprise;
 
-
-    public NGOWorkerPickupDeliveryJPanel() {
+    public NGOWorkerPickupDeliveryJPanel(JPanel userProcessContainer, UserAccount account, Enterprise enterprise) {
         initComponents();
-
+        this.userProcessContainer = userProcessContainer;
+        this.account = account;
+        this.enterprise = (NGOEnterprise) enterprise;
+        populateTable();
     }
 
     /**
@@ -34,7 +47,7 @@ public class NGOWorkerPickupDeliveryJPanel extends javax.swing.JPanel {
         btnView = new javax.swing.JButton();
         btnBack = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(204, 255, 204));
 
         tblDetails.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -117,17 +130,58 @@ public class NGOWorkerPickupDeliveryJPanel extends javax.swing.JPanel {
 
     private void btnCollectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCollectActionPerformed
         // TODO add your handling code here:
-  
+        int selectedRow = tblDetails.getSelectedRow();
+        if (selectedRow < 0) {
+            JOptionPane.showMessageDialog(null,
+                    "Please select a request item to work",
+                    "Warning",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        } else {
+            CollectionWorkRequest request = (CollectionWorkRequest) tblDetails.getValueAt(selectedRow, 1);
+            if (request.getStatus().equals(RequestStatus.getPickupStatusMessage(5))) {
+
+                request.setStatus(RequestStatus.getPickupStatusMessage(6));
+                for (RequestItem ri : request.getRequestItems()) {
+                    enterprise.getInventory().addRequestItem(ri);
+                }
+
+                JOptionPane.showMessageDialog(null, "Added to inventory", "Information", JOptionPane.INFORMATION_MESSAGE);
+                populateTable();
+            } else {
+                JOptionPane.showMessageDialog(null,
+                        "Request already processed by you",
+                        "Warning",
+                        JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+        }
     }//GEN-LAST:event_btnCollectActionPerformed
 
     private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
         // TODO add your handling code here:
-  
+        int selectedRow = tblDetails.getSelectedRow();
+        if (selectedRow < 0) {
+            JOptionPane.showMessageDialog(null,
+                    "Please select a request item to work",
+                    "Warning",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        } else {
+            CollectionWorkRequest request = (CollectionWorkRequest) tblDetails.getValueAt(selectedRow, 1);
+
+            NGOWorkerViewRequestJPanel nGOWorkerViewRequestJPanel = new NGOWorkerViewRequestJPanel(userProcessContainer, request);
+            userProcessContainer.add("NGOWorkerViewRequestJPanel", nGOWorkerViewRequestJPanel);
+            CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+            layout.next(userProcessContainer);
+        }
     }//GEN-LAST:event_btnViewActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-  
+        userProcessContainer.remove(this);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
 
 
@@ -140,5 +194,15 @@ public class NGOWorkerPickupDeliveryJPanel extends javax.swing.JPanel {
     private javax.swing.JTable tblDetails;
     // End of variables declaration//GEN-END:variables
 
-
+    private void populateTable() {
+        DefaultTableModel dtm = (DefaultTableModel) tblDetails.getModel();
+        dtm.setRowCount(0);
+        for (WorkRequest workRequest : account.getWorkQueue().getWorkRequestList()) {
+            CollectionWorkRequest cwr = (CollectionWorkRequest) workRequest;
+            Object row[] = new Object[2];
+            row[0] = cwr.getRaisedByDairy();
+            row[1] = cwr;
+            dtm.addRow(row);
+        }
+    }
 }
