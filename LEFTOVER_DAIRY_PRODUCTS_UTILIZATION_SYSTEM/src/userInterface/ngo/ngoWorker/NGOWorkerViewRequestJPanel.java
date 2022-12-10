@@ -1,9 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package userInterface.ngo.ngoWorker;
+
+import business.util.request.RequestItem;
+import business.workQueue.CollectionWorkRequest;
+import java.awt.CardLayout;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 
 public class NGOWorkerViewRequestJPanel extends javax.swing.JPanel {
@@ -11,11 +13,15 @@ public class NGOWorkerViewRequestJPanel extends javax.swing.JPanel {
     /**
      * Creates new form NGOWorkerViewRequestJPanel
      */
+    private JPanel userProcessContainer;
+    private CollectionWorkRequest request;
 
-
-    NGOWorkerViewRequestJPanel() {
+    NGOWorkerViewRequestJPanel(JPanel userProcessContainer, CollectionWorkRequest request) {
         initComponents();
- 
+        this.userProcessContainer = userProcessContainer;
+        this.request = request;
+        populateTable();
+        populateData();
     }
 
     /**
@@ -42,7 +48,7 @@ public class NGOWorkerViewRequestJPanel extends javax.swing.JPanel {
         lblRequestStatus = new javax.swing.JLabel();
         lblRequestFrom = new javax.swing.JLabel();
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(204, 255, 204));
 
         tblDetails.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -170,7 +176,9 @@ public class NGOWorkerViewRequestJPanel extends javax.swing.JPanel {
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-
+        userProcessContainer.remove(this);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.previous(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
 
 
@@ -191,5 +199,31 @@ public class NGOWorkerViewRequestJPanel extends javax.swing.JPanel {
     private javax.swing.JTable tblDetails;
     // End of variables declaration//GEN-END:variables
 
-  
+    private void populateTable() {
+        DefaultTableModel dtm = (DefaultTableModel) tblDetails.getModel();
+        dtm.setRowCount(0);
+
+        for (RequestItem ri : request.getRequestItems()) {
+
+            Object row[] = new Object[3];
+            row[0] = ri;
+            row[1] = ri.getQuantity() == 0 ? "Sold Out" : ri.getQuantity();
+            row[2] = ri.getHoursToPerish();
+
+            dtm.addRow(row);
+        }
+    }
+
+    private void populateData() {
+
+        String status = request.getStatus();
+
+        lblRequestStatusVal.setText(status);
+        lblRequestFromVal.setText(request.getRaisedByDairy());
+        lblRequestDateVal.setText(request.getRequestDate() + "");
+        lblQuantityVal.setText(request.getTotalQuantity() + " pounds");
+
+        String cost = request.getDeliveryCost() == 0 ? "Undelivered" : "$" + request.getDeliveryCost();
+        lblCostVal.setText(cost);
+    }
 }

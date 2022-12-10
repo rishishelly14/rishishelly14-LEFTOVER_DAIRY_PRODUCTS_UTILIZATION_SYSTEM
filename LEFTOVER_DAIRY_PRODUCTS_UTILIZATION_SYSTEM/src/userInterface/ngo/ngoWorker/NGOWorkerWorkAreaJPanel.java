@@ -1,9 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package userInterface.ngo.ngoWorker;
+
+import business.EcoSystem;
+import business.enterprise.Enterprise;
+import business.organization.Organization;
+import business.userAccount.UserAccount;
+import java.awt.CardLayout;
+import javax.swing.JPanel;
 
 
 public class NGOWorkerWorkAreaJPanel extends javax.swing.JPanel {
@@ -11,10 +14,19 @@ public class NGOWorkerWorkAreaJPanel extends javax.swing.JPanel {
     /**
      * Creates new form RegionWorkerJPanel
      */
+    private JPanel userProcessContainer;
+    private UserAccount account;
+    private Organization organization;
+    private Enterprise enterprise;
+    private EcoSystem business;
 
-
-    public NGOWorkerWorkAreaJPanel() {
+    public NGOWorkerWorkAreaJPanel(JPanel userProcessContainer, UserAccount account, Organization organization, Enterprise enterprise, EcoSystem business) {
         initComponents();
+        this.userProcessContainer = userProcessContainer;
+        this.business = business;
+        this.account = account;
+        this.organization = organization;
+        this.enterprise = enterprise;
     }
 
     /**
@@ -31,7 +43,7 @@ public class NGOWorkerWorkAreaJPanel extends javax.swing.JPanel {
         btnUpdateInventory = new javax.swing.JButton();
         btnDistributeFood = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(204, 255, 204));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setText("NGO Worker WorkArea Panel");
@@ -91,17 +103,26 @@ public class NGOWorkerWorkAreaJPanel extends javax.swing.JPanel {
 
     private void btnViewInventoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewInventoryActionPerformed
         // TODO add your handling code here:
-
+        NGOWorkerViewInventoryJPanel nGOWorkerInventoryUpdateJPanel = new NGOWorkerViewInventoryJPanel(userProcessContainer, enterprise);
+        userProcessContainer.add("NGOWorkerInventoryUpdateJPanel", nGOWorkerInventoryUpdateJPanel);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
     }//GEN-LAST:event_btnViewInventoryActionPerformed
 
     private void btnUpdateInventoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateInventoryActionPerformed
         // TODO add your handling code here:
- 
+        NGOWorkerPickupDeliveryJPanel nGOWorkerInventoryUpdateJPanel = new NGOWorkerPickupDeliveryJPanel(userProcessContainer, account, enterprise);
+        userProcessContainer.add("NGOWorkerUpdateInventoryJPanel", nGOWorkerInventoryUpdateJPanel);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
     }//GEN-LAST:event_btnUpdateInventoryActionPerformed
 
     private void btnDistributeFoodActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDistributeFoodActionPerformed
         // TODO add your handling code here:
-
+        NGOWorkerDistributeFoodJPanel distributeFoodJPanel = new NGOWorkerDistributeFoodJPanel(userProcessContainer, enterprise);
+        userProcessContainer.add("DistributeFoodJPanel", distributeFoodJPanel);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.next(userProcessContainer);
     }//GEN-LAST:event_btnDistributeFoodActionPerformed
 
 
