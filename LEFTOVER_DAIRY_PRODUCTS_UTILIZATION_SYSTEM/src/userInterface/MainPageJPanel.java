@@ -22,21 +22,30 @@ public class MainPageJPanel extends javax.swing.JPanel {
 
         mainPagePanel = new javax.swing.JPanel();
         lblHeading = new javax.swing.JLabel();
+        lblGif = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(204, 255, 255));
 
-        mainPagePanel.setBackground(new java.awt.Color(204, 255, 255));
+        mainPagePanel.setBackground(new java.awt.Color(51, 153, 255));
 
-        lblHeading.setFont(new java.awt.Font("Tw Cen MT", 0, 52)); // NOI18N
+        lblHeading.setFont(new java.awt.Font("Dubai", 1, 48)); // NOI18N
+        lblHeading.setForeground(new java.awt.Color(255, 255, 255));
         lblHeading.setText("LEFTOVER DAIRY PRODUCTS UTILIZATION");
+
+        lblGif.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/srisakun-khacheecheet-source.gif"))); // NOI18N
 
         javax.swing.GroupLayout mainPagePanelLayout = new javax.swing.GroupLayout(mainPagePanel);
         mainPagePanel.setLayout(mainPagePanelLayout);
         mainPagePanelLayout.setHorizontalGroup(
             mainPagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPagePanelLayout.createSequentialGroup()
-                .addGap(67, 67, 67)
-                .addComponent(lblHeading)
+                .addGroup(mainPagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(mainPagePanelLayout.createSequentialGroup()
+                        .addGap(67, 67, 67)
+                        .addComponent(lblHeading))
+                    .addGroup(mainPagePanelLayout.createSequentialGroup()
+                        .addGap(113, 113, 113)
+                        .addComponent(lblGif, javax.swing.GroupLayout.PREFERRED_SIZE, 921, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         mainPagePanelLayout.setVerticalGroup(
@@ -44,7 +53,9 @@ public class MainPageJPanel extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPagePanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblHeading)
-                .addContainerGap(545, Short.MAX_VALUE))
+                .addGap(42, 42, 42)
+                .addComponent(lblGif, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -67,6 +78,7 @@ public class MainPageJPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel lblGif;
     private javax.swing.JLabel lblHeading;
     private javax.swing.JPanel mainPagePanel;
     // End of variables declaration//GEN-END:variables

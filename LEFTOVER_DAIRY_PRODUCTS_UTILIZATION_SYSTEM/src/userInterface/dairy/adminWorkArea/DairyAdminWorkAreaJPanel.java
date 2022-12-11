@@ -41,27 +41,23 @@ public class DairyAdminWorkAreaJPanel extends javax.swing.JPanel {
         lblHeading = new javax.swing.JLabel();
         lblEnterprise = new javax.swing.JLabel();
         lblValue = new javax.swing.JLabel();
-        btnManageOrganization = new javax.swing.JButton();
         btnManageEmployee = new javax.swing.JButton();
+        btnManageOrganization = new javax.swing.JButton();
         btnManageUser = new javax.swing.JButton();
 
-        jPanel1.setBackground(new java.awt.Color(255, 204, 153));
+        jPanel1.setBackground(new java.awt.Color(51, 153, 255));
 
-        lblHeading.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblHeading.setFont(new java.awt.Font("Dubai", 1, 48)); // NOI18N
+        lblHeading.setForeground(new java.awt.Color(255, 255, 255));
         lblHeading.setText("Dairy Adminstrative Work Area");
 
-        lblEnterprise.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblEnterprise.setFont(new java.awt.Font("Dubai", 1, 24)); // NOI18N
+        lblEnterprise.setForeground(new java.awt.Color(255, 255, 255));
         lblEnterprise.setText("Dairy");
 
         lblValue.setText("<value>");
 
-        btnManageOrganization.setText("Manage Organization");
-        btnManageOrganization.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnManageOrganizationActionPerformed(evt);
-            }
-        });
-
+        btnManageEmployee.setIcon(new javax.swing.ImageIcon("C:\\Users\\nehas\\Downloads\\DairyMgmt\\employeeicon.png")); // NOI18N
         btnManageEmployee.setText("Manage Employee");
         btnManageEmployee.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -69,6 +65,15 @@ public class DairyAdminWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
+        btnManageOrganization.setIcon(new javax.swing.ImageIcon("C:\\Users\\nehas\\Downloads\\DairyMgmt\\ABC (1).jpg")); // NOI18N
+        btnManageOrganization.setText("Manage Organization");
+        btnManageOrganization.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnManageOrganizationActionPerformed(evt);
+            }
+        });
+
+        btnManageUser.setIcon(new javax.swing.ImageIcon("C:\\Users\\nehas\\Downloads\\DairyMgmt\\userIcon.png")); // NOI18N
         btnManageUser.setText("Manage User");
         btnManageUser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -89,14 +94,14 @@ public class DairyAdminWorkAreaJPanel extends javax.swing.JPanel {
                         .addComponent(lblValue, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(205, 205, 205)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnManageOrganization, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnManageEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnManageUser, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnManageUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnManageOrganization, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnManageEmployee, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(70, 70, 70)
                         .addComponent(lblHeading)))
-                .addGap(158, 158, 158))
+                .addContainerGap(482, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -109,32 +114,30 @@ public class DairyAdminWorkAreaJPanel extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addComponent(lblValue)))
-                .addGap(38, 38, 38)
-                .addComponent(btnManageOrganization)
-                .addGap(26, 26, 26)
-                .addComponent(btnManageEmployee)
-                .addGap(27, 27, 27)
-                .addComponent(btnManageUser)
-                .addContainerGap(147, Short.MAX_VALUE))
+                .addGap(42, 42, 42)
+                .addComponent(btnManageOrganization, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnManageEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
+                .addComponent(btnManageUser, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(70, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 672, Short.MAX_VALUE)
+            .addGap(0, 1198, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 451, Short.MAX_VALUE)
+            .addGap(0, 594, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );

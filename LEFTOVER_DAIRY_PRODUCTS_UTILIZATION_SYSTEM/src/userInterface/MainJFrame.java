@@ -59,23 +59,29 @@ public class MainJFrame extends javax.swing.JFrame implements Runnable {
         mainPagePanel = new javax.swing.JPanel();
         lblHeading = new javax.swing.JLabel();
         lblText = new javax.swing.JLabel();
+        lblGif = new javax.swing.JLabel();
+        lblGIF = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        leftPane.setBackground(new java.awt.Color(204, 255, 255));
+        leftPane.setBackground(new java.awt.Color(0, 102, 102));
 
+        lblUserName.setFont(new java.awt.Font("Dubai", 1, 18)); // NOI18N
+        lblUserName.setForeground(new java.awt.Color(255, 255, 255));
         lblUserName.setText("User Name:");
 
+        lblPassword.setFont(new java.awt.Font("Dubai", 1, 18)); // NOI18N
+        lblPassword.setForeground(new java.awt.Color(255, 255, 255));
         lblPassword.setText("Password:");
 
-        btnLogin.setText("Login");
+        btnLogin.setIcon(new javax.swing.ImageIcon("C:\\Users\\nehas\\Downloads\\DairyMgmt\\login123 (1).png")); // NOI18N
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLoginActionPerformed(evt);
             }
         });
 
-        btnLogout.setText("Logout");
+        btnLogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/271-2715210_logout-button-icon-png (1).png"))); // NOI18N
         btnLogout.setEnabled(false);
         btnLogout.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -83,7 +89,8 @@ public class MainJFrame extends javax.swing.JFrame implements Runnable {
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Dubai", 1, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Login Panel");
 
         javax.swing.GroupLayout leftPaneLayout = new javax.swing.GroupLayout(leftPane);
@@ -94,21 +101,21 @@ public class MainJFrame extends javax.swing.JFrame implements Runnable {
                 .addContainerGap()
                 .addGroup(leftPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(leftPaneLayout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(leftPaneLayout.createSequentialGroup()
                         .addGroup(leftPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblPassword)
                             .addComponent(lblUserName))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(leftPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtUserName)
-                            .addComponent(txtPassword)))
-                    .addGroup(leftPaneLayout.createSequentialGroup()
-                        .addGroup(leftPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(leftPaneLayout.createSequentialGroup()
-                                .addComponent(btnLogin)
-                                .addGap(72, 72, 72)
-                                .addComponent(btnLogout))
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnLogout)
+                                .addGap(30, 30, 30))
+                            .addComponent(txtUserName)
+                            .addComponent(txtPassword))))
                 .addContainerGap())
         );
         leftPaneLayout.setVerticalGroup(
@@ -125,10 +132,10 @@ public class MainJFrame extends javax.swing.JFrame implements Runnable {
                     .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblPassword))
                 .addGap(31, 31, 31)
-                .addGroup(leftPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnLogin)
-                    .addComponent(btnLogout))
-                .addGap(222, 222, 222))
+                .addGroup(leftPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(286, 286, 286))
         );
 
         splitPane.setLeftComponent(leftPane);
@@ -136,32 +143,50 @@ public class MainJFrame extends javax.swing.JFrame implements Runnable {
         userProcessContainer.setBackground(new java.awt.Color(204, 255, 255));
         userProcessContainer.setLayout(new java.awt.CardLayout());
 
-        mainPagePanel.setBackground(new java.awt.Color(204, 255, 255));
+        mainPagePanel.setBackground(new java.awt.Color(102, 153, 255));
 
-        lblHeading.setFont(new java.awt.Font("Tw Cen MT", 0, 52)); // NOI18N
+        lblHeading.setFont(new java.awt.Font("Dubai", 1, 48)); // NOI18N
+        lblHeading.setForeground(new java.awt.Color(255, 255, 255));
         lblHeading.setText("LEFTOVER DAIRY PRODUCTS UTILIZATION");
+        lblHeading.setToolTipText("");
 
         lblText.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+
+        lblGIF.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/srisakun-khacheecheet-source.gif"))); // NOI18N
 
         javax.swing.GroupLayout mainPagePanelLayout = new javax.swing.GroupLayout(mainPagePanel);
         mainPagePanel.setLayout(mainPagePanelLayout);
         mainPagePanelLayout.setHorizontalGroup(
             mainPagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPagePanelLayout.createSequentialGroup()
-                .addGap(67, 67, 67)
+                .addGap(18, 18, 18)
                 .addGroup(mainPagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblHeading)
-                    .addComponent(lblText))
-                .addGap(64, 64, 64))
+                    .addComponent(lblGIF, javax.swing.GroupLayout.PREFERRED_SIZE, 997, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblGif, javax.swing.GroupLayout.PREFERRED_SIZE, 1153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblText)
+                .addGap(989, 989, 989))
         );
         mainPagePanelLayout.setVerticalGroup(
             mainPagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPagePanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblHeading)
-                .addGap(31, 31, 31)
-                .addComponent(lblText, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(94, 94, 94)
+                .addGroup(mainPagePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(mainPagePanelLayout.createSequentialGroup()
+                        .addGap(314, 314, 314)
+                        .addComponent(lblText, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(mainPagePanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblGif, javax.swing.GroupLayout.PREFERRED_SIZE, 592, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(65, 65, 65))
+            .addGroup(mainPagePanelLayout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(lblHeading)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblGIF, javax.swing.GroupLayout.PREFERRED_SIZE, 605, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         userProcessContainer.add(mainPagePanel, "card2");
@@ -308,6 +333,8 @@ public class MainJFrame extends javax.swing.JFrame implements Runnable {
     private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnLogout;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel lblGIF;
+    private javax.swing.JLabel lblGif;
     private javax.swing.JLabel lblHeading;
     private javax.swing.JLabel lblPassword;
     private javax.swing.JLabel lblText;
