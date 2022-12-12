@@ -121,7 +121,7 @@ public class CollectionWorkRequest extends WorkRequest {
     public void updatePerishable() {
         for (RequestItem ri : requestItems) {
             if (ri.getHoursToPerish() > 0 && ri.getQuantity() > 0) {
-                ri.setHoursToPerish(ri.getHoursToPerish() - 0.25);
+                ri.setHoursToPerish(ri.getHoursToPerish() - 1.00);
                 System.out.println(ri.getFoodName() + " " + ri.getHoursToPerish());
             }
         }
