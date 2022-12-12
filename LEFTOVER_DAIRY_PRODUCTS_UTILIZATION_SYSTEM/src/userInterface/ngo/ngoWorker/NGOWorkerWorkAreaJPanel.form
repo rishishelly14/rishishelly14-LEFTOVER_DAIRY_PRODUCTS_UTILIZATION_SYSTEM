@@ -3,7 +3,7 @@
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <Properties>
     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-      <Color blue="cc" green="ff" red="cc" type="rgb"/>
+      <Color blue="cc" green="99" red="0" type="rgb"/>
     </Property>
   </Properties>
   <AuxValues>
@@ -23,20 +23,20 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" attributes="0">
                       <EmptySpace min="-2" pref="264" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="btnUpdateInventory" pref="156" max="32767" attributes="0"/>
+                          <Component id="btnUpdateInventory" max="32767" attributes="0"/>
                           <Component id="btnDistributeFood" max="32767" attributes="0"/>
                           <Component id="btnViewInventory" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="148" max="-2" attributes="0"/>
-                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel1" min="-2" pref="625" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace min="-2" pref="173" max="-2" attributes="0"/>
+              <EmptySpace pref="548" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -60,13 +60,19 @@
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Tahoma" size="24" style="1"/>
+          <Font name="Dubai" size="48" style="1"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
         <Property name="text" type="java.lang.String" value="NGO Worker WorkArea Panel"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btnViewInventory">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/userInterface/ngo/ngoWorker/viewitem.png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="View Inventory"/>
       </Properties>
       <Events>
@@ -75,6 +81,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnUpdateInventory">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/userInterface/ngo/ngoWorker/pickupDeliveryIcon (1).jpeg"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Pickup Delivery"/>
       </Properties>
       <Events>
@@ -83,6 +92,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnDistributeFood">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/userInterface/ngo/ngoWorker/distributeIcon (1).png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Distribute Food"/>
       </Properties>
       <Events>

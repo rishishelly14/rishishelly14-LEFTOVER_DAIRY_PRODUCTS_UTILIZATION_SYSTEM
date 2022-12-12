@@ -119,9 +119,10 @@ public class LogisticsManagerViewRequestsJPanel extends javax.swing.JPanel {
         btnBack = new javax.swing.JButton();
         btnDetails = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(255, 255, 204));
+        setBackground(new java.awt.Color(153, 204, 255));
 
-        lblHeader.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblHeader.setFont(new java.awt.Font("Dubai", 1, 48)); // NOI18N
+        lblHeader.setForeground(new java.awt.Color(255, 255, 255));
         lblHeader.setText("Logistics Manager Work Area - Requests");
 
         tblRequests.setModel(new javax.swing.table.DefaultTableModel(
@@ -148,6 +149,7 @@ public class LogisticsManagerViewRequestsJPanel extends javax.swing.JPanel {
             tblRequests.getColumnModel().getColumn(3).setResizable(false);
         }
 
+        btnAssigntoEmployee.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/logistics/logisticsManager/assignIcon (1).png"))); // NOI18N
         btnAssigntoEmployee.setText("Assign to Employee");
         btnAssigntoEmployee.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -157,8 +159,11 @@ public class LogisticsManagerViewRequestsJPanel extends javax.swing.JPanel {
 
         cmbWorker.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        lblWorker.setFont(new java.awt.Font("Dubai", 1, 18)); // NOI18N
+        lblWorker.setForeground(new java.awt.Color(255, 255, 255));
         lblWorker.setText("Worker:");
 
+        btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/logistics/logisticsManager/back-button-icon-50.png"))); // NOI18N
         btnBack.setText("<< Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -166,6 +171,7 @@ public class LogisticsManagerViewRequestsJPanel extends javax.swing.JPanel {
             }
         });
 
+        btnDetails.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/logistics/logisticsManager/viewitem.png"))); // NOI18N
         btnDetails.setText("View Details");
         btnDetails.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -180,20 +186,20 @@ public class LogisticsManagerViewRequestsJPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(53, 53, 53)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 545, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(btnBack)
-                            .addGap(476, 476, 476)
-                            .addComponent(btnDetails))
-                        .addComponent(jScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 638, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(lblWorker)
-                            .addGap(18, 18, 18)
-                            .addComponent(cmbWorker, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(18, 18, 18)
-                            .addComponent(btnAssigntoEmployee))))
-                .addContainerGap(64, Short.MAX_VALUE))
+                    .addComponent(jScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 638, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblWorker)
+                                .addGap(80, 80, 80)
+                                .addComponent(cmbWorker, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(253, 253, 253)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnAssigntoEmployee, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnDetails, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(lblHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 1064, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -202,16 +208,16 @@ public class LogisticsManagerViewRequestsJPanel extends javax.swing.JPanel {
                 .addComponent(lblHeader)
                 .addGap(49, 49, 49)
                 .addComponent(jScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(48, 48, 48)
+                .addGap(39, 39, 39)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmbWorker, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblWorker)
+                    .addComponent(cmbWorker, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAssigntoEmployee))
-                .addGap(37, 37, 37)
+                .addGap(46, 46, 46)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnDetails)
-                    .addComponent(btnBack))
-                .addGap(96, 96, 96))
+                    .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnDetails, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 

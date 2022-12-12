@@ -54,21 +54,25 @@ public class NGOManagerRaiseShortageRequestJPanel extends javax.swing.JPanel {
         cmbEmployee = new javax.swing.JComboBox();
         btnRaise = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(204, 255, 204));
+        setBackground(new java.awt.Color(153, 204, 255));
 
-        lblHeader.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblHeader.setFont(new java.awt.Font("Dubai", 1, 48)); // NOI18N
+        lblHeader.setForeground(new java.awt.Color(255, 255, 255));
         lblHeader.setText("NGO Manager - Shortage Request");
 
-        lblEmployee.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblEmployee.setFont(new java.awt.Font("Dubai", 1, 18)); // NOI18N
+        lblEmployee.setForeground(new java.awt.Color(255, 255, 255));
         lblEmployee.setText("<HTML>Select <br/>Employee:</HTML>");
 
-        lblMessage.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblMessage.setFont(new java.awt.Font("Dubai", 1, 18)); // NOI18N
+        lblMessage.setForeground(new java.awt.Color(255, 255, 255));
         lblMessage.setText("Message:");
 
         txtMessage.setColumns(20);
         txtMessage.setRows(5);
         jScrollPane.setViewportView(txtMessage);
 
+        btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/ngo/ngoManager/back-button-icon-50.png"))); // NOI18N
         btnBack.setText("<<BACK");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -76,6 +80,7 @@ public class NGOManagerRaiseShortageRequestJPanel extends javax.swing.JPanel {
             }
         });
 
+        btnRaise.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/ngo/ngoManager/raisereq.png"))); // NOI18N
         btnRaise.setText("Raise Request");
         btnRaise.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -88,14 +93,10 @@ public class NGOManagerRaiseShortageRequestJPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(191, 191, 191)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnBack)
-                                .addGap(142, 142, 142)
-                                .addComponent(btnRaise))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(5, 5, 5)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -106,7 +107,11 @@ public class NGOManagerRaiseShortageRequestJPanel extends javax.swing.JPanel {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(lblMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                        .addComponent(jScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnBack)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnRaise))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(168, 168, 168)
                         .addComponent(lblHeader)))
@@ -123,13 +128,13 @@ public class NGOManagerRaiseShortageRequestJPanel extends javax.swing.JPanel {
                     .addComponent(jScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cmbEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(101, 101, 101)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBack)
                     .addComponent(btnRaise))
-                .addContainerGap())
+                .addContainerGap(374, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
     public void populateEmployeeDropDown() {

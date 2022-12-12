@@ -3,7 +3,7 @@
 <Form version="1.3" maxVersion="1.5" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <Properties>
     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-      <Color blue="ff" green="cc" red="cc" type="rgb"/>
+      <Color blue="ff" green="99" red="66" type="rgb"/>
     </Property>
   </Properties>
   <AuxValues>
@@ -21,25 +21,26 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="btnPeopleFed" alignment="1" min="-2" pref="340" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="119" max="-2" attributes="0"/>
-                          <Component id="lblValue" min="-2" pref="216" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="159" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="btnWastageAvoided" pref="340" max="32767" attributes="0"/>
-                              <Component id="btnWastageAvoidedChart" alignment="0" max="32767" attributes="0"/>
-                          </Group>
+          <Group type="102" attributes="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="119" max="-2" attributes="0"/>
+                      <Component id="lblValue" min="-2" pref="216" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="295" max="-2" attributes="0"/>
+                      <Component id="lblHeading" min="-2" pref="380" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="159" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="btnWastageAvoided" max="32767" attributes="0"/>
+                          <Component id="btnWastageAvoidedChart" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btnPeopleFed" max="32767" attributes="0"/>
                       </Group>
                   </Group>
-                  <Component id="lblHeading" alignment="1" min="-2" pref="380" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="177" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -54,9 +55,9 @@
               <Component id="btnWastageAvoided" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
               <Component id="btnWastageAvoidedChart" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
               <Component id="btnPeopleFed" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="102" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -65,18 +66,30 @@
     <Component class="javax.swing.JLabel" name="lblHeading">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Tahoma" size="24" style="1"/>
+          <Font name="Dubai" size="48" style="1"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Mayor Work Area"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblValue">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Dubai" size="24" style="1"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Welcome, "/>
       </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btnWastageAvoided">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/userInterface/government/governmentMayor/viewitem.png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="View Wastage Avoided by Dairy(Tabular)"/>
       </Properties>
       <Events>
@@ -85,6 +98,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnPeopleFed">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/userInterface/government/governmentMayor/viewitem.png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="View People Fed by NGOs"/>
       </Properties>
       <Events>
@@ -93,6 +109,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnWastageAvoidedChart">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/userInterface/government/governmentMayor/viewitem.png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="View Wastage Avoided by Dairy(Chart)"/>
       </Properties>
       <Events>

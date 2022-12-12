@@ -49,7 +49,7 @@ public class NGOWorkerViewInventoryJPanel extends javax.swing.JPanel {
         lblQuantityVal = new javax.swing.JLabel();
         btnShortage = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(204, 255, 204));
+        setBackground(new java.awt.Color(153, 204, 255));
 
         tblInventory.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -75,9 +75,11 @@ public class NGOWorkerViewInventoryJPanel extends javax.swing.JPanel {
             tblInventory.getColumnModel().getColumn(2).setResizable(false);
         }
 
-        lblHeader.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblHeader.setFont(new java.awt.Font("Dubai", 1, 48)); // NOI18N
+        lblHeader.setForeground(new java.awt.Color(255, 255, 255));
         lblHeader.setText("NGO Manager - View Inventory");
 
+        btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/ngo/ngoManager/back-button-icon-50.png"))); // NOI18N
         btnBack.setText("<< Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -85,11 +87,13 @@ public class NGOWorkerViewInventoryJPanel extends javax.swing.JPanel {
             }
         });
 
-        lblQuantity.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblQuantity.setFont(new java.awt.Font("Dubai", 1, 24)); // NOI18N
+        lblQuantity.setForeground(new java.awt.Color(255, 255, 255));
         lblQuantity.setText("Total Quantity :");
 
         lblQuantityVal.setText("<quantity>");
 
+        btnShortage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/ngo/ngoManager/raisereq.png"))); // NOI18N
         btnShortage.setText("Raise Shortage Request");
         btnShortage.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -107,19 +111,19 @@ public class NGOWorkerViewInventoryJPanel extends javax.swing.JPanel {
                         .addGap(45, 45, 45)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(262, 262, 262)
-                                .addComponent(btnShortage))
+                                .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(121, 121, 121)
+                                .addComponent(btnShortage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(jScrollPane1)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(101, 101, 101)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblQuantityVal, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(lblHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(35, 35, 35))
+                        .addComponent(lblQuantity)
+                        .addGap(38, 38, 38)
+                        .addComponent(lblQuantityVal, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(101, 101, 101)
+                        .addComponent(lblHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 708, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(314, 314, 314))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

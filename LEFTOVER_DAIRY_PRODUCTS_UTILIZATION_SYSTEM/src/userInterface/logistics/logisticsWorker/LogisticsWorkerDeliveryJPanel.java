@@ -69,9 +69,10 @@ public class LogisticsWorkerDeliveryJPanel extends javax.swing.JPanel {
         btnBack = new javax.swing.JButton();
         btnDelivery = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(255, 255, 204));
+        setBackground(new java.awt.Color(0, 153, 204));
 
-        lblHeader.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblHeader.setFont(new java.awt.Font("Dubai", 1, 48)); // NOI18N
+        lblHeader.setForeground(new java.awt.Color(255, 255, 255));
         lblHeader.setText("Logistics Worker - Delivery Queue");
 
         tblLogisticsWorker.setModel(new javax.swing.table.DefaultTableModel(
@@ -92,6 +93,7 @@ public class LogisticsWorkerDeliveryJPanel extends javax.swing.JPanel {
         });
         jScrollPane.setViewportView(tblLogisticsWorker);
 
+        btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/logistics/logisticsWorker/back-button-icon-50.png"))); // NOI18N
         btnBack.setText("<< Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -99,6 +101,7 @@ public class LogisticsWorkerDeliveryJPanel extends javax.swing.JPanel {
             }
         });
 
+        btnDelivery.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/logistics/logisticsWorker/confirmIcon (1).jpeg"))); // NOI18N
         btnDelivery.setText("Confirm Delivery");
         btnDelivery.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -113,8 +116,8 @@ public class LogisticsWorkerDeliveryJPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(57, 57, 57)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnBack)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnDelivery))
                     .addComponent(jScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 825, Short.MAX_VALUE)

@@ -99,13 +99,18 @@ public class LogisticsManageUserAccountJPanel extends javax.swing.JPanel {
         lblEmployee = new javax.swing.JLabel();
         txtPassword = new javax.swing.JPasswordField();
 
-        setBackground(new java.awt.Color(255, 255, 204));
+        setBackground(new java.awt.Color(153, 204, 255));
 
+        lblRole.setFont(new java.awt.Font("Dubai", 1, 18)); // NOI18N
+        lblRole.setForeground(new java.awt.Color(255, 255, 255));
         lblRole.setText("Role");
 
+        lblUserName.setFont(new java.awt.Font("Dubai", 1, 18)); // NOI18N
+        lblUserName.setForeground(new java.awt.Color(255, 255, 255));
         lblUserName.setText("User Name");
 
-        lblHeader.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblHeader.setFont(new java.awt.Font("Dubai", 1, 48)); // NOI18N
+        lblHeader.setForeground(new java.awt.Color(255, 255, 255));
         lblHeader.setText("Logistics Adminstrative Work Area - Manage Users");
 
         tblUsers.setModel(new javax.swing.table.DefaultTableModel(
@@ -137,8 +142,11 @@ public class LogisticsManageUserAccountJPanel extends javax.swing.JPanel {
             tblUsers.getColumnModel().getColumn(1).setResizable(false);
         }
 
+        lblPassword.setFont(new java.awt.Font("Dubai", 1, 18)); // NOI18N
+        lblPassword.setForeground(new java.awt.Color(255, 255, 255));
         lblPassword.setText("Password");
 
+        btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/logistics/logisticsAdmin/back-button-icon-50.png"))); // NOI18N
         btnBack.setText("<< Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -146,8 +154,11 @@ public class LogisticsManageUserAccountJPanel extends javax.swing.JPanel {
             }
         });
 
+        lblOrganization.setFont(new java.awt.Font("Dubai", 1, 18)); // NOI18N
+        lblOrganization.setForeground(new java.awt.Color(255, 255, 255));
         lblOrganization.setText("Organization");
 
+        btnCreate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/logistics/logisticsAdmin/userIcon.png"))); // NOI18N
         btnCreate.setText("Create");
         btnCreate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -161,6 +172,8 @@ public class LogisticsManageUserAccountJPanel extends javax.swing.JPanel {
             }
         });
 
+        lblEmployee.setFont(new java.awt.Font("Dubai", 1, 18)); // NOI18N
+        lblEmployee.setForeground(new java.awt.Color(255, 255, 255));
         lblEmployee.setText("Employee");
 
         txtPassword.addActionListener(new java.awt.event.ActionListener() {
@@ -189,7 +202,7 @@ public class LogisticsManageUserAccountJPanel extends javax.swing.JPanel {
                                         .addComponent(btnBack)
                                         .addGap(230, 230, 230)
                                         .addComponent(btnCreate)))
-                                .addGap(0, 0, Short.MAX_VALUE))))
+                                .addGap(0, 640, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -199,7 +212,7 @@ public class LogisticsManageUserAccountJPanel extends javax.swing.JPanel {
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(lblUserName)
                                             .addComponent(lblPassword))
-                                        .addGap(19, 19, 19)
+                                        .addGap(30, 30, 30)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(txtUserName)
                                             .addComponent(txtPassword)))
@@ -216,15 +229,15 @@ public class LogisticsManageUserAccountJPanel extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(73, 73, 73)
                                 .addComponent(lblHeader)))
-                        .addGap(0, 83, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(49, 49, 49)
-                .addComponent(lblHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(49, 49, 49)
+                .addComponent(lblHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addComponent(jSeparator, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -252,7 +265,7 @@ public class LogisticsManageUserAccountJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCreate)
                     .addComponent(btnBack))
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addContainerGap(226, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

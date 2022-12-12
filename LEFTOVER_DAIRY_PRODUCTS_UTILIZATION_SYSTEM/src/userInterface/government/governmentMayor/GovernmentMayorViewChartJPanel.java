@@ -94,15 +94,17 @@ public class GovernmentMayorViewChartJPanel extends javax.swing.JPanel {
         lblHeader = new javax.swing.JLabel();
         btnBack1 = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(204, 204, 255));
+        setBackground(new java.awt.Color(102, 153, 255));
 
-        pnlChart.setBackground(new java.awt.Color(204, 204, 255));
+        pnlChart.setBackground(new java.awt.Color(102, 153, 255));
         pnlChart.setLayout(new java.awt.BorderLayout());
 
         lblHeader.setBackground(new java.awt.Color(204, 204, 255));
-        lblHeader.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblHeader.setFont(new java.awt.Font("Dubai", 1, 48)); // NOI18N
+        lblHeader.setForeground(new java.awt.Color(255, 255, 255));
         lblHeader.setText("Mayor Work Area - Dairy Wastage Avoided Chart");
 
+        btnBack1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/government/governmentMayor/back-button-icon-50.png"))); // NOI18N
         btnBack1.setText("<< Back");
         btnBack1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -117,14 +119,15 @@ public class GovernmentMayorViewChartJPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnBack1)
-                            .addComponent(pnlChart, javax.swing.GroupLayout.PREFERRED_SIZE, 735, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(46, 46, 46)
-                        .addComponent(lblHeader)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(lblHeader))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(58, 58, 58)
+                        .addComponent(btnBack1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(pnlChart, javax.swing.GroupLayout.PREFERRED_SIZE, 909, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -132,10 +135,10 @@ public class GovernmentMayorViewChartJPanel extends javax.swing.JPanel {
                 .addGap(44, 44, 44)
                 .addComponent(lblHeader)
                 .addGap(18, 18, 18)
-                .addComponent(pnlChart, javax.swing.GroupLayout.DEFAULT_SIZE, 560, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(btnBack1)
-                .addGap(30, 30, 30))
+                .addComponent(pnlChart, javax.swing.GroupLayout.PREFERRED_SIZE, 438, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(btnBack1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(130, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

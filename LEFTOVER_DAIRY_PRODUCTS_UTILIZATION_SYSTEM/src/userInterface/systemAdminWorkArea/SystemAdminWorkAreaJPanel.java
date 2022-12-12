@@ -47,7 +47,7 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
         btnManageEnterprise = new javax.swing.JButton();
         btnManageNetwork = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(0, 204, 204));
+        setBackground(new java.awt.Color(0, 102, 255));
 
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("EcoSystem");
         treeNetwork.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
@@ -70,20 +70,22 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
         );
         panelNetworkLayout.setVerticalGroup(
             panelNetworkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 649, Short.MAX_VALUE)
+            .addGap(0, 757, Short.MAX_VALUE)
             .addGroup(panelNetworkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jScrollPane, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 649, Short.MAX_VALUE))
+                .addComponent(jScrollPane, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 757, Short.MAX_VALUE))
         );
 
         splitPane.setLeftComponent(panelNetwork);
 
-        workAreaPanel.setBackground(new java.awt.Color(0, 204, 204));
+        workAreaPanel.setBackground(new java.awt.Color(102, 153, 255));
 
-        lblNode.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblNode.setFont(new java.awt.Font("Dubai", 1, 18)); // NOI18N
+        lblNode.setForeground(new java.awt.Color(255, 255, 255));
         lblNode.setText("Selected Node:");
 
         lblNodeValue.setText("<view selected network>");
 
+        btnManageEnterpriseAdmin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/systemAdminWorkArea/administration-vector-icon (1).jpg"))); // NOI18N
         btnManageEnterpriseAdmin.setText("Manage Enterprise Admin");
         btnManageEnterpriseAdmin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -91,6 +93,7 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
+        btnManageEnterprise.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/systemAdminWorkArea/enterpriseIcon (1).jpg"))); // NOI18N
         btnManageEnterprise.setText("Manage Enterprise");
         btnManageEnterprise.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -98,6 +101,7 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
+        btnManageNetwork.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/systemAdminWorkArea/networkIcon (1).jpg"))); // NOI18N
         btnManageNetwork.setText("Manage Network");
         btnManageNetwork.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -148,7 +152,7 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(splitPane, javax.swing.GroupLayout.PREFERRED_SIZE, 900, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 88, Short.MAX_VALUE))
+                .addGap(0, 378, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

@@ -71,9 +71,10 @@ public class GovernmentManageOrganizationJPanel extends javax.swing.JPanel {
         btnBack = new javax.swing.JButton();
         btnAddOrganization = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(204, 204, 255));
+        setBackground(new java.awt.Color(0, 153, 204));
 
-        lblHeader.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblHeader.setFont(new java.awt.Font("Dubai", 1, 48)); // NOI18N
+        lblHeader.setForeground(new java.awt.Color(255, 255, 255));
         lblHeader.setText("Government Adminstrative Work Area - Manage Organization");
 
         tblOrganization.setModel(new javax.swing.table.DefaultTableModel(
@@ -105,8 +106,11 @@ public class GovernmentManageOrganizationJPanel extends javax.swing.JPanel {
             tblOrganization.getColumnModel().getColumn(1).setResizable(false);
         }
 
+        lblOrg.setFont(new java.awt.Font("Dubai", 1, 18)); // NOI18N
+        lblOrg.setForeground(new java.awt.Color(255, 255, 255));
         lblOrg.setText("Organization Type ");
 
+        btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/government/governmentAdmin/back-button-icon-50.png"))); // NOI18N
         btnBack.setText("<< Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -114,6 +118,7 @@ public class GovernmentManageOrganizationJPanel extends javax.swing.JPanel {
             }
         });
 
+        btnAddOrganization.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/government/governmentAdmin/organization.jpg"))); // NOI18N
         btnAddOrganization.setText("Add Organization");
         btnAddOrganization.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -125,7 +130,7 @@ public class GovernmentManageOrganizationJPanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator, javax.swing.GroupLayout.DEFAULT_SIZE, 815, Short.MAX_VALUE)
+            .addComponent(jSeparator)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -137,14 +142,14 @@ public class GovernmentManageOrganizationJPanel extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addComponent(cmbOrganization, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(135, 135, 135)
-                        .addComponent(btnBack)
-                        .addGap(306, 306, 306)
+                        .addGap(174, 174, 174)
+                        .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(193, 193, 193)
                         .addComponent(btnAddOrganization))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(lblHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 746, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(45, 45, 45))
+                        .addGap(76, 76, 76)
+                        .addComponent(lblHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 1297, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

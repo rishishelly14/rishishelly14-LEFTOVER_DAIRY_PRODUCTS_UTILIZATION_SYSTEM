@@ -46,16 +46,19 @@ public class NGOAdminWorkAreaJPanel extends javax.swing.JPanel {
         btnManageEmployee = new javax.swing.JButton();
         btnManageUser = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(204, 255, 204));
+        setBackground(new java.awt.Color(102, 153, 255));
 
-        lblHeading.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblHeading.setFont(new java.awt.Font("Dubai", 1, 48)); // NOI18N
+        lblHeading.setForeground(new java.awt.Color(255, 255, 255));
         lblHeading.setText("NGO Adminstrative Work Area");
 
-        lblEnterprise.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblEnterprise.setFont(new java.awt.Font("Dubai", 1, 18)); // NOI18N
+        lblEnterprise.setForeground(new java.awt.Color(255, 255, 255));
         lblEnterprise.setText("NGO:");
 
         lblValue.setText("<value>");
 
+        btnManageOrganization.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/ngo/ngoAdmin/organization.jpg"))); // NOI18N
         btnManageOrganization.setText("Manage Organization");
         btnManageOrganization.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -63,6 +66,7 @@ public class NGOAdminWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
+        btnManageEmployee.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/ngo/ngoAdmin/employeeicon.png"))); // NOI18N
         btnManageEmployee.setText("Manage Employee");
         btnManageEmployee.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -70,6 +74,7 @@ public class NGOAdminWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
+        btnManageUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/ngo/ngoAdmin/userIcon.png"))); // NOI18N
         btnManageUser.setText("Manage User");
         btnManageUser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -90,14 +95,14 @@ public class NGOAdminWorkAreaJPanel extends javax.swing.JPanel {
                         .addComponent(lblValue, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(205, 205, 205)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnManageOrganization, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnManageEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnManageUser, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnManageOrganization, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnManageEmployee, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnManageUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(90, 90, 90)
-                        .addComponent(lblHeading, javax.swing.GroupLayout.PREFERRED_SIZE, 397, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(213, 213, 213))
+                        .addComponent(lblHeading, javax.swing.GroupLayout.PREFERRED_SIZE, 767, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(330, 463, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -116,7 +121,7 @@ public class NGOAdminWorkAreaJPanel extends javax.swing.JPanel {
                 .addComponent(btnManageEmployee)
                 .addGap(27, 27, 27)
                 .addComponent(btnManageUser)
-                .addContainerGap(139, Short.MAX_VALUE))
+                .addContainerGap(445, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

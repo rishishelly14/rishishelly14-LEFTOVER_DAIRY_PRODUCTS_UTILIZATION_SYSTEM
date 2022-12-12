@@ -6,11 +6,6 @@ Team: Ritik Bhandari(002738904)
       Rishi Shelly(002771020)
 
 
-We have designed and developed a java swing application which manages leftover dairy produces like milk, butter etc. 
-The main objective of this project is to help underpreviledged people by providing them surplus dairy products.
-We have also implemented a quality check procedure, where Government checks if the dairy products are appropriate for donating to NGO or should go to waste.
-A system Admin is responsible for adding any new role in the system and can access the data anytime.
-
 
 Softwares and language/database used:
 Apache Netbeans IDE
@@ -40,7 +35,7 @@ Government Mayor organization
 
 Roles:
 System Admin
-Admin (Restaurant, NGO, Logistics, Government)
-Region Manager (Restaurant, NGO, Logistics)
-Worker role (Restaurant, NGO, Logistics)
+Admin (Dairy, NGO, Logistics, Government)
+Region Manager (Dairy, NGO, Logistics)
+Worker role (Dairy, NGO, Logistics)
 Mayor. 

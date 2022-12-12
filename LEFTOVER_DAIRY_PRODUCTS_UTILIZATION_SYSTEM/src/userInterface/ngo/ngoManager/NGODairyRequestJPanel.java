@@ -71,7 +71,7 @@ public class NGODairyRequestJPanel extends javax.swing.JPanel {
         txtMessageRedirect = new javax.swing.JTextField();
         jSeparator1 = new javax.swing.JSeparator();
 
-        jPanel1.setBackground(new java.awt.Color(204, 255, 204));
+        jPanel1.setBackground(new java.awt.Color(153, 204, 255));
 
         tblDairyRequests.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -91,9 +91,11 @@ public class NGODairyRequestJPanel extends javax.swing.JPanel {
         });
         jScrollPane.setViewportView(tblDairyRequests);
 
-        lblHeader.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblHeader.setFont(new java.awt.Font("Dubai", 1, 48)); // NOI18N
+        lblHeader.setForeground(new java.awt.Color(255, 255, 255));
         lblHeader.setText("NGO Manager- Dairy Requests");
 
+        btnView.setIcon(new javax.swing.ImageIcon("C:\\Users\\nehas\\OneDrive\\Desktop\\UpdatedDairyProd\\LEFTOVER_DAIRY_PRODUCTS_UTILIZATION_SYSTEM\\src\\icons\\viewitem.png")); // NOI18N
         btnView.setText("View Details");
         btnView.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -101,6 +103,7 @@ public class NGODairyRequestJPanel extends javax.swing.JPanel {
             }
         });
 
+        btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/ngo/ngoManager/back-button-icon-50.png"))); // NOI18N
         btnBack.setText("<< BACK");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -108,11 +111,15 @@ public class NGODairyRequestJPanel extends javax.swing.JPanel {
             }
         });
 
-        jPanelAssignToEmployee.setBackground(new java.awt.Color(204, 255, 204));
-        jPanelAssignToEmployee.setBorder(javax.swing.BorderFactory.createTitledBorder("Assign to Employee"));
+        jPanelAssignToEmployee.setBackground(new java.awt.Color(0, 51, 102));
+        jPanelAssignToEmployee.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Assign to Employee", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dubai", 1, 18), new java.awt.Color(255, 255, 255))); // NOI18N
 
+        lblMessage.setFont(new java.awt.Font("Dubai", 1, 18)); // NOI18N
+        lblMessage.setForeground(new java.awt.Color(255, 255, 255));
         lblMessage.setText("Message:");
 
+        lblWorker.setFont(new java.awt.Font("Dubai", 1, 18)); // NOI18N
+        lblWorker.setForeground(new java.awt.Color(255, 255, 255));
         lblWorker.setText("Worker:");
 
         cmbWorker.addActionListener(new java.awt.event.ActionListener() {
@@ -121,6 +128,7 @@ public class NGODairyRequestJPanel extends javax.swing.JPanel {
             }
         });
 
+        btnApprove.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/ngo/ngoManager/assignIcon (1).png"))); // NOI18N
         btnApprove.setText("Assign");
         btnApprove.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -133,21 +141,22 @@ public class NGODairyRequestJPanel extends javax.swing.JPanel {
         jPanelAssignToEmployeeLayout.setHorizontalGroup(
             jPanelAssignToEmployeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelAssignToEmployeeLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanelAssignToEmployeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelAssignToEmployeeLayout.createSequentialGroup()
-                        .addComponent(lblMessage)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
                     .addGroup(jPanelAssignToEmployeeLayout.createSequentialGroup()
-                        .addComponent(lblWorker)
-                        .addGap(17, 17, 17)))
-                .addGroup(jPanelAssignToEmployeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(cmbWorker, 0, 176, Short.MAX_VALUE)
-                    .addComponent(txtMessage))
-                .addGap(10, 10, 10))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelAssignToEmployeeLayout.createSequentialGroup()
-                .addGap(179, 179, 179)
-                .addComponent(btnApprove)
+                        .addContainerGap()
+                        .addGroup(jPanelAssignToEmployeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelAssignToEmployeeLayout.createSequentialGroup()
+                                .addComponent(lblMessage)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                            .addGroup(jPanelAssignToEmployeeLayout.createSequentialGroup()
+                                .addComponent(lblWorker)
+                                .addGap(17, 17, 17)))
+                        .addGroup(jPanelAssignToEmployeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cmbWorker, 0, 176, Short.MAX_VALUE)
+                            .addComponent(txtMessage)))
+                    .addGroup(jPanelAssignToEmployeeLayout.createSequentialGroup()
+                        .addGap(179, 179, 179)
+                        .addComponent(btnApprove, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanelAssignToEmployeeLayout.setVerticalGroup(
@@ -162,13 +171,15 @@ public class NGODairyRequestJPanel extends javax.swing.JPanel {
                     .addComponent(txtMessage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblMessage))
                 .addGap(38, 38, 38)
-                .addComponent(btnApprove)
-                .addGap(11, 11, 11))
+                .addComponent(btnApprove, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
-        jPanelRedirectToNGO.setBackground(new java.awt.Color(204, 255, 204));
-        jPanelRedirectToNGO.setBorder(javax.swing.BorderFactory.createTitledBorder("Redirect to other NGO"));
+        jPanelRedirectToNGO.setBackground(new java.awt.Color(0, 51, 102));
+        jPanelRedirectToNGO.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Redirect to other NGO", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dubai", 1, 18), new java.awt.Color(255, 255, 255))); // NOI18N
+        jPanelRedirectToNGO.setForeground(new java.awt.Color(255, 255, 255));
 
+        btnAssignNGO.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/ngo/ngoManager/redirectIcon (1).jpg"))); // NOI18N
         btnAssignNGO.setText("Redirect");
         btnAssignNGO.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -176,6 +187,8 @@ public class NGODairyRequestJPanel extends javax.swing.JPanel {
             }
         });
 
+        lblMessageRedirect.setFont(new java.awt.Font("Dubai", 1, 18)); // NOI18N
+        lblMessageRedirect.setForeground(new java.awt.Color(255, 255, 255));
         lblMessageRedirect.setText("Message:");
 
         javax.swing.GroupLayout jPanelRedirectToNGOLayout = new javax.swing.GroupLayout(jPanelRedirectToNGO);
@@ -201,9 +214,9 @@ public class NGODairyRequestJPanel extends javax.swing.JPanel {
                 .addGroup(jPanelRedirectToNGOLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtMessageRedirect, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblMessageRedirect))
-                .addGap(59, 59, 59)
+                .addGap(69, 69, 69)
                 .addComponent(btnAssignNGO)
-                .addGap(16, 16, 16))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -214,22 +227,24 @@ public class NGODairyRequestJPanel extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(41, 41, 41)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnView, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(117, 117, 117)
+                        .addComponent(lblHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 666, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(btnView, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                            .addGap(41, 41, 41)
                             .addComponent(jScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 566, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(37, 37, 37)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnBack)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jPanelRedirectToNGO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jPanelAssignToEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(117, 117, 117)
-                        .addComponent(lblHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 459, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(28, Short.MAX_VALUE))
+                                .addComponent(jPanelAssignToEmployee, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(168, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -255,19 +270,17 @@ public class NGODairyRequestJPanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 671, Short.MAX_VALUE)
+            .addGap(0, 951, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 642, Short.MAX_VALUE)
+            .addGap(0, 876, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );

@@ -47,7 +47,7 @@ public class NGOWorkerPickupDeliveryJPanel extends javax.swing.JPanel {
         btnView = new javax.swing.JButton();
         btnBack = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(204, 255, 204));
+        setBackground(new java.awt.Color(0, 153, 204));
 
         tblDetails.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -67,9 +67,11 @@ public class NGOWorkerPickupDeliveryJPanel extends javax.swing.JPanel {
         });
         jScrollPane.setViewportView(tblDetails);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Dubai", 1, 48)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("NGO Worker - Pickup Delivery");
 
+        btnCollect.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/ngo/ngoWorker/collectIcon (1).png"))); // NOI18N
         btnCollect.setText("Collect");
         btnCollect.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -77,6 +79,7 @@ public class NGOWorkerPickupDeliveryJPanel extends javax.swing.JPanel {
             }
         });
 
+        btnView.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/ngo/ngoWorker/viewitem.png"))); // NOI18N
         btnView.setText("View");
         btnView.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -84,6 +87,7 @@ public class NGOWorkerPickupDeliveryJPanel extends javax.swing.JPanel {
             }
         });
 
+        btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/ngo/ngoWorker/back-button-icon-50.png"))); // NOI18N
         btnBack.setText("<<Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

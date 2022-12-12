@@ -79,11 +79,15 @@ public class GovernmentManageEmployeeJPanel extends javax.swing.JPanel {
         btnBack = new javax.swing.JButton();
         btnCreateEmployee = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(204, 204, 255));
+        setBackground(new java.awt.Color(0, 153, 204));
+        setForeground(new java.awt.Color(255, 255, 255));
 
-        lblHeader.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblHeader.setFont(new java.awt.Font("Dubai", 1, 48)); // NOI18N
+        lblHeader.setForeground(new java.awt.Color(255, 255, 255));
         lblHeader.setText("Government Adminstrative Work Area - Manage Employee");
 
+        lblOrg.setFont(new java.awt.Font("Dubai", 1, 18)); // NOI18N
+        lblOrg.setForeground(new java.awt.Color(255, 255, 255));
         lblOrg.setText("Organization");
 
         cmbOrg.addActionListener(new java.awt.event.ActionListener() {
@@ -121,10 +125,15 @@ public class GovernmentManageEmployeeJPanel extends javax.swing.JPanel {
             tblOrganization.getColumnModel().getColumn(1).setResizable(false);
         }
 
+        lblOrgCreate.setFont(new java.awt.Font("Dubai", 1, 18)); // NOI18N
+        lblOrgCreate.setForeground(new java.awt.Color(255, 255, 255));
         lblOrgCreate.setText("Organization");
 
+        lblName.setFont(new java.awt.Font("Dubai", 1, 18)); // NOI18N
+        lblName.setForeground(new java.awt.Color(255, 255, 255));
         lblName.setText("Name");
 
+        btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/government/governmentAdmin/back-button-icon-50.png"))); // NOI18N
         btnBack.setText("<< Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -132,6 +141,7 @@ public class GovernmentManageEmployeeJPanel extends javax.swing.JPanel {
             }
         });
 
+        btnCreateEmployee.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/government/governmentAdmin/employeeicon.png"))); // NOI18N
         btnCreateEmployee.setText("Create Employee");
         btnCreateEmployee.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -143,7 +153,7 @@ public class GovernmentManageEmployeeJPanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator)
+            .addComponent(jSeparator, javax.swing.GroupLayout.DEFAULT_SIZE, 1319, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -168,21 +178,21 @@ public class GovernmentManageEmployeeJPanel extends javax.swing.JPanel {
                                         .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGap(10, 10, 10))
                         .addGroup(layout.createSequentialGroup()
-                            .addGap(118, 118, 118)
-                            .addComponent(btnBack)
+                            .addGap(134, 134, 134)
+                            .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnCreateEmployee)))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
+                        .addGap(100, 100, 100)
                         .addComponent(lblHeader)))
-                .addGap(22, 22, 22))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(38, 38, 38)
+                .addGap(43, 43, 43)
                 .addComponent(lblHeader)
-                .addGap(54, 54, 54)
+                .addGap(49, 49, 49)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmbOrg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblOrg))

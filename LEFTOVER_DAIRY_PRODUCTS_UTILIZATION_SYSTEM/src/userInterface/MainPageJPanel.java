@@ -30,7 +30,7 @@ public class MainPageJPanel extends javax.swing.JPanel {
 
         lblHeading.setFont(new java.awt.Font("Dubai", 1, 48)); // NOI18N
         lblHeading.setForeground(new java.awt.Color(255, 255, 255));
-        lblHeading.setText("LEFTOVER DAIRY PRODUCTS UTILIZATION");
+        lblHeading.setText("LEFTOVER DAIRY PRODUCTS UTILIZATION SYSTEM");
 
         lblGif.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/srisakun-khacheecheet-source.gif"))); // NOI18N
 
@@ -54,7 +54,7 @@ public class MainPageJPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(lblHeading)
                 .addGap(42, 42, 42)
-                .addComponent(lblGif, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblGif, javax.swing.GroupLayout.DEFAULT_SIZE, 716, Short.MAX_VALUE)
                 .addContainerGap())
         );
 

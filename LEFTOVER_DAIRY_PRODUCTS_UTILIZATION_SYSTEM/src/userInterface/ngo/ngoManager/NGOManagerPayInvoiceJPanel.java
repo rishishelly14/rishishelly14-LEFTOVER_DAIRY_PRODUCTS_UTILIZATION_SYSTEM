@@ -46,9 +46,10 @@ public class NGOManagerPayInvoiceJPanel extends javax.swing.JPanel {
         btnBack = new javax.swing.JButton();
         btnPay = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(204, 255, 204));
+        setBackground(new java.awt.Color(153, 204, 255));
 
-        lblHeader.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblHeader.setFont(new java.awt.Font("Dubai", 1, 48)); // NOI18N
+        lblHeader.setForeground(new java.awt.Color(255, 255, 255));
         lblHeader.setText("NGO Manager - Pay Invoices");
 
         tblDetails.setModel(new javax.swing.table.DefaultTableModel(
@@ -76,6 +77,7 @@ public class NGOManagerPayInvoiceJPanel extends javax.swing.JPanel {
             tblDetails.getColumnModel().getColumn(4).setResizable(false);
         }
 
+        btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/ngo/ngoManager/back-button-icon-50.png"))); // NOI18N
         btnBack.setText("<< Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -83,6 +85,7 @@ public class NGOManagerPayInvoiceJPanel extends javax.swing.JPanel {
             }
         });
 
+        btnPay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/ngo/ngoManager/payInvoice (1).png"))); // NOI18N
         btnPay.setText("Pay Invoice");
         btnPay.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -106,8 +109,8 @@ public class NGOManagerPayInvoiceJPanel extends javax.swing.JPanel {
                                 .addComponent(btnPay))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(179, 179, 179)
-                        .addComponent(lblHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(58, Short.MAX_VALUE))
+                        .addComponent(lblHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 628, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(439, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

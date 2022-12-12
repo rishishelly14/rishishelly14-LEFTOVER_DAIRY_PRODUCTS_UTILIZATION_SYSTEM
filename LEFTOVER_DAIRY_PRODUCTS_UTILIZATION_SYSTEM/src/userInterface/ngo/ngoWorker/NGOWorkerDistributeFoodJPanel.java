@@ -60,9 +60,10 @@ public class NGOWorkerDistributeFoodJPanel extends javax.swing.JPanel {
         btnBack = new javax.swing.JButton();
         btnConfirm = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(204, 255, 204));
+        setBackground(new java.awt.Color(0, 153, 204));
 
-        lblHeader.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblHeader.setFont(new java.awt.Font("Dubai", 1, 48)); // NOI18N
+        lblHeader.setForeground(new java.awt.Color(255, 255, 255));
         lblHeader.setText("NGO Worker - Distriubute Food");
 
         tblInventory.setModel(new javax.swing.table.DefaultTableModel(
@@ -89,11 +90,14 @@ public class NGOWorkerDistributeFoodJPanel extends javax.swing.JPanel {
             tblInventory.getColumnModel().getColumn(2).setResizable(false);
         }
 
+        lblQuantity.setFont(new java.awt.Font("Dubai", 1, 18)); // NOI18N
+        lblQuantity.setForeground(new java.awt.Color(255, 255, 255));
         lblQuantity.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblQuantity.setText("Quantity:");
 
         spnQuantity.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
 
+        btnAdd.setIcon(new javax.swing.ImageIcon("C:\\Users\\nehas\\OneDrive\\Desktop\\UpdatedDairyProd\\LEFTOVER_DAIRY_PRODUCTS_UTILIZATION_SYSTEM\\src\\icons\\milk.jpeg")); // NOI18N
         btnAdd.setText("Add");
         btnAdd.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -124,6 +128,7 @@ public class NGOWorkerDistributeFoodJPanel extends javax.swing.JPanel {
             tblListItem.getColumnModel().getColumn(1).setResizable(false);
         }
 
+        btnRemove.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/ngo/ngoWorker/remove.png"))); // NOI18N
         btnRemove.setText("Remove");
         btnRemove.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -131,13 +136,18 @@ public class NGOWorkerDistributeFoodJPanel extends javax.swing.JPanel {
             }
         });
 
+        lblPeopleFed.setFont(new java.awt.Font("Dubai", 1, 18)); // NOI18N
+        lblPeopleFed.setForeground(new java.awt.Color(255, 255, 255));
         lblPeopleFed.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblPeopleFed.setText("People fed:");
 
         spnPeopleFed.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
 
+        lblWastageAvoided.setFont(new java.awt.Font("Dubai", 1, 18)); // NOI18N
+        lblWastageAvoided.setForeground(new java.awt.Color(255, 255, 255));
         lblWastageAvoided.setText("Wastage Avoided:");
 
+        btnBack.setIcon(new javax.swing.ImageIcon("C:\\Users\\nehas\\OneDrive\\Desktop\\UpdatedDairyProd\\LEFTOVER_DAIRY_PRODUCTS_UTILIZATION_SYSTEM\\src\\icons\\back-button-icon-50.png")); // NOI18N
         btnBack.setText("<<Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -145,6 +155,7 @@ public class NGOWorkerDistributeFoodJPanel extends javax.swing.JPanel {
             }
         });
 
+        btnConfirm.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/ngo/ngoWorker/confirmIcon (1).jpeg"))); // NOI18N
         btnConfirm.setText("Confirm");
         btnConfirm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -156,7 +167,7 @@ public class NGOWorkerDistributeFoodJPanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator)
+            .addComponent(jSeparator, javax.swing.GroupLayout.DEFAULT_SIZE, 1321, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -164,9 +175,9 @@ public class NGOWorkerDistributeFoodJPanel extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(btnRemove)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(lblPeopleFed, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(lblWastageAvoided))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblWastageAvoided)
+                                    .addComponent(lblPeopleFed, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblWastageAvoidedValue, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -181,14 +192,14 @@ public class NGOWorkerDistributeFoodJPanel extends javax.swing.JPanel {
                                     .addComponent(jScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 630, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lblQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGap(27, 27, 27)
                                 .addComponent(spnQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGap(18, 18, 18)
+                                .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(203, 203, 203)
-                        .addComponent(lblHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 478, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(75, 75, 75))
+                        .addComponent(lblHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 675, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

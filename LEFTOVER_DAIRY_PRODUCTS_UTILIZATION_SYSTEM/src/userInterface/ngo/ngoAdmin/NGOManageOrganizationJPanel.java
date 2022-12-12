@@ -67,8 +67,9 @@ public class NGOManageOrganizationJPanel extends javax.swing.JPanel {
         cmbOrganization = new javax.swing.JComboBox();
         btnBack = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(204, 255, 204));
+        setBackground(new java.awt.Color(102, 153, 255));
 
+        btnAddOrganization.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/ngo/ngoAdmin/organization.jpg"))); // NOI18N
         btnAddOrganization.setText("Add Organization");
         btnAddOrganization.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -76,7 +77,8 @@ public class NGOManageOrganizationJPanel extends javax.swing.JPanel {
             }
         });
 
-        lblHeader.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblHeader.setFont(new java.awt.Font("Dubai", 1, 48)); // NOI18N
+        lblHeader.setForeground(new java.awt.Color(255, 255, 255));
         lblHeader.setText("NGO Adminstrative Work Area - Manage Organization");
 
         tblOrganization.setModel(new javax.swing.table.DefaultTableModel(
@@ -104,6 +106,8 @@ public class NGOManageOrganizationJPanel extends javax.swing.JPanel {
         });
         jScrollPane.setViewportView(tblOrganization);
 
+        lblOrg.setFont(new java.awt.Font("Dubai", 1, 18)); // NOI18N
+        lblOrg.setForeground(new java.awt.Color(255, 255, 255));
         lblOrg.setText("Organization Type ");
 
         cmbOrganization.addActionListener(new java.awt.event.ActionListener() {
@@ -112,6 +116,7 @@ public class NGOManageOrganizationJPanel extends javax.swing.JPanel {
             }
         });
 
+        btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/ngo/ngoAdmin/back-button-icon-50.png"))); // NOI18N
         btnBack.setText("<< Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -130,28 +135,27 @@ public class NGOManageOrganizationJPanel extends javax.swing.JPanel {
                         .addGap(165, 165, 165)
                         .addComponent(jScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(163, 163, 163)
-                        .addComponent(btnBack)
+                        .addGap(150, 150, 150)
+                        .addComponent(lblHeader))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(161, 161, 161)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(17, 17, 17)
                                 .addComponent(lblOrg)
-                                .addGap(18, 18, 18)
+                                .addGap(84, 84, 84)
                                 .addComponent(cmbOrganization, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(293, 293, 293)
-                                .addComponent(btnAddOrganization))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(46, 46, 46)
-                        .addComponent(lblHeader)))
-                .addGap(293, 293, 293))
+                                .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(224, 224, 224)
+                                .addComponent(btnAddOrganization)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(40, 40, 40)
+                .addGap(36, 36, 36)
                 .addComponent(lblHeader)
-                .addGap(48, 48, 48)
+                .addGap(52, 52, 52)
                 .addComponent(jScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31)
                 .addComponent(jSeparator, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -159,11 +163,11 @@ public class NGOManageOrganizationJPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmbOrganization, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblOrg))
-                .addGap(102, 102, 102)
+                .addGap(94, 94, 94)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAddOrganization)
                     .addComponent(btnBack))
-                .addGap(19, 19, 19))
+                .addGap(27, 27, 27))
         );
     }// </editor-fold>//GEN-END:initComponents
 

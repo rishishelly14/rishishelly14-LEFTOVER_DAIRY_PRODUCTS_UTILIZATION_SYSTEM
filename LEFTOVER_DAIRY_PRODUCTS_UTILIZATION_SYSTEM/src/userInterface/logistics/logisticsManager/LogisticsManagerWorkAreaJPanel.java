@@ -47,15 +47,19 @@ public class LogisticsManagerWorkAreaJPanel extends javax.swing.JPanel {
         btnWorkLog = new javax.swing.JButton();
         btnPayementInfo = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(255, 255, 204));
+        setBackground(new java.awt.Color(153, 204, 255));
 
-        lblHeader.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblHeader.setFont(new java.awt.Font("Dubai", 1, 48)); // NOI18N
+        lblHeader.setForeground(new java.awt.Color(255, 255, 255));
         lblHeader.setText("Logistics Manager Work Area");
 
+        lblName.setFont(new java.awt.Font("Dubai", 1, 24)); // NOI18N
+        lblName.setForeground(new java.awt.Color(255, 255, 255));
         lblName.setText("Welcome: ");
 
         lblNameVal.setText("<<View Name>>");
 
+        btnRestaurantRequest.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/logistics/logisticsManager/viewitem.png"))); // NOI18N
         btnRestaurantRequest.setText("View Work Requests");
         btnRestaurantRequest.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -63,6 +67,7 @@ public class LogisticsManagerWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
+        btnInvoices.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/logistics/logisticsManager/payInvoice (1).png"))); // NOI18N
         btnInvoices.setText("Generate Invoices");
         btnInvoices.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -70,6 +75,7 @@ public class LogisticsManagerWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
+        btnWorkLog.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/logistics/logisticsManager/viewitem.png"))); // NOI18N
         btnWorkLog.setText("View Work Log");
         btnWorkLog.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -77,6 +83,7 @@ public class LogisticsManagerWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
+        btnPayementInfo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/logistics/logisticsManager/viewitem.png"))); // NOI18N
         btnPayementInfo.setText("View Payment Info");
         btnPayementInfo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -101,20 +108,20 @@ public class LogisticsManagerWorkAreaJPanel extends javax.swing.JPanel {
                                 .addGap(88, 88, 88)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(btnInvoices, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnRestaurantRequest, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(btnWorkLog, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnPayementInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                    .addComponent(btnPayementInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnRestaurantRequest, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(161, 161, 161)
-                        .addComponent(lblHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(147, 147, 147))
+                        .addComponent(lblHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 631, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addComponent(lblHeader)
-                .addGap(45, 45, 45)
+                .addGap(16, 16, 16)
+                .addComponent(lblHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblName)
                     .addComponent(lblNameVal))
@@ -126,7 +133,7 @@ public class LogisticsManagerWorkAreaJPanel extends javax.swing.JPanel {
                 .addComponent(btnInvoices)
                 .addGap(26, 26, 26)
                 .addComponent(btnPayementInfo)
-                .addContainerGap())
+                .addContainerGap(347, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

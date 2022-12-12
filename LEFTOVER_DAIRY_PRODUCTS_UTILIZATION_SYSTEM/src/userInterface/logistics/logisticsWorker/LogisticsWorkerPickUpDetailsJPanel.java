@@ -77,11 +77,13 @@ public class LogisticsWorkerPickUpDetailsJPanel extends javax.swing.JPanel {
         lblDate = new javax.swing.JLabel();
         lblDateValue = new javax.swing.JLabel();
 
-        setBackground(new java.awt.Color(255, 255, 204));
+        setBackground(new java.awt.Color(0, 153, 204));
 
-        lblHeader.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblHeader.setFont(new java.awt.Font("Dubai", 1, 48)); // NOI18N
+        lblHeader.setForeground(new java.awt.Color(255, 255, 255));
         lblHeader.setText("Logistics Worker - Pick Up ");
 
+        btnConfirm.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/logistics/logisticsWorker/confirmIcon (1).jpeg"))); // NOI18N
         btnConfirm.setText("Confirm");
         btnConfirm.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -89,6 +91,7 @@ public class LogisticsWorkerPickUpDetailsJPanel extends javax.swing.JPanel {
             }
         });
 
+        btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/logistics/logisticsWorker/back-button-icon-50.png"))); // NOI18N
         btnBack.setText("<< Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -96,20 +99,23 @@ public class LogisticsWorkerPickUpDetailsJPanel extends javax.swing.JPanel {
             }
         });
 
-        pnlDeliveryDetails.setBackground(new java.awt.Color(255, 255, 204));
-        pnlDeliveryDetails.setBorder(javax.swing.BorderFactory.createTitledBorder("Pickup Details"));
+        pnlDeliveryDetails.setBackground(new java.awt.Color(0, 153, 204));
+        pnlDeliveryDetails.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pickup Details", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dubai", 1, 18), new java.awt.Color(255, 255, 255))); // NOI18N
 
-        lblRequestedBy.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblRequestedBy.setFont(new java.awt.Font("Dubai", 1, 18)); // NOI18N
+        lblRequestedBy.setForeground(new java.awt.Color(255, 255, 255));
         lblRequestedBy.setText("Requested By:");
 
         lblRequestedByValue.setText("<requested_by>");
 
-        lblDeliveredTo.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblDeliveredTo.setFont(new java.awt.Font("Dubai", 1, 18)); // NOI18N
+        lblDeliveredTo.setForeground(new java.awt.Color(255, 255, 255));
         lblDeliveredTo.setText("Delivered To:");
 
         lblDeliveredValue.setText("<delivered_to>");
 
-        lblPackage.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblPackage.setFont(new java.awt.Font("Dubai", 1, 18)); // NOI18N
+        lblPackage.setForeground(new java.awt.Color(255, 255, 255));
         lblPackage.setText("Package Details:");
 
         tblDetails.setModel(new javax.swing.table.DefaultTableModel(
@@ -130,12 +136,14 @@ public class LogisticsWorkerPickUpDetailsJPanel extends javax.swing.JPanel {
         });
         jScrollPane.setViewportView(tblDetails);
 
-        lblWeight.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblWeight.setFont(new java.awt.Font("Dubai", 1, 18)); // NOI18N
+        lblWeight.setForeground(new java.awt.Color(255, 255, 255));
         lblWeight.setText("Package Weight: ");
 
         lblWeightValue.setText("<package_weight>");
 
-        lblDate.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblDate.setFont(new java.awt.Font("Dubai", 1, 18)); // NOI18N
+        lblDate.setForeground(new java.awt.Color(255, 255, 255));
         lblDate.setText("Pickup Date:");
 
         lblDateValue.setText("<delivery_date>");
@@ -190,7 +198,7 @@ public class LogisticsWorkerPickUpDetailsJPanel extends javax.swing.JPanel {
                 .addGroup(pnlDeliveryDetailsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblDate)
                     .addComponent(lblDateValue))
-                .addContainerGap())
+                .addContainerGap(72, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -200,14 +208,15 @@ public class LogisticsWorkerPickUpDetailsJPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(64, 64, 64)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 433, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 688, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(layout.createSequentialGroup()
+                            .addGap(16, 16, 16)
                             .addComponent(btnBack)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnConfirm))
                         .addComponent(pnlDeliveryDetails, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(92, Short.MAX_VALUE))
+                .addContainerGap(566, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -216,11 +225,11 @@ public class LogisticsWorkerPickUpDetailsJPanel extends javax.swing.JPanel {
                 .addComponent(lblHeader)
                 .addGap(50, 50, 50)
                 .addComponent(pnlDeliveryDetails, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25)
+                .addGap(50, 50, 50)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBack)
                     .addComponent(btnConfirm))
-                .addGap(85, 85, 85))
+                .addGap(461, 461, 461))
         );
     }// </editor-fold>//GEN-END:initComponents
 

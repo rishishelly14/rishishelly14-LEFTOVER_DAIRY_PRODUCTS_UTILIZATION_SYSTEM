@@ -86,9 +86,10 @@ public class GovernmentMayorViewRequestDetailsJPanel extends javax.swing.JPanel 
         lblPickedUpBy = new javax.swing.JLabel();
         lblPickedUpByVal = new javax.swing.JLabel();
 
-        setBackground(new java.awt.Color(204, 204, 255));
+        setBackground(new java.awt.Color(102, 153, 255));
 
-        lblHeader.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblHeader.setFont(new java.awt.Font("Dubai", 1, 48)); // NOI18N
+        lblHeader.setForeground(new java.awt.Color(255, 255, 255));
         lblHeader.setText("Mayor Work Area - Request Details");
 
         tblDetails.setModel(new javax.swing.table.DefaultTableModel(
@@ -113,6 +114,7 @@ public class GovernmentMayorViewRequestDetailsJPanel extends javax.swing.JPanel 
             tblDetails.getColumnModel().getColumn(1).setResizable(false);
         }
 
+        btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/government/governmentMayor/back-button-icon-50.png"))); // NOI18N
         btnBack.setText("<< Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -120,7 +122,8 @@ public class GovernmentMayorViewRequestDetailsJPanel extends javax.swing.JPanel 
             }
         });
 
-        lblCost.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblCost.setFont(new java.awt.Font("Dubai", 1, 18)); // NOI18N
+        lblCost.setForeground(new java.awt.Color(255, 255, 255));
         lblCost.setText("Pickup Cost:");
 
         lblQuantityVal.setText("<quantity>");
@@ -133,19 +136,24 @@ public class GovernmentMayorViewRequestDetailsJPanel extends javax.swing.JPanel 
 
         lblRequestFromVal.setText("<request_from>");
 
-        lblRequestDate.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblRequestDate.setFont(new java.awt.Font("Dubai", 1, 18)); // NOI18N
+        lblRequestDate.setForeground(new java.awt.Color(255, 255, 255));
         lblRequestDate.setText("Request Date:");
 
-        lblQuantity.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblQuantity.setFont(new java.awt.Font("Dubai", 1, 18)); // NOI18N
+        lblQuantity.setForeground(new java.awt.Color(255, 255, 255));
         lblQuantity.setText("Food Quantity:");
 
-        lblRequestStatus.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblRequestStatus.setFont(new java.awt.Font("Dubai", 1, 18)); // NOI18N
+        lblRequestStatus.setForeground(new java.awt.Color(255, 255, 255));
         lblRequestStatus.setText("Request status:");
 
-        lblRequestFrom.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblRequestFrom.setFont(new java.awt.Font("Dubai", 1, 18)); // NOI18N
+        lblRequestFrom.setForeground(new java.awt.Color(255, 255, 255));
         lblRequestFrom.setText("Request from:");
 
-        lblPickedUpBy.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblPickedUpBy.setFont(new java.awt.Font("Dubai", 1, 18)); // NOI18N
+        lblPickedUpBy.setForeground(new java.awt.Color(255, 255, 255));
         lblPickedUpBy.setText("Pickup done by:");
 
         lblPickedUpByVal.setText("<emp_name>");
@@ -159,7 +167,6 @@ public class GovernmentMayorViewRequestDetailsJPanel extends javax.swing.JPanel 
                     .addGroup(layout.createSequentialGroup()
                         .addGap(39, 39, 39)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnBack)
                             .addComponent(lblRequestFrom)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -186,18 +193,19 @@ public class GovernmentMayorViewRequestDetailsJPanel extends javax.swing.JPanel 
                                 .addGap(27, 27, 27)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblPickedUpByVal)
-                                    .addComponent(lblCostVal)))))
+                                    .addComponent(lblCostVal)))
+                            .addComponent(btnBack)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(68, 68, 68)
-                        .addComponent(lblHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(145, 145, 145))
+                        .addGap(256, 256, 256)
+                        .addComponent(lblHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 866, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(39, 39, 39)
+                .addGap(50, 50, 50)
                 .addComponent(lblHeader)
-                .addGap(48, 48, 48)
+                .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblRequestFrom)
                     .addComponent(lblRequestFromVal))
@@ -223,9 +231,9 @@ public class GovernmentMayorViewRequestDetailsJPanel extends javax.swing.JPanel 
                     .addComponent(lblCostVal))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
+                .addGap(33, 33, 33)
                 .addComponent(btnBack)
-                .addGap(68, 68, 68))
+                .addContainerGap(201, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

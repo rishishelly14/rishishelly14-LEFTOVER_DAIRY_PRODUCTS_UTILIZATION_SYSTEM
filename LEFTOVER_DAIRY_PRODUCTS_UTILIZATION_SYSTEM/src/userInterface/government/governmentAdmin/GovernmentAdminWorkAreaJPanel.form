@@ -3,7 +3,7 @@
 <Form version="1.3" maxVersion="1.5" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <Properties>
     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-      <Color blue="ff" green="cc" red="cc" type="rgb"/>
+      <Color blue="cc" green="99" red="0" type="rgb"/>
     </Property>
   </Properties>
   <AuxValues>
@@ -31,27 +31,27 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="205" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="btnManageOrganization" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
-                          <Component id="btnManageEmployee" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
-                          <Component id="btnManageUser" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="btnManageOrganization" min="-2" pref="273" max="-2" attributes="0"/>
+                          <Component id="btnManageEmployee" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btnManageUser" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="200" max="-2" attributes="0"/>
                       <Component id="lblHeading" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace min="-2" pref="96" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
-              <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
               <Component id="lblHeading" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblEnterprise" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                   <Component id="lblValue" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -62,7 +62,7 @@
               <Component id="btnManageEmployee" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
               <Component id="btnManageUser" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="76" max="32767" attributes="0"/>
+              <EmptySpace pref="447" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -71,7 +71,10 @@
     <Component class="javax.swing.JLabel" name="lblHeading">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Tahoma" size="24" style="1"/>
+          <Font name="Dubai" size="48" style="1"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Government Adminstrative Work Area"/>
       </Properties>
@@ -79,7 +82,10 @@
     <Component class="javax.swing.JLabel" name="lblEnterprise">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Tahoma" size="18" style="1"/>
+          <Font name="Dubai" size="18" style="1"/>
+        </Property>
+        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Government:"/>
       </Properties>
@@ -91,6 +97,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnManageOrganization">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/userInterface/government/governmentAdmin/organization.jpg"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Manage Organization"/>
       </Properties>
       <Events>
@@ -99,6 +108,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnManageEmployee">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/userInterface/government/governmentAdmin/employeeicon.png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Manage Employee"/>
       </Properties>
       <Events>
@@ -107,6 +119,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnManageUser">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/userInterface/government/governmentAdmin/userIcon.png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Manage User"/>
       </Properties>
       <Events>

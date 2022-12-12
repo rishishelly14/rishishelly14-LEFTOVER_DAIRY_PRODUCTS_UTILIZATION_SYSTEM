@@ -89,11 +89,14 @@ public class LogisticsWorkerDeliveryDetailsJPanel extends javax.swing.JPanel {
         lblDate = new javax.swing.JLabel();
         lblDateValue = new javax.swing.JLabel();
 
-        setBackground(new java.awt.Color(255, 255, 204));
+        setBackground(new java.awt.Color(0, 153, 204));
 
-        lblHeader.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblHeader.setFont(new java.awt.Font("Dubai", 1, 48)); // NOI18N
+        lblHeader.setForeground(new java.awt.Color(255, 255, 255));
         lblHeader.setText("Logistics Worker - Confirm Delivery");
 
+        lblCost.setFont(new java.awt.Font("Dubai", 1, 18)); // NOI18N
+        lblCost.setForeground(new java.awt.Color(255, 255, 255));
         lblCost.setText("Delivery Cost:");
 
         txtCost.addActionListener(new java.awt.event.ActionListener() {
@@ -109,6 +112,7 @@ public class LogisticsWorkerDeliveryDetailsJPanel extends javax.swing.JPanel {
             }
         });
 
+        btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/logistics/logisticsWorker/back-button-icon-50.png"))); // NOI18N
         btnBack.setText("<< Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -116,20 +120,23 @@ public class LogisticsWorkerDeliveryDetailsJPanel extends javax.swing.JPanel {
             }
         });
 
-        pnlDeliveryDetails.setBackground(new java.awt.Color(255, 255, 204));
-        pnlDeliveryDetails.setBorder(javax.swing.BorderFactory.createTitledBorder("Delivery Details"));
+        pnlDeliveryDetails.setBackground(new java.awt.Color(0, 153, 204));
+        pnlDeliveryDetails.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Delivery Details", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dubai", 1, 24), new java.awt.Color(255, 255, 255))); // NOI18N
 
-        lblRequestedBy.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblRequestedBy.setFont(new java.awt.Font("Dubai", 1, 18)); // NOI18N
+        lblRequestedBy.setForeground(new java.awt.Color(255, 255, 255));
         lblRequestedBy.setText("Requested By:");
 
         lblRequestedByValue.setText("<requested_by>");
 
-        lblDeliveredTo.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblDeliveredTo.setFont(new java.awt.Font("Dubai", 1, 18)); // NOI18N
+        lblDeliveredTo.setForeground(new java.awt.Color(255, 255, 255));
         lblDeliveredTo.setText("Delivered To:");
 
         lblDeliveredValue.setText("<delivered_to>");
 
-        lblPackage.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblPackage.setFont(new java.awt.Font("Dubai", 1, 18)); // NOI18N
+        lblPackage.setForeground(new java.awt.Color(255, 255, 255));
         lblPackage.setText("Package Details:");
 
         tblDetails.setModel(new javax.swing.table.DefaultTableModel(
@@ -155,12 +162,14 @@ public class LogisticsWorkerDeliveryDetailsJPanel extends javax.swing.JPanel {
             tblDetails.getColumnModel().getColumn(2).setResizable(false);
         }
 
-        lblWeight.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblWeight.setFont(new java.awt.Font("Dubai", 1, 18)); // NOI18N
+        lblWeight.setForeground(new java.awt.Color(255, 255, 255));
         lblWeight.setText("Package Weight: ");
 
         lblWeightValue.setText("<package_weight>");
 
-        lblDate.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblDate.setFont(new java.awt.Font("Dubai", 1, 18)); // NOI18N
+        lblDate.setForeground(new java.awt.Color(255, 255, 255));
         lblDate.setText("Delivery Date:");
 
         lblDateValue.setText("<delivery_date>");
@@ -225,7 +234,6 @@ public class LogisticsWorkerDeliveryDetailsJPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 480, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(lblCost)
@@ -235,8 +243,9 @@ public class LogisticsWorkerDeliveryDetailsJPanel extends javax.swing.JPanel {
                             .addComponent(btnConfirm))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnBack)
-                            .addComponent(pnlDeliveryDetails, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(10, 10, 10))
+                            .addComponent(pnlDeliveryDetails, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(lblHeader, javax.swing.GroupLayout.PREFERRED_SIZE, 816, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -250,7 +259,7 @@ public class LogisticsWorkerDeliveryDetailsJPanel extends javax.swing.JPanel {
                     .addComponent(btnConfirm)
                     .addComponent(txtCost, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblCost))
-                .addGap(38, 38, 38)
+                .addGap(137, 137, 137)
                 .addComponent(btnBack)
                 .addGap(43, 43, 43))
         );

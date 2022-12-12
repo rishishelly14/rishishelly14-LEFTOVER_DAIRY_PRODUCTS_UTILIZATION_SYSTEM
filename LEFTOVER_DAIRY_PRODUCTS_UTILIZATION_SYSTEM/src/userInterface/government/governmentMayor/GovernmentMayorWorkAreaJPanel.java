@@ -34,13 +34,17 @@ public class GovernmentMayorWorkAreaJPanel extends javax.swing.JPanel {
         btnPeopleFed = new javax.swing.JButton();
         btnWastageAvoidedChart = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(204, 204, 255));
+        setBackground(new java.awt.Color(102, 153, 255));
 
-        lblHeading.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblHeading.setFont(new java.awt.Font("Dubai", 1, 48)); // NOI18N
+        lblHeading.setForeground(new java.awt.Color(255, 255, 255));
         lblHeading.setText("Mayor Work Area");
 
+        lblValue.setFont(new java.awt.Font("Dubai", 1, 24)); // NOI18N
+        lblValue.setForeground(new java.awt.Color(255, 255, 255));
         lblValue.setText("Welcome, ");
 
+        btnWastageAvoided.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/government/governmentMayor/viewitem.png"))); // NOI18N
         btnWastageAvoided.setText("View Wastage Avoided by Dairy(Tabular)");
         btnWastageAvoided.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -48,6 +52,7 @@ public class GovernmentMayorWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
+        btnPeopleFed.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/government/governmentMayor/viewitem.png"))); // NOI18N
         btnPeopleFed.setText("View People Fed by NGOs");
         btnPeopleFed.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -55,6 +60,7 @@ public class GovernmentMayorWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
+        btnWastageAvoidedChart.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/government/governmentMayor/viewitem.png"))); // NOI18N
         btnWastageAvoidedChart.setText("View Wastage Avoided by Dairy(Chart)");
         btnWastageAvoidedChart.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -67,19 +73,20 @@ public class GovernmentMayorWorkAreaJPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnPeopleFed, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(119, 119, 119)
-                            .addComponent(lblValue, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(159, 159, 159)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(btnWastageAvoided, javax.swing.GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE)
-                                .addComponent(btnWastageAvoidedChart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                    .addComponent(lblHeading, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(177, 177, 177))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(119, 119, 119)
+                        .addComponent(lblValue, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(295, 295, 295)
+                        .addComponent(lblHeading, javax.swing.GroupLayout.PREFERRED_SIZE, 380, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(159, 159, 159)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnWastageAvoided, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnWastageAvoidedChart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnPeopleFed, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -92,9 +99,9 @@ public class GovernmentMayorWorkAreaJPanel extends javax.swing.JPanel {
                 .addComponent(btnWastageAvoided)
                 .addGap(24, 24, 24)
                 .addComponent(btnWastageAvoidedChart)
-                .addGap(24, 24, 24)
+                .addGap(42, 42, 42)
                 .addComponent(btnPeopleFed)
-                .addGap(102, 102, 102))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
