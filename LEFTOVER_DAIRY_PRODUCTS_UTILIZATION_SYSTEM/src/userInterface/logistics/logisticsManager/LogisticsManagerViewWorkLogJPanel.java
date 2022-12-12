@@ -72,6 +72,7 @@ public class LogisticsManagerViewWorkLogJPanel extends javax.swing.JPanel {
             tblRequests.getColumnModel().getColumn(4).setResizable(false);
         }
 
+        btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/logistics/logisticsManager/back-button-arrow-icon-52394.png"))); // NOI18N
         btnBack.setText("<< Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -79,6 +80,7 @@ public class LogisticsManagerViewWorkLogJPanel extends javax.swing.JPanel {
             }
         });
 
+        btnViewDetails.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/logistics/logisticsManager/viewitem.png"))); // NOI18N
         btnViewDetails.setText("View Details");
         btnViewDetails.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -97,9 +99,9 @@ public class LogisticsManagerViewWorkLogJPanel extends javax.swing.JPanel {
                     .addComponent(jScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 819, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnBack)
-                        .addGap(657, 657, 657)
+                        .addGap(331, 331, 331)
                         .addComponent(btnViewDetails)))
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addContainerGap(162, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

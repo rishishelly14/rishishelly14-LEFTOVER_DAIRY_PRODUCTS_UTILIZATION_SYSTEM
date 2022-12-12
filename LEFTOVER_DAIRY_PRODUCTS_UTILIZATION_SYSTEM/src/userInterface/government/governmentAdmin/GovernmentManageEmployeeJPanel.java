@@ -125,13 +125,14 @@ public class GovernmentManageEmployeeJPanel extends javax.swing.JPanel {
 
         lblName.setText("Name");
 
-        btnBack.setText("<< Back");
+        btnBack.setIcon(new javax.swing.ImageIcon("C:\\Users\\nehas\\Downloads\\DairyMgmt\\back-button-arrow-icon-52394.png")); // NOI18N
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBackActionPerformed(evt);
             }
         });
 
+        btnCreateEmployee.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/government/governmentAdmin/employeeicon.png"))); // NOI18N
         btnCreateEmployee.setText("Create Employee");
         btnCreateEmployee.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -169,7 +170,7 @@ public class GovernmentManageEmployeeJPanel extends javax.swing.JPanel {
                             .addGap(10, 10, 10))
                         .addGroup(layout.createSequentialGroup()
                             .addGap(118, 118, 118)
-                            .addComponent(btnBack)
+                            .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnCreateEmployee)))
                     .addGroup(layout.createSequentialGroup()

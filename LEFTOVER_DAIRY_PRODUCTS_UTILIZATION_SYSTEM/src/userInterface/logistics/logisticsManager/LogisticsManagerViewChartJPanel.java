@@ -94,6 +94,7 @@ public class LogisticsManagerViewChartJPanel extends javax.swing.JPanel {
         lblHeader.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lblHeader.setText("Logistics Manager - View Invoice Payement Status");
 
+        btnBack.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/logistics/logisticsManager/back-button-arrow-icon-52394.png"))); // NOI18N
         btnBack.setText("<< Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -149,7 +150,7 @@ public class LogisticsManagerViewChartJPanel extends javax.swing.JPanel {
                     .addComponent(lblUnPaid)
                     .addComponent(lblUnPaidVal))
                 .addGap(8, 8, 8)
-                .addComponent(pnlChart, javax.swing.GroupLayout.DEFAULT_SIZE, 541, Short.MAX_VALUE)
+                .addComponent(pnlChart, javax.swing.GroupLayout.DEFAULT_SIZE, 462, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(btnBack)
                 .addGap(19, 19, 19))

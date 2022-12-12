@@ -56,6 +56,7 @@ public class LogisticsManagerWorkAreaJPanel extends javax.swing.JPanel {
 
         lblNameVal.setText("<<View Name>>");
 
+        btnRestaurantRequest.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/logistics/logisticsManager/viewitem.png"))); // NOI18N
         btnRestaurantRequest.setText("View Work Requests");
         btnRestaurantRequest.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -63,6 +64,7 @@ public class LogisticsManagerWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
+        btnInvoices.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/logistics/logisticsManager/export.png"))); // NOI18N
         btnInvoices.setText("Generate Invoices");
         btnInvoices.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -70,6 +72,7 @@ public class LogisticsManagerWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
+        btnWorkLog.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/logistics/logisticsManager/viewitem.png"))); // NOI18N
         btnWorkLog.setText("View Work Log");
         btnWorkLog.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -77,6 +80,7 @@ public class LogisticsManagerWorkAreaJPanel extends javax.swing.JPanel {
             }
         });
 
+        btnPayementInfo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/logistics/logisticsManager/viewitem.png"))); // NOI18N
         btnPayementInfo.setText("View Payment Info");
         btnPayementInfo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -126,7 +130,7 @@ public class LogisticsManagerWorkAreaJPanel extends javax.swing.JPanel {
                 .addComponent(btnInvoices)
                 .addGap(26, 26, 26)
                 .addComponent(btnPayementInfo)
-                .addContainerGap())
+                .addContainerGap(188, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

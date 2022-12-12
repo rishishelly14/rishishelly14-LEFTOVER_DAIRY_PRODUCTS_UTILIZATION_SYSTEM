@@ -150,13 +150,14 @@ public class GovernmentManageUserAccountJPanel extends javax.swing.JPanel {
 
         lblPassword.setText("Password");
 
-        btnBack.setText("<< Back");
+        btnBack.setIcon(new javax.swing.ImageIcon("C:\\Users\\nehas\\Downloads\\DairyMgmt\\back-button-arrow-icon-52394.png")); // NOI18N
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBackActionPerformed(evt);
             }
         });
 
+        btnCreate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/userInterface/government/governmentAdmin/userIcon.png"))); // NOI18N
         btnCreate.setText("Create");
         btnCreate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -176,8 +177,8 @@ public class GovernmentManageUserAccountJPanel extends javax.swing.JPanel {
                         .addComponent(jScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(195, 195, 195)
-                        .addComponent(btnBack)
-                        .addGap(244, 244, 244)
+                        .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(154, 154, 154)
                         .addComponent(btnCreate))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(244, 244, 244)

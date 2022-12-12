@@ -31,10 +31,10 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="248" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="btnManageEmployee" min="-2" pref="150" max="-2" attributes="0"/>
-                          <Component id="btnManageOrganization" min="-2" pref="150" max="-2" attributes="0"/>
-                          <Component id="btnManageUser" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="btnManageOrganization" max="32767" attributes="0"/>
+                          <Component id="btnManageEmployee" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btnManageUser" alignment="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -62,7 +62,7 @@
               <Component id="btnManageEmployee" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
               <Component id="btnManageUser" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="345" max="32767" attributes="0"/>
+              <EmptySpace pref="108" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -91,6 +91,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnManageOrganization">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/userInterface/logistics/logisticsAdmin/ABC (1).jpg"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Manage Organization"/>
       </Properties>
       <Events>
@@ -99,6 +102,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnManageEmployee">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/userInterface/logistics/logisticsAdmin/employeeicon.png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Manage Employee"/>
       </Properties>
       <Events>
@@ -107,6 +113,9 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnManageUser">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/userInterface/logistics/logisticsAdmin/userIcon.png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="Manage User"/>
       </Properties>
       <Events>
